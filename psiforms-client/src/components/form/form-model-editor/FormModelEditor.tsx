@@ -131,11 +131,11 @@ export function FormModelEditor(props: FormModelEditorProps) {
 
 				<div className="form-group">
 					<label>
-						<input type="radio" checked={!formModel.approval} disabled={isReadonly} onChange={() => updateFormModel({ approval: false })} />
+						<input type="radio" checked={!formModel.requireApproval} disabled={isReadonly} onChange={() => updateFormModel({ requireApproval: false })} />
 						No approval, transfer money to me immediately
 					</label>
 					<label>
-						<input type="radio" checked={formModel.approval} disabled={isReadonly} onChange={() => updateFormModel({ approval: true })} />
+						<input type="radio" checked={formModel.requireApproval} disabled={isReadonly} onChange={() => updateFormModel({ requireApproval: true })} />
 						Need approval, transfer money to me after approval
 					</label>
 				</div>

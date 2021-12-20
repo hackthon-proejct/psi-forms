@@ -2,7 +2,7 @@ import Moralis from 'moralis';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 
-import { determineNetworkType, NetworkInfo } from '../../core/NetworkInfo';
+import { determineNetwork, NetworkInfo } from '../../core/NetworkInfo';
 
 export const walletContext = createContext<Wallet | null>(null);
 
@@ -42,7 +42,10 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 				appId: 'xNlvWKCOxfltmjKzINOx3HO2Om3NcWkdJNGzfYuo'
 			});
 
-			Moralis.Web3.onAccountsChanged(connect);
+			Moralis.Web3.onAccountsChanged(accounts => {
+				console.log(accounts);
+				connect();
+			});
 			Moralis.Web3.onChainChanged(connect);
 
 			if (canAutoConnect()) {
@@ -61,11 +64,14 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 
 		const ethAddress = user.get('ethAddress');
 		const chainId = await web3.eth.getChainId();
-		const hash = `${ethAddress}|${chainId}`;
+		const networkId = await web3.eth.net.getId();
+		const hash = `${ethAddress}|${chainId}|${networkId}`;
+
+		console.log(`chainId = ${chainId}, networkId = ${networkId}`);
 
 		return {
 			web3,
-			network: determineNetworkType(chainId),
+			network: determineNetwork(networkId, chainId),
 			address: ethAddress,
 			hash
 		};

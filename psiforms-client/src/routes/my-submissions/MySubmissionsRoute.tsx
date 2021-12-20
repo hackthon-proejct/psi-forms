@@ -6,7 +6,7 @@ import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClient } from '../../core/ApiClient';
 import { AdStatus, AdSummaryDto, SyncStatus } from '../../core/ApiModel';
-import { FormsContract } from '../../core/FormsContract';
+import { PsiFormsContract } from '../../core/PsiFormsContract';
 
 export function MySubmissionsRoute() {
 
@@ -30,9 +30,9 @@ export function MySubmissionsRoute() {
 			return;
 		}
 
-		const contract = new FormsContract(account);
+		const contract = new PsiFormsContract(account);
 		try {
-			const transactionHash = await contract.rollBackAd(as.adBoxId, as.id);
+			const transactionHash = await contract.rollBackRequest(as.adBoxId, as.id);
 			await ApiClient.confirmAdRolledBack(as.id, transactionHash);
 		} catch (e) {
 			console.error(e);

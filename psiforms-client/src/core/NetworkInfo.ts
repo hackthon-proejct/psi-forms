@@ -1,7 +1,8 @@
 
 export interface NetworkInfo {
 	id: number;
-	web3NetworkId: number;
+	networkId: number;
+	chainId: number;
 	name: string;
 	ethSymbol: string;
 	ethDecimals: number;
@@ -11,43 +12,21 @@ export interface NetworkInfo {
 export const networkInfos: NetworkInfo[] = [
 	{
 		id: 1,
-		web3NetworkId: 1,
-		name: 'Ethereum Mainnet',
+		networkId: 1,
+		chainId: 43113,
+		name: 'Avalanche Testnet',
 		ethDecimals: 18,
-		ethSymbol: 'ETH',
+		ethSymbol: 'AVAX',
 		isSupported: false
-	},
-	{
-		id: 56,
-		web3NetworkId: 56,
-		name: 'BSC',
-		ethDecimals: 18,
-		ethSymbol: 'BNB',
-		isSupported: true
-	},
-	{
-		id: 97,
-		web3NetworkId: 97,
-		name: 'BSC Testnet',
-		ethDecimals: 18,
-		ethSymbol: 'BNB',
-		isSupported: true
-	},
-	{
-		id: 5777,
-		web3NetworkId: 5777,
-		name: 'Ganache',
-		ethDecimals: 18,
-		ethSymbol: 'ETH',
-		isSupported: true
 	}
 ];
 
-export function determineNetworkType(web3NetworkId: number): NetworkInfo {
-	const network = networkInfos.find(n => n.web3NetworkId === web3NetworkId);
+export function determineNetwork(networkId: number, chainId: number): NetworkInfo {
+	const network = networkInfos.find(n => n.networkId === networkId && n.chainId === chainId);
 	return network || {
 		id: -1,
-		web3NetworkId: -1,
+		networkId: -1,
+		chainId: -1,
 		name: 'Unknown',
 		ethDecimals: 18,
 		ethSymbol: 'ETH',

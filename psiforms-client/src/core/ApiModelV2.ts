@@ -1,11 +1,11 @@
 
 export interface FormDto {
-	id?: string;
+	id: string;
 	name: string;
 	description: string;
-	itemPrice: string;
+	unitPrice: string;
 	minQuantity: number;
 	maxQuantity: number;
-	approval: boolean;
+	requireApproval: boolean;
 	fields: string;
 }

@@ -7,7 +7,7 @@ export interface FormModel {
 	itemPrice: BN;
 	minQuantity: number;
 	maxQuantity: number;
-	approval: boolean;
+	requireApproval: boolean;
 	fields: FieldModel[];
 }
 

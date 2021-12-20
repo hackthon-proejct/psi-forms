@@ -5,7 +5,7 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClient } from '../../core/ApiClient';
 import { AdDto, SyncStatus } from '../../core/ApiModel';
-import { FormsContract } from '../../core/FormsContract';
+import { PsiFormsContract } from '../../core/PsiFormsContract';
 import { EthFormatter } from '../../core/EthFormatter';
 
 export function FormSubmissionsRoute() {
@@ -48,9 +48,9 @@ export function FormSubmissionsRoute() {
 			return;
 		}
 
-		const contract = new FormsContract(account);
+		const contract = new PsiFormsContract(account);
 		try {
-			const transactionHash = await contract.approveOrRejectAds(adBoxId, state.value.map(a => a.id), statuses as boolean[]);
+			const transactionHash = await contract.approveOrRejectRequest(adBoxId, state.value.map(a => a.id), statuses as boolean[]);
 
 			for (let ad of state.value) {
 				await ApiClient.confirmAdApprovedOrRejected(ad.id, transactionHash);

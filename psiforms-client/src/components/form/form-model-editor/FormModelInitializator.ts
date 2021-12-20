@@ -2,21 +2,21 @@ import BN from 'bn.js';
 import Web3 from 'web3';
 
 import {
-    FieldModel,
-    FieldType,
-    FileFieldModel,
-    FileType,
-    FormModel,
-    NumberFieldModel,
-    TextFieldModel,
+	FieldModel,
+	FieldType,
+	FileFieldModel,
+	FileType,
+	FormModel,
+	NumberFieldModel,
+	TextFieldModel,
 } from '../FormModel';
 
 export function initializeNewForm(): FormModel {
 	return {
-		id: Web3.utils.randomHex(22),
+		id: Web3.utils.randomHex(16),
 		name: 'Form title',
 		description: 'Form description',
-		approval: false,
+		requireApproval: false,
 		fields: [],
 		itemPrice: new BN(100000000000),
 		minQuantity: 1,

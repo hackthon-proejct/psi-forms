@@ -1,0 +1,17 @@
+{
+	"name": "psiforms-contract",
+	"version": "1.0.0",
+	"author": "b4rtaz",
+	"scripts": {
+		"build": "truffle compile",
+		"migrate": "truffle migrate --reset",
+		"deploy:avalTestnet": "truffle deploy --network avalTestnet",
+		"test": "truffle test",
+		"console": "truffle console"
+	},
+	"dependencies": {
+		"@truffle/hdwallet-provider": "^1.6.0",
+		"pify": "^5.0.0",
+		"truffle": "^5.4.19"
+	}
+}

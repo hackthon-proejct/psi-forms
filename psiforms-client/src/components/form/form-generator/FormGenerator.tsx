@@ -32,7 +32,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 
 			<div className="xform-footer">
 				<button>
-					{fm.approval ? 'Send for approval' : 'Send'}
+					{fm.requireApproval ? 'Send for approval' : 'Send'}
 				</button>
 			</div>
 		</div>
