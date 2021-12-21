@@ -8,7 +8,7 @@ export function Header() {
 			<div className="header">
 				<h1>
 					<Link to="/">
-						Crypto Forms
+						ΨForms
 					</Link>
 				</h1>
 

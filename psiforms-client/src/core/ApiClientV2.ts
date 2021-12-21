@@ -1,12 +1,11 @@
 import Moralis from 'moralis';
 import Web3 from 'web3';
 
-import { FieldModel } from '../components/form/FormModel';
-import { FormDto } from './ApiModelV2';
+import { BasicsFormDto, FormDto } from './ApiModelV2';
 
 export class ApiClientV2 {
 
-	public static async createForm(formId: string, name: string, description: string, fields: FieldModel[]): Promise<string> {
+	public static async createForm(creator: string, formId: string, name: string, description: string, fields: string): Promise<string> {
 		const user = Moralis.User.current();
 		if (!user) {
 			throw new Error('Not logged in');
@@ -18,57 +17,85 @@ export class ApiClientV2 {
 		acl.setReadAccess(user, true);
 		acl.setWriteAccess(user, true);
 
-		const entity = new FormEntity(formId, name, description, JSON.stringify(fields));
-		entity.setACL(acl);
-		await entity.save();
+		const row = new FormEntity(creator, formId, name, description, fields);
+		row.setACL(acl);
+		await row.save();
 
-		return entity.id;
+		return row.id;
 	}
 
-	public static async getForms(creator: string): Promise<FormDto[]> {
-		const formCreatedQuery = new Moralis.Query(FormCreatedEntity);
-		formCreatedQuery.equalTo('creator', creator);
+	public static async updateForm(formId: string, name: string, description: string, fields: string): Promise<void> {
+		const formRow = await (new Moralis.Query(FormEntity)
+			.equalTo('formId', formId))
+			.first();
+		if (!formRow) {
+			throw new Error(`Cannot find form ${formId}`);
+		}
 
-		const formCreatedRows = (await formCreatedQuery.find()).map(obj => {
-			const formId = Web3.utils.toBN(obj.get('formId'));
-			return {
-				id: Web3.utils.toHex(formId),
-				isEnabled: obj.get('isEnabled'),
-				unitPrice: obj.get('unitPrice'),
-				requireApproval: obj.get('requireApproval'),
-				minQuantity: parseInt(obj.get('minQuantity'), 10),
-				maxQuantity: parseInt(obj.get('maxQuantity'), 10),
-				creator: obj.get('creator')
-			};
-		});
+		formRow.set('name', name);
+		formRow.set('description', description);
+		formRow.set('fields', fields);
+		await formRow.save();
+	}
 
-		const formQuery = new Moralis.Query(FormEntity);
-		formQuery.containsAll('formId', formCreatedRows.map(r => r.id));
-		const formRows = (await formQuery.find()).map(obj => {
+	public static async getForms(creator: string): Promise<BasicsFormDto[]> {
+		const formQuery = new Moralis.Query(FormEntity)
+			.equalTo('creator', creator);
+		return (await formQuery.find()).map(obj => {
 			return {
-				formId: obj.get('formId'),
+				id: obj.get('formId'),
 				name: obj.get('name'),
 				description: obj.get('description'),
 				fields: obj.get('fields')
 			};
 		});
-
-		const forms = formCreatedRows.map<FormDto>(row => {
-			const form = formRows.find(r => r.formId === row.id);
-			return {
-				id: row.id,
-				isEnabled: row.isEnabled,
-				unitPrice: row.unitPrice,
-				requireApproval: row.requireApproval,
-				minQuantity: row.minQuantity,
-				maxQuantity: row.maxQuantity,
-				name: form?.name || '',
-				description: form?.description || '',
-				fields: form?.fields || '{}',
-			};
-		});
-		return forms;
 	}
+
+	public static async getForm(creator: string, formId: string): Promise<FormDto> {
+		const formIdInt = Web3.utils.toBN(formId).toString();
+
+		const formCreatedRow = await (new Moralis.Query(FormCreatedEntity)
+			.equalTo('creator', creator)
+			.equalTo('formId', formIdInt))
+			.first();
+		if (!formCreatedRow) {
+			throw new Error(`Cannot find form created event ${formId}`);
+		}
+
+		const form: Partial<FormDto> = {
+			id: Web3.utils.toHex(formId),
+			requireApproval: formCreatedRow.get('requireApproval')
+		};
+		readFormEarningsFields(formCreatedRow, form);
+
+		const formQueryRow = await (new Moralis.Query(FormEntity)
+			.equalTo('formId', formId))
+			.first();
+		if (!formQueryRow) {
+			throw new Error(`Cannot find form ${formId}`);
+		}
+
+		form.name = formQueryRow.get('name');
+		form.description = formQueryRow.get('description');
+		form.fields = formQueryRow.get('fields');
+
+		const formUpdatedRow = await (new Moralis.Query(FormUpdatedEntity)
+			.equalTo('formId', formIdInt)
+			.addDescending('createdAt'))
+			.first();
+		if (formUpdatedRow) {
+			readFormEarningsFields(formUpdatedRow, form);
+		}
+
+		return form as FormDto;
+	}
+}
+
+function readFormEarningsFields(row: Moralis.Object, form: Partial<FormDto>) {
+	form.isEnabled = row.get('isEnabled');
+	form.unitPrice = row.get('unitPrice');
+	form.minQuantity = parseInt(row.get('minQuantity'), 10);
+	form.maxQuantity = parseInt(row.get('maxQuantity'), 10);
 }
 
 class FormCreatedEntity extends Moralis.Object {
@@ -78,10 +105,18 @@ class FormCreatedEntity extends Moralis.Object {
 	}
 }
 
+class FormUpdatedEntity extends Moralis.Object {
+
+	public constructor() {
+		super('FormUpdated');
+	}
+}
+
 class FormEntity extends Moralis.Object {
 
-	public constructor(formId: string, name: string, description: string, fields: string) {
+	public constructor(creator: string, formId: string, name: string, description: string, fields: string) {
 		super('Form');
+		this.set('creator', creator);
 		this.set('formId', formId);
 		this.set('name', name);
 		this.set('description', description);

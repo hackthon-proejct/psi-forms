@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { EthFormatter } from '../../core/EthFormatter';
 import { useWallet } from '../wallet/WalletContext';

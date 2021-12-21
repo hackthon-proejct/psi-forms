@@ -1,5 +1,4 @@
 import BN from 'bn.js';
-import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 
 import network1 from '../assets/abi/psiforms-1.json';
@@ -26,24 +25,24 @@ export class PsiFormsContract {
 		});
 	}
 
-	public async createForm(formId: string, isEnabled: boolean, requireApproval: boolean, minQuantity: number, maxQuantity: number, price: BN): Promise<string> {
+	public async createForm(formId: string, isEnabled: boolean, requireApproval: boolean, minQuantity: number, maxQuantity: number, unitPrice: BN): Promise<string> {
 		const result = await this.contract.methods['createForm'](
 			formId,
 			isEnabled,
 			requireApproval,
 			minQuantity,
 			maxQuantity,
-			price).send() as ContractResult;
+			unitPrice).send() as ContractResult;
 		return result.transactionHash;
 	}
 
-	public async updateForm(formId: string, isEnabled: boolean, minTime: number, maxTime: number, price: BN) {
+	public async updateForm(formId: string, isEnabled: boolean, minQuantity: number, maxQuantity: number, unitPrice: BN) {
 		const result = await this.contract.methods['updateForm'](
 			formId,
 			isEnabled,
-			minTime,
-			maxTime,
-			price).send() as ContractResult;
+			minQuantity,
+			maxQuantity,
+			unitPrice).send() as ContractResult;
 		return result.transactionHash;
 	}
 

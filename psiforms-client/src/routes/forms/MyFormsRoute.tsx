@@ -5,14 +5,14 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClientV2 } from '../../core/ApiClientV2';
-import { FormDto } from '../../core/ApiModelV2';
+import { BasicsFormDto } from '../../core/ApiModelV2';
 
 export function MyFormsRoute() {
 
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();
 
-	const state = useLoader<FormDto[]>(
+	const state = useLoader<BasicsFormDto[]>(
 		useCallback(async () => {
 			if (account) {
 				return await ApiClientV2.getForms(account.address);
@@ -41,12 +41,7 @@ export function MyFormsRoute() {
 						<table>
 							<thead>
 								<tr>
-									<th>Status</th>
 									<th>Name</th>
-									<th>Type</th>
-									<th>Income Gross</th>
-									<th>Active Ads</th>
-									<th>Waiting Ads</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -56,16 +51,12 @@ export function MyFormsRoute() {
 										<td>
 											{ab.name}
 										</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td>
-
-										</td>
 										<td className="actions">
-											<Link to={`/my-forms/${ab.id}`} className="btn btn-white">Edit</Link>
+											<Link to={`/my-forms/${ab.id}/blockchain`} className="btn btn-white">Edit Earnings</Link>
 											{' '}
-											<Link to={`/submit-form/${ab.id}`} className="btn btn-white" title="Purchase Form">
+											<Link to={`/my-forms/${ab.id}/storage`} className="btn btn-white">Edit Description</Link>
+											{' '}
+											<Link to={`/forms/${ab.id}`} className="btn btn-white" title="Submit Form">
 												<i className="ico ico-purchase-black" />
 											</Link>
 										</td>

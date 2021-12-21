@@ -8,11 +8,9 @@ import { AdDto, SyncStatus } from '../../core/ApiModel';
 import { PsiFormsContract } from '../../core/PsiFormsContract';
 import { EthFormatter } from '../../core/EthFormatter';
 
-export function FormSubmissionsRoute() {
+export function FormRequestsRoute() {
 	const wallet = useWallet();
-	const account = wallet.isConnected()
-		? wallet.getAccount()
-		: null;
+	const account = wallet.tryGetAccount();
 
 	const { id } = useParams();
 	const adBoxId = id as string;

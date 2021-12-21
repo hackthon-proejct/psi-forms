@@ -1,14 +1,21 @@
 import BN from 'bn.js';
 
-export interface FormModel {
-	id: string;
-	name: string;
-	description: string;
-	itemPrice: BN;
+export interface BlockchainForm {
+	isEnabled: boolean;
+	unitPrice: BN;
 	minQuantity: number;
 	maxQuantity: number;
+}
+
+export interface StorageForm {
+	name: string;
+	description: string;
+	fields: Field[];
+}
+
+export interface Form extends BlockchainForm, StorageForm {
+	id: string;
 	requireApproval: boolean;
-	fields: FieldModel[];
 }
 
 export enum FieldType {
@@ -17,21 +24,21 @@ export enum FieldType {
 	file = 'file'
 }
 
-export interface FieldModel {
+export interface Field {
 	type: FieldType;
 	isRequired: boolean;
 	label: string;
 }
 
-export interface TextFieldModel extends FieldModel {
+export interface TextField extends Field {
 }
 
-export interface NumberFieldModel extends FieldModel {
+export interface NumberField extends Field {
 	min?: number;
 	max?: number;
 }
 
-export interface FileFieldModel extends FieldModel {
+export interface FileField extends Field {
 	fileType: FileType;
 }
 

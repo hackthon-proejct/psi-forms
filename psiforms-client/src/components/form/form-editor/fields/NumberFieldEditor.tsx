@@ -1,16 +1,16 @@
 import { Fragment } from 'react';
 
-import { FieldModel, NumberFieldModel } from '../../FormModel';
+import { Field, NumberField } from '../../Form';
 
-export interface NumberFieldModelEditorProps {
-	fieldModel: NumberFieldModel;
-	onChanged: (newFieldModel: FieldModel) => void;
+export interface NumberFieldEditorProps {
+	field: NumberField;
+	onChanged: (newField: Field) => void;
 }
 
-export function NumberFieldModelEditor(props: NumberFieldModelEditorProps) {
+export function NumberFieldEditor(props: NumberFieldEditorProps) {
 
-	function updateFieldModel(delta: Partial<NumberFieldModel>) {
-		const nfm = Object.assign({}, props.fieldModel, delta);
+	function updateField(delta: Partial<NumberField>) {
+		const nfm = Object.assign({}, props.field, delta);
 		props.onChanged(nfm);
 	}
 
@@ -20,13 +20,13 @@ export function NumberFieldModelEditor(props: NumberFieldModelEditorProps) {
 				<div className="col">
 					<div className="form-group">
 						<label>Label: *</label>
-						<input type="text" value={props.fieldModel.label} onChange={e => updateFieldModel({ label: e.target.value })} />
+						<input type="text" value={props.field.label} onChange={e => updateField({ label: e.target.value })} />
 					</div>
 				</div>
 				<div className="col">
 					<div className="form-group">
 						<label>Is required:</label>
-						<input type="checkbox" checked={props.fieldModel.isRequired} onChange={() => updateFieldModel({ isRequired: !props.fieldModel.isRequired })} />
+						<input type="checkbox" checked={props.field.isRequired} onChange={() => updateField({ isRequired: !props.field.isRequired })} />
 					</div>
 				</div>
 			</div>

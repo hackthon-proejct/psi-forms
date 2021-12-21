@@ -8,7 +8,7 @@ import { ApiClient } from '../../core/ApiClient';
 import { AdStatus, AdSummaryDto, SyncStatus } from '../../core/ApiModel';
 import { PsiFormsContract } from '../../core/PsiFormsContract';
 
-export function MySubmissionsRoute() {
+export function MyRequestsRoute() {
 
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();

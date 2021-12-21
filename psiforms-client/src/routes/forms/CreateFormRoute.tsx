@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 
-import { FormModelEditor } from '../../components/form/form-model-editor/FormModelEditor';
-import { FormModel } from '../../components/form/FormModel';
+import { Form } from '../../components/form/Form';
+import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClientV2 } from '../../core/ApiClientV2';
@@ -11,17 +11,15 @@ export function CreateFormRoute() {
 
 	const wallet = useWallet();
 	const [formId, setFormId] = useState<string>();
-	const form = true;
+	const createdForm = true;
 
-	async function save(fm: FormModel): Promise<boolean> {
+	async function save(form: Form): Promise<boolean> {
 		const account = wallet.getAccount();
 
-		await ApiClientV2.createForm(fm.id, fm.name, fm.description, fm.fields);
+		await ApiClientV2.createForm(account.address, form.id, form.name, form.description, JSON.stringify(form.fields));
 
 		const contract = new PsiFormsContract(account);
-
-		await contract.createForm(fm.id, true, fm.requireApproval, fm.minQuantity, fm.maxQuantity, fm.itemPrice);
-
+		await contract.createForm(form.id, form.isEnabled, form.requireApproval, form.minQuantity, form.maxQuantity, form.unitPrice);
 		return false;
 	}
 
@@ -32,8 +30,8 @@ export function CreateFormRoute() {
 	return (
 		<Fragment>
 			<ConnectYourWallet />
-			{!formId && <FormModelEditor isEdit={false} saveHandler={save} />}
-			{form &&
+			{!formId && <NewFormEditor onSave={save} />}
+			{createdForm &&
 				<Fragment>
 					<section className="form">
 						<div className="form-submit">
