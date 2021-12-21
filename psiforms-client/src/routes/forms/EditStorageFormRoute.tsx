@@ -21,7 +21,7 @@ export function EditStorageFormRoute() {
 		useCallback(async () => {
 			return {
 				form: account
-					? await ApiClientV2.getForm(account.address, formId)
+					? await ApiClientV2.getForm(formId)
 					: null
 			};
 		}, [formId, account]));

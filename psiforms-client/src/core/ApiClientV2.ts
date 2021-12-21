@@ -3,6 +3,10 @@ import Web3 from 'web3';
 
 import { BasicsFormDto, FormDto } from './ApiModelV2';
 
+async function waitFormMoralis(): Promise<void> {
+	await Moralis.Web3.enableWeb3();
+}
+
 export class ApiClientV2 {
 
 	public static async createForm(creator: string, formId: string, name: string, description: string, fields: string): Promise<string> {
@@ -12,7 +16,7 @@ export class ApiClientV2 {
 		}
 
 		const acl = new Moralis.ACL();
-		acl.setPublicReadAccess(false);
+		acl.setPublicReadAccess(true);
 		acl.setPublicWriteAccess(false);
 		acl.setReadAccess(user, true);
 		acl.setWriteAccess(user, true);
@@ -40,7 +44,8 @@ export class ApiClientV2 {
 
 	public static async getForms(creator: string): Promise<BasicsFormDto[]> {
 		const formQuery = new Moralis.Query(FormEntity)
-			.equalTo('creator', creator);
+			.equalTo('creator', creator)
+			.addDescending('createdAt');
 		return (await formQuery.find()).map(obj => {
 			return {
 				id: obj.get('formId'),
@@ -51,11 +56,12 @@ export class ApiClientV2 {
 		});
 	}
 
-	public static async getForm(creator: string, formId: string): Promise<FormDto> {
+	public static async getForm(formId: string): Promise<FormDto> {
+		await waitFormMoralis();
+
 		const formIdInt = Web3.utils.toBN(formId).toString();
 
 		const formCreatedRow = await (new Moralis.Query(FormCreatedEntity)
-			.equalTo('creator', creator)
 			.equalTo('formId', formIdInt))
 			.first();
 		if (!formCreatedRow) {

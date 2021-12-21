@@ -10,8 +10,19 @@ export interface NumberFieldEditorProps {
 export function NumberFieldEditor(props: NumberFieldEditorProps) {
 
 	function updateField(delta: Partial<NumberField>) {
-		const nfm = Object.assign({}, props.field, delta);
-		props.onChanged(nfm);
+		const newField = Object.assign({}, props.field, delta);
+		console.log(newField);
+		props.onChanged(newField);
+	}
+
+	function onMinChanged(text: string) {
+		const value = parseInt(text, 10);
+		updateField({ min: isNaN(value) ? undefined : value });
+	}
+
+	function onMaxChanged(text: string) {
+		const value = parseInt(text, 10);
+		updateField({ max: isNaN(value) ? undefined : value });
 	}
 
 	return (
@@ -34,13 +45,13 @@ export function NumberFieldEditor(props: NumberFieldEditorProps) {
 				<div className="col">
 					<div className="form-group">
 						<label>Min:</label>
-						<input type="number" />
+						<input type="number" value={props.field.min || ''} onChange={e => onMinChanged(e.target.value)} />
 					</div>
 				</div>
 				<div className="col">
 					<div className="form-group">
 						<label>Max:</label>
-						<input type="number" />
+						<input type="number" value={props.field.max || ''} onChange={e => onMaxChanged(e.target.value)} />
 					</div>
 				</div>
 			</div>

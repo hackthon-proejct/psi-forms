@@ -58,11 +58,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 				<FieldsFormEditor fields={form.fields} onChange={onFieldsChanged} />
 			</FormBlock>
 
-			<div className="form">
-				<h2>Preview</h2>
-
-				<FormGenerator form={form} />
-			</div>
+			<FormGenerator form={form} />
 		</Fragment>
 	);
 }

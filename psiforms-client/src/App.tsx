@@ -44,7 +44,7 @@ function AppRoutes() {
 
 			<Route path="/my-forms/:id/requests" element={<Meta title="Review Ads" element={<FormRequestsRoute />} />} />
 			<Route path="/my-requests" element={<Meta title="My Requests" element={<MyRequestsRoute />} />} />
-			<Route path="/forms/:id" element={<Meta title="Buy Ad" element={<SubmitFormRoute />} />} />
+			<Route path="/forms/:id" element={<Meta title="Submit Form" element={<SubmitFormRoute />} />} />
 			<Route path="/terms" element={<Meta title="Terms and Conditions" element={<TermsRoute />} />} />
 			<Route path="/how-it-works" element={<Meta title="How it Works" element={<HowItWorksRoute />} />} />
 			<Route path="/examples" element={<Meta title="Widget Examples" element={<Examples />} />} />

@@ -1,9 +1,9 @@
-import { AdBoxDto, AdBoxSummaryDto, AdDto, AdSummaryDto, AdType } from './ApiModel';
+import { AdDto, AdSummaryDto } from './ApiModel';
 import { HttpClient } from './HttpClient';
 
 export class ApiClient {
 
-	public static async createAdBox(networkId: number, publisher: string, type: AdType, name: string, email: string, websiteUrl: string | null): Promise<string> {
+	/*public static async createAdBox(networkId: number, publisher: string, type: AdType, name: string, email: string, websiteUrl: string | null): Promise<string> {
 		return (await HttpClient.request<{ id: string }>('POST', `/api/publishers/${publisher}/4db0x3s`, {
 			networkId,
 			type,
@@ -11,9 +11,9 @@ export class ApiClient {
 			email,
 			websiteUrl
 		})).id;
-	}
+	}*/
 
-	public static async confirmAdBoxCreation(adBoxId: string, transactionHash: string): Promise<void> {
+	/*public static async confirmAdBoxCreation(adBoxId: string, transactionHash: string): Promise<void> {
 		await HttpClient.request<void>('PUT', `/api/4db0x3s/${adBoxId}/creation`, {
 			transactionHash
 		});
@@ -23,21 +23,21 @@ export class ApiClient {
 		await HttpClient.request<void>('PUT', `/api/4db0x3s/${adBoxId}/update`, {
 			transactionHash
 		});
-	}
+	}*/
 
-	public static async getAdBoxSummaries(publisher: string): Promise<AdBoxSummaryDto[]> {
+	/*public static async getAdBoxSummaries(publisher: string): Promise<AdBoxSummaryDto[]> {
 		return await HttpClient.get(`/api/publishers/${publisher}/4db0x3s`);
 	}
 
 	public static async getAdBox(adBoxId: string): Promise<AdBoxDto> {
 		return await HttpClient.get(`/api/4db0x3s/${adBoxId}`);
-	}
+	}*/
 
 	public static async getAdsToReview(adBoxId: string): Promise<AdDto[]> {
 		return await HttpClient.get(`/api/4db0x3s/${adBoxId}/review`);
 	}
 
-	public static async createAd(networkId: number, advertiser: string, adBoxId: string, url: string, email: string | null, image: string, mimeType: string): Promise<string> {
+	/*public static async createAd(networkId: number, advertiser: string, adBoxId: string, url: string, email: string | null, image: string, mimeType: string): Promise<string> {
 		const pos = image.indexOf('base64,');
 		image = image.substr(pos + 7);
 		return (await HttpClient.request<{ id: string }>('POST', `/api/4dvert1s3rs/${advertiser}/4ds`, {
@@ -48,7 +48,7 @@ export class ApiClient {
 			image,
 			mimeType
 		})).id;
-	}
+	}*/
 
 	public static async confirmAdCreation(adId: string, transactionHash: string): Promise<void> {
 		await HttpClient.request<void>('PUT', `/api/4ds/${adId}/creation`, {

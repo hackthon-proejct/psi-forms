@@ -42,10 +42,7 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 				appId: 'xNlvWKCOxfltmjKzINOx3HO2Om3NcWkdJNGzfYuo'
 			});
 
-			Moralis.Web3.onAccountsChanged(accounts => {
-				console.log(accounts);
-				connect();
-			});
+			Moralis.Web3.onAccountsChanged(disconnect);
 			Moralis.Web3.onChainChanged(connect);
 
 			if (canAutoConnect()) {
@@ -106,8 +103,8 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 
 	async function disconnect(): Promise<void> {
 		localStorage['autoConnect'] = '0';
+		await Moralis.User.logOut();
 		setAccount(undefined);
-		await Moralis.Web3.cleanup();
 	}
 
 	function isConnected(): boolean {
