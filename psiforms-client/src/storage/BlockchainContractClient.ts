@@ -5,7 +5,7 @@ import network1 from '../assets/abi/psiforms-1.json';
 import abi from '../assets/abi/psiforms-abi.json';
 import { Account } from '../components/wallet/WalletContext';
 
-export class PsiFormsContract {
+export class BlockchainContractClient {
 
 	private readonly contract: Contract;
 
@@ -46,11 +46,11 @@ export class PsiFormsContract {
 		return result.transactionHash;
 	}
 
-	public async createRequest(formId: string, requestId: string, time: number, value: BN) {
+	public async createRequest(formId: string, requestId: string, quantity: number, value: BN) {
 		const result = await this.contract.methods['createRequest'](
 			formId,
 			requestId,
-			time).send({ value }) as ContractResult;
+			quantity).send({ value }) as ContractResult;
 		return result.transactionHash;
 	}
 

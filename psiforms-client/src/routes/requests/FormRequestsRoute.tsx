@@ -5,7 +5,7 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClient } from '../../core/ApiClient';
 import { AdDto, SyncStatus } from '../../core/ApiModel';
-import { PsiFormsContract } from '../../core/PsiFormsContract';
+import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { EthFormatter } from '../../core/EthFormatter';
 
 export function FormRequestsRoute() {
@@ -46,7 +46,7 @@ export function FormRequestsRoute() {
 			return;
 		}
 
-		const contract = new PsiFormsContract(account);
+		const contract = new BlockchainContractClient(account);
 		try {
 			const transactionHash = await contract.approveOrRejectRequest(adBoxId, state.value.map(a => a.id), statuses as boolean[]);
 

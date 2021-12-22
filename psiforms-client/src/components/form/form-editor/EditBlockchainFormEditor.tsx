@@ -3,7 +3,7 @@ import Web3 from 'web3';
 
 import { FormBlock } from '../../layout/FormBlock';
 import { BlockchainForm } from '../Form';
-import { EarningsFormEditor } from './earnings/EarningsFormEditor';
+import { PricingFormEditor } from './pricing/PricingFormEditor';
 
 export interface EditBlockchainFormEditorProps {
 	isEnabled: boolean;
@@ -30,7 +30,7 @@ export function EditBlockchainFormEditor(props: EditBlockchainFormEditorProps) {
 
 	return (
 		<FormBlock title="Edit Earnings of Form" submitText="Edit Form" onSubmit={onSubmit}>
-			<EarningsFormEditor isReadonly={false} form={form} onChange={setForm} />
+			<PricingFormEditor isReadonly={false} form={form} onChange={setForm} />
 		</FormBlock>
 	);
 }

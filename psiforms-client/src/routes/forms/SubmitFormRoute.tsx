@@ -1,3 +1,4 @@
+import BN from 'bn.js';
 import { Fragment, useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 import Web3 from 'web3';
@@ -8,14 +9,14 @@ import { FormGenerator } from '../../components/form/form-generator/FormGenerato
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClientV2 } from '../../core/ApiClientV2';
-import { FormDto } from '../../core/ApiModelV2';
+import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { StorageClient } from '../../storage/StorageClient';
+import { FormDto } from '../../storage/StorageModel';
 
 function convertToForm(dto: FormDto): Form {
 	return {
 		name: dto.name,
 		description: dto.description,
-		id: dto.id,
 		isEnabled: dto.isEnabled,
 		fields: JSON.parse(dto.fields),
 		maxQuantity: dto.maxQuantity,
@@ -33,15 +34,33 @@ export function SubmitFormRoute() {
 
 	const [navigateTo, setNavigateTo] = useState<string>();
 
-	const state = useLoader<Form>(
+	const state = useLoader(
 		useCallback(async () => {
-			const dto = await ApiClientV2.getForm(formId);
+			const dto = await StorageClient.getForm(formId);
 			return convertToForm(dto);
 		}, [formId]));
 
-	async function save(_: FormData) {
-		if (!account) {
+	async function save(data: FormData) {
+		if (!account || !state.value) {
 			return;
+		}
+
+		const requestId = Web3.utils.randomHex(16);
+		const totalPrice = state.value.unitPrice.mul(new BN(data.quantity));
+
+		let requestCreated = false;
+		try {
+
+			await StorageClient.createRequest(account.address, requestId, formId, data.email, JSON.stringify(data.fields));
+			requestCreated = true;
+
+			const contract = new BlockchainContractClient(account);
+			await contract.createRequest(formId, requestId, data.quantity, totalPrice);
+		} catch (e) {
+			if (requestCreated) {
+				await StorageClient.deleteRequest(requestId);
+			}
+			throw e;
 		}
 
 		setNavigateTo('/my-requests');

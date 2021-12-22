@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 export interface FormBlockProps {
 	title: string;
 	submitText: string;
-	children: JSX.Element[] | JSX.Element;
+	children: ReactNode;
 	onSubmit: () => Promise<boolean>;
 }
 

@@ -6,7 +6,7 @@ import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { ApiClient } from '../../core/ApiClient';
 import { AdStatus, AdSummaryDto, SyncStatus } from '../../core/ApiModel';
-import { PsiFormsContract } from '../../core/PsiFormsContract';
+import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 
 export function MyRequestsRoute() {
 
@@ -30,7 +30,7 @@ export function MyRequestsRoute() {
 			return;
 		}
 
-		const contract = new PsiFormsContract(account);
+		const contract = new BlockchainContractClient(account);
 		try {
 			const transactionHash = await contract.rollBackRequest(as.adBoxId, as.id);
 			await ApiClient.confirmAdRolledBack(as.id, transactionHash);

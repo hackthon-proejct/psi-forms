@@ -1,36 +1,62 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
+import Web3 from 'web3';
 
-import { Form } from '../../components/form/Form';
+import { Form, PostReceipt, PreReceipt } from '../../components/form/Form';
 import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClientV2 } from '../../core/ApiClientV2';
-import { PsiFormsContract } from '../../core/PsiFormsContract';
+import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { StorageClient } from '../../storage/StorageClient';
 
 export function CreateFormRoute() {
 
 	const wallet = useWallet();
-	const [formId, setFormId] = useState<string>();
 	const createdForm = true;
 
-	async function save(form: Form): Promise<boolean> {
+	async function save(form: Form, preReceipt: PreReceipt, postReceipt: PostReceipt): Promise<boolean> {
 		const account = wallet.getAccount();
 
-		await ApiClientV2.createForm(account.address, form.id, form.name, form.description, JSON.stringify(form.fields));
+		const formId = Web3.utils.randomHex(16);
 
-		const contract = new PsiFormsContract(account);
-		await contract.createForm(form.id, form.isEnabled, form.requireApproval, form.minQuantity, form.maxQuantity, form.unitPrice);
+		let formCreated = false;
+		let preReceiptCreated = false;
+		let postReceiptCreated = false;
+		try {
+			await StorageClient.createForm(account.address, formId, form.name, form.description, JSON.stringify(form.fields));
+			formCreated = true;
+
+			if (form.requireApproval) {
+				await StorageClient.createPreReceipt(formId, preReceipt.message);
+				preReceiptCreated = true;
+			}
+
+			await StorageClient.createPostReceipt(formId, postReceipt.message, postReceipt.files);
+			postReceiptCreated = true;
+
+			const contract = new BlockchainContractClient(account);
+			await contract.createForm(formId, form.isEnabled, form.requireApproval, form.minQuantity, form.maxQuantity, form.unitPrice);
+		} catch (e) {
+			if (formCreated) {
+				await StorageClient.deleteForm(formId);
+			}
+			if (preReceiptCreated) {
+				await StorageClient.deletePreReceipt(formId);
+			}
+			if (postReceiptCreated) {
+				await StorageClient.deletePostReceipt(formId);
+			}
+			throw e;
+		}
 		return false;
 	}
 
 	function onCreateNextClicked() {
-		setFormId(undefined);
 	}
 
 	return (
 		<Fragment>
 			<ConnectYourWallet />
-			{!formId && <NewFormEditor onSave={save} />}
+			<NewFormEditor onSave={save} />
 			{createdForm &&
 				<Fragment>
 					<section className="form">

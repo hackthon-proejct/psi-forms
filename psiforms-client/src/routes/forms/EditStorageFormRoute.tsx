@@ -6,8 +6,9 @@ import { EditStorageFormEditor } from '../../components/form/form-editor/EditSto
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClientV2 } from '../../core/ApiClientV2';
-import { FormDto } from '../../core/ApiModelV2';
+import { StorageClient } from '../../storage/StorageClient';
+import { FormDto } from '../../storage/StorageModel';
+
 
 export function EditStorageFormRoute() {
 
@@ -21,7 +22,7 @@ export function EditStorageFormRoute() {
 		useCallback(async () => {
 			return {
 				form: account
-					? await ApiClientV2.getForm(formId)
+					? await StorageClient.getForm(formId)
 					: null
 			};
 		}, [formId, account]));
@@ -31,7 +32,7 @@ export function EditStorageFormRoute() {
 			return false;
 		}
 
-		await ApiClientV2.updateForm(formId, form.name, form.description, JSON.stringify(form.fields));
+		await StorageClient.updateForm(formId, form.name, form.description, JSON.stringify(form.fields));
 
 		setNavigateTo('/my-forms');
 		return true;

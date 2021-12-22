@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClientV2 } from '../../core/ApiClientV2';
-import { BasicsFormDto } from '../../core/ApiModelV2';
+import { StorageClient } from '../../storage/StorageClient';
+import { StorageFormDto } from '../../storage/StorageModel';
 
 export function MyFormsRoute() {
 
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();
 
-	const state = useLoader<BasicsFormDto[]>(
+	const state = useLoader<StorageFormDto[]>(
 		useCallback(async () => {
 			if (account) {
-				return await ApiClientV2.getForms(account.address);
+				return await StorageClient.getForms(account.address);
 			}
 			return [];
 		}, [account]));

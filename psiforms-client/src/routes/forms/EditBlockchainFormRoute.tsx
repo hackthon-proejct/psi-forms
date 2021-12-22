@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
-import { EditBlockchainFormEditor } from '../../components/form/form-editor/EditBlockchainFormEditor';
 import { BlockchainForm } from '../../components/form/Form';
+import { EditBlockchainFormEditor } from '../../components/form/form-editor/EditBlockchainFormEditor';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClientV2 } from '../../core/ApiClientV2';
-import { FormDto } from '../../core/ApiModelV2';
-import { PsiFormsContract } from '../../core/PsiFormsContract';
+import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { StorageClient } from '../../storage/StorageClient';
+import { FormDto } from '../../storage/StorageModel';
 
 export function EditBlockchainFormRoute() {
 
@@ -22,7 +22,7 @@ export function EditBlockchainFormRoute() {
 		useCallback(async () => {
 			return {
 				form: account
-					? await ApiClientV2.getForm(formId)
+					? await StorageClient.getForm(formId)
 					: null
 			};
 		}, [formId, account]));
@@ -32,7 +32,7 @@ export function EditBlockchainFormRoute() {
 			return false;
 		}
 
-		const contract = new PsiFormsContract(account);
+		const contract = new BlockchainContractClient(account);
 		await contract.updateForm(state.value.form.id, form.isEnabled, form.minQuantity, form.maxQuantity, form.unitPrice);
 
 		setNavigateTo('/my-forms');
