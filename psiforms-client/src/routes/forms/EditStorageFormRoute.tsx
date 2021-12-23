@@ -34,7 +34,7 @@ export function EditStorageFormRoute() {
 
 		await StorageClient.updateForm(formId, form.name, form.description, JSON.stringify(form.fields));
 
-		setNavigateTo('/my-forms');
+		setNavigateTo('/forms');
 		return true;
 	}
 

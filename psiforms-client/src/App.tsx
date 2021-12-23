@@ -39,17 +39,18 @@ function AppRoutes() {
 	return (
 		<Routes>
 			<Route path="/" element={<Meta title={null} element={<HomeRoute />} />} />
+
 			<Route path="/create-form" element={<Meta title="Create Form" element={<CreateFormRoute />} />} />
-			<Route path="/my-forms" element={<Meta title="My Forms" element={<MyFormsRoute />} />} />
-			<Route path="/my-forms/:id/blockchain" element={<Meta title="Edit Earnings of Form" element={<EditBlockchainFormRoute />} />} />
-			<Route path="/my-forms/:id/storage" element={<Meta title="Edit Form" element={<EditStorageFormRoute />} />} />
+			<Route path="/forms" element={<Meta title="My Forms" element={<MyFormsRoute />} />} />
+			<Route path="/forms/:id/blockchain" element={<Meta title="Edit Earnings of Form" element={<EditBlockchainFormRoute />} />} />
+			<Route path="/forms/:id/storage" element={<Meta title="Edit Form" element={<EditStorageFormRoute />} />} />
 
 			<Route path="/forms/:id" element={<Meta title="Submit Form" element={<SubmitFormRoute />} />} />
 			<Route path="/forms/:id/pre-receipt" element={<Meta title="Form Submitted" element={<PreReceiptRoute />} />} />
 			<Route path="/forms/:id/post-receipt" element={<Meta title="Form Receipt" element={<PostReceiptRoute />} />} />
+			<Route path="/forms/:id/requests" element={<Meta title="Form Requests" element={<FormRequestsRoute />} />} />
+			<Route path="/requests" element={<Meta title="My Requests" element={<MyRequestsRoute />} />} />
 
-			<Route path="/my-forms/:id/requests" element={<Meta title="Review Ads" element={<FormRequestsRoute />} />} />
-			<Route path="/my-requests" element={<Meta title="My Requests" element={<MyRequestsRoute />} />} />
 			<Route path="/terms" element={<Meta title="Terms and Conditions" element={<TermsRoute />} />} />
 			<Route path="/how-it-works" element={<Meta title="How it Works" element={<HowItWorksRoute />} />} />
 			<Route path="/examples" element={<Meta title="Widget Examples" element={<Examples />} />} />

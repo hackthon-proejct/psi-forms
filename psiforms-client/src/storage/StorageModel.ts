@@ -28,3 +28,10 @@ export interface FileDto {
 	name: string;
 	url: string;
 }
+
+export interface RequestDto {
+	id: string;
+	formId: string;
+	email: string;
+	fields: string;
+}

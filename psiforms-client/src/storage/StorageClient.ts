@@ -9,7 +9,7 @@ import {
     PreReceiptEntity,
     RequestEntity,
 } from './StorageEntities';
-import { FileDto, FormDto, PostReceiptDto, PreReceiptDto, StorageFormDto } from './StorageModel';
+import { FileDto, FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
 
@@ -158,6 +158,20 @@ export class StorageClient {
 	public static async deleteRequest(requestId: string) {
 		const entity = await readEntity(RequestEntity, 'requestId', toIdInt(requestId));
 		await entity.destroy();
+	}
+
+	public static async getRequests(sender: string): Promise<RequestDto[]> {
+		const query = new Moralis.Query(RequestEntity)
+			.equalTo('sender', sender)
+			.addDescending('createdAt');
+		return (await query.find()).map(entity => {
+			return {
+				id: toIdHex(entity.get('requestId')),
+				formId: toIdHex(entity.get('formId')),
+				email: entity.get('email'),
+				fields: entity.get('fields')
+			};
+		});
 	}
 }
 

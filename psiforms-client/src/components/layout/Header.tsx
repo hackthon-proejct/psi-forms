@@ -14,8 +14,8 @@ export function Header() {
 
 				<nav>
 					<Link to="/create-form">Create Form</Link>
-					<Link to="/my-forms">My Forms</Link>
-					<Link to="/my-requests">My Requests</Link>
+					<Link to="/forms">My Forms</Link>
+					<Link to="/requests">My Requests</Link>
 				</nav>
 			</div>
 			<aside className="aside">

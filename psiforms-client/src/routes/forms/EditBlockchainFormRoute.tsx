@@ -35,7 +35,7 @@ export function EditBlockchainFormRoute() {
 		const contract = new BlockchainContractClient(account);
 		await contract.updateForm(state.value.form.id, form.isEnabled, form.minQuantity, form.maxQuantity, form.unitPrice);
 
-		setNavigateTo('/my-forms');
+		setNavigateTo('/forms');
 		return true;
 	}
 

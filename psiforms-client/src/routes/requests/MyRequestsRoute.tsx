@@ -1,22 +1,20 @@
 import { Fragment, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { ApiClient } from '../../core/ApiClient';
-import { AdStatus, AdSummaryDto, SyncStatus } from '../../core/ApiModel';
-import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { StorageClient } from '../../storage/StorageClient';
+import { RequestDto } from '../../storage/StorageModel';
 
 export function MyRequestsRoute() {
 
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();
 
-	const state = useLoader<AdSummaryDto[]>(
+	const state = useLoader<RequestDto[]>(
 		useCallback(async () => {
 			if (account) {
-				return await ApiClient.getAdSummaries(account.address);
+				return await StorageClient.getRequests(account.address);
 			}
 			return [];
 		}, [account]));
@@ -25,27 +23,19 @@ export function MyRequestsRoute() {
 		state.reload();
 	}
 
-	async function onRollbackClicked(as: AdSummaryDto) {
+	async function onRollbackClicked() {
 		if (!account) {
 			return;
-		}
-
-		const contract = new BlockchainContractClient(account);
-		try {
-			const transactionHash = await contract.rollBackRequest(as.adBoxId, as.id);
-			await ApiClient.confirmAdRolledBack(as.id, transactionHash);
-		} catch (e) {
-			console.error(e);
 		}
 	}
 
 	return (
 		<Fragment>
 			<ConnectYourWallet />
-			<Loader state={state} element={(ads => (
+			<Loader state={state} element={(requests => (
 				<section className="list">
 					<div className="header">
-						<h2>My Ads</h2>
+						<h2>My Requests</h2>
 
 						<button className="btn btn-white" title="Reload" onClick={onRefreshClicked}>
 							<i className="ico ico-reload-black" />
@@ -56,56 +46,14 @@ export function MyRequestsRoute() {
 						<table>
 							<thead>
 								<tr>
-									<th>Status</th>
-									<th>AdBox</th>
-									<th>Display Time</th>
-									<th>Created at</th>
-									<th>Expired at</th>
-									<th></th>
-									<th>Clicks</th>
-									<th></th>
+									<th>Id</th>
 								</tr>
 							</thead>
 							<tbody>
-								{ads.map(as =>
-									<tr key={as.id}>
-										<td width="1%">
-											{as.syncStatus === SyncStatus.syncing && <span className="status status-idle">Syncing</span>}
-											{as.syncStatus === SyncStatus.error && <span className="status status-danger">Sync Error</span>}
-											{as.syncStatus === SyncStatus.synced &&
-												<Fragment>
-													{as.status === AdStatus.waitingForApproval && <span className="status status-idle">Waiting for Approval</span>}
-													{as.status === AdStatus.approved && <span className="status status-success">Displaying</span>}
-													{as.status === AdStatus.rejected && <span className="status status-danger">Rejected</span>}
-													{as.status === AdStatus.expired && <span className="status status-neutral">Expired</span>}
-													{as.status === AdStatus.rolledBack && <span className="status status-neutral">Rolled Back</span>}
-												</Fragment>}
-										</td>
+								{requests.map((as, index) =>
+									<tr key={index}>
 										<td width="15%">
-											{as.adBoxName}
-										</td>
-										<td>{as.quantity} hours</td>
-										<td>
-											{new Date(as.createdAt * 1000).toLocaleString()}
-										</td>
-										<td>
-											{as.expiredAt && new Date(as.expiredAt * 1000).toLocaleString()}
-										</td>
-										<td>
-											<a href={as.url} target="_blank" rel="noreferrer">
-												<img src={as.imageUrl} alt="Ad" width="100" />
-											</a>
-										</td>
-										<td>{as.clicks}</td>
-										<td className="actions">
-											<Link to={`/buy-ad/${as.adBoxId}`} className="btn main" title="Buy Another">
-												<i className="ico ico-purchase-black" />
-											</Link>
-											{as.canRollback &&
-												<Fragment>
-													{' '}
-													<button className="btn btn-white" onClick={() => onRollbackClicked(as)}>Roll Back</button>
-												</Fragment>}
+											{as.id}
 										</td>
 									</tr>)}
 							</tbody>

@@ -43,6 +43,7 @@ export function MyFormsRoute() {
 								<tr>
 									<th>Name</th>
 									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -51,10 +52,13 @@ export function MyFormsRoute() {
 										<td>
 											{ab.name}
 										</td>
+										<td>
+											<Link to={`/forms/${ab.id}/requests`} className="btn btn-white">Requests</Link>
+										</td>
 										<td className="actions">
-											<Link to={`/my-forms/${ab.id}/blockchain`} className="btn btn-white">Edit Earnings</Link>
+											<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-white">Edit Earnings</Link>
 											{' '}
-											<Link to={`/my-forms/${ab.id}/storage`} className="btn btn-white">Edit Description</Link>
+											<Link to={`/forms/${ab.id}/storage`} className="btn btn-white">Edit Description</Link>
 											{' '}
 											<Link to={`/forms/${ab.id}`} className="btn btn-white" title="Submit Form">
 												<i className="ico ico-purchase-black" />
