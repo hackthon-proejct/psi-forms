@@ -16,7 +16,6 @@ interface FieldState {
 	value: string | null;
 	isValid: boolean;
 }
-
 export function FormGenerator(props: FormGeneratorProps) {
 
 	const [error, setError] = useState<string>();
@@ -94,7 +93,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 			<p>Total price: {UnitsConverter.toDecimalETH(totalPrice)} AVAX</p>
 
 			{props.form.fields.map((fm, index) =>
-				<FieldGenerator key={index} field={fm} value={fieldStates[index].value} onChanged={(v, iv) => onFieldChanged(v, iv, index)} />)}
+				<FieldGenerator key={index} field={fm} value={fieldStates[index]?.value || null} onChanged={(v, iv) => onFieldChanged(v, iv, index)} />)}
 
 			{error && <p className="form-error">Error: {error}</p>}
 

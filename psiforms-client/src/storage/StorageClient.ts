@@ -9,20 +9,20 @@ import {
     PreReceiptEntity,
     RequestEntity,
 } from './StorageEntities';
-import { FormDto, StorageFormDto } from './StorageModel';
+import { FileDto, FormDto, PostReceiptDto, PreReceiptDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
 
 	public static async createForm(creator: string, formId: string, name: string, description: string, fields: string): Promise<void> {
 		const user = await currentUser();
 
-		const entity = FormEntity.create(creator, formId, name, description, fields);
+		const entity = FormEntity.create(creator, toIdInt(formId), name, description, fields);
 		entity.setAccess(user.id);
 		await entity.save();
 	}
 
 	public static async updateForm(formId: string, name: string, description: string, fields: string): Promise<void> {
-		const entity = await readEntity(FormEntity, 'formId', formId);
+		const entity = await readEntity(FormEntity, 'formId', toIdInt(formId));
 		entity.set('name', name);
 		entity.set('description', description);
 		entity.set('fields', fields);
@@ -30,20 +30,20 @@ export class StorageClient {
 	}
 
 	public static async deleteForm(formId: string): Promise<void> {
-		const entity = await readEntity(FormEntity, 'formId', formId);
+		const entity = await readEntity(FormEntity, 'formId', toIdInt(formId));
 		await entity.destroy();
 	}
 
 	public static async createPreReceipt(formId: string, message: string): Promise<void> {
 		const user = await currentUser();
 
-		const entity = PreReceiptEntity.create(formId, message);
+		const entity = PreReceiptEntity.create(toIdInt(formId), message);
 		entity.setAccess(user.id);
 		await entity.save();
 	}
 
 	public static async deletePreReceipt(formId: string): Promise<void> {
-		const entity = await readEntity(PreReceiptEntity, 'formId', formId);
+		const entity = await readEntity(PreReceiptEntity, 'formId', toIdInt(formId));
 		await entity.destroy();
 	}
 
@@ -52,14 +52,49 @@ export class StorageClient {
 
 		const files = inputFiles.map(f => new Moralis.File(f.name, f));
 
-		const entity = PostReceiptEntity.create(formId, message, files);
+		const entity = PostReceiptEntity.create(toIdInt(formId), message, files);
 		entity.setAccess(user.id);
 		await entity.save();
 	}
 
 	public static async deletePostReceipt(formId: string): Promise<void> {
-		const entity = await readEntity(PostReceiptEntity, 'formId', formId);
+		const entity = await readEntity(PostReceiptEntity, 'formId', toIdInt(formId));
 		await entity.destroy();
+	}
+
+	public static async tryGetPreReceipt(formId: string): Promise<PreReceiptDto | null> {
+		await waitForWeb3();
+		const entity = await tryReadEntity(PreReceiptEntity, 'formId', toIdInt(formId));
+		if (!entity) {
+			return null;
+		}
+		return {
+			message: entity.get('message')
+		};
+	}
+
+	public static async tryGetPostReceipt(formId: string): Promise<PostReceiptDto | null> {
+		await waitForWeb3();
+
+		const entity = await tryReadEntity(PostReceiptEntity, 'formId', toIdInt(formId));
+		if (!entity) {
+			return null;
+		}
+		const files = (entity.get('files') as any[]).map<FileDto>(f => {
+			let name: string = f['_name'];
+			const pos = name.indexOf('_');
+			if (pos >= 0) {
+				name = name.substring(name.indexOf('_') + 1);
+			}
+			return {
+				name,
+				url: f['_url']
+			};
+		});
+		return {
+			message: entity.get('message'),
+			files
+		};
 	}
 
 	public static async getForms(creator: string): Promise<StorageFormDto[]> {
@@ -68,7 +103,7 @@ export class StorageClient {
 			.addDescending('createdAt');
 		return (await formQuery.find()).map(obj => {
 			return {
-				id: obj.get('formId'),
+				id: toIdHex(obj.get('formId')),
 				name: obj.get('name'),
 				description: obj.get('description'),
 				fields: obj.get('fields'),
@@ -80,17 +115,17 @@ export class StorageClient {
 	public static async getForm(formId: string): Promise<FormDto> {
 		await waitForWeb3();
 
-		const formIdInt = Web3.utils.toBN(formId).toString();
+		const formIdInt = toIdInt(formId);
 
 		const formCreatedEntity = await readEntity(FormCreatedEntity, 'formId', formIdInt);
 
 		const form: Partial<FormDto> = {
-			id: Web3.utils.toHex(formId),
+			id: formId,
 			requireApproval: formCreatedEntity.get('requireApproval')
 		};
 		readFormEarningsFields(formCreatedEntity, form);
 
-		const formEntity = await readEntity(FormEntity, 'formId', formId);
+		const formEntity = await readEntity(FormEntity, 'formId', formIdInt);
 
 		form.name = formEntity.get('name');
 		form.description = formEntity.get('description');
@@ -111,19 +146,27 @@ export class StorageClient {
 	public static async createRequest(sender: string, requestId: string, formId: string, email: string, fields: string): Promise<void> {
 		const senderUser = await currentUser();
 
-		const formEntity = await readEntity(FormEntity, 'formId', formId);
+		const formEntity = await readEntity(FormEntity, 'formId', toIdInt(formId));
 		const formAcl = formEntity.getACL()?.toJSON(); // TODO
 		const creatorUserId = Object.keys(formAcl).filter(id => id !== '*')[0];
 
-		const entity = RequestEntity.create(sender, requestId, formId, email, fields);
+		const entity = RequestEntity.create(sender, toIdInt(requestId), toIdInt(formId), email, fields);
 		entity.setAccess(senderUser.id, creatorUserId);
 		await entity.save();
 	}
 
 	public static async deleteRequest(requestId: string) {
-		const entity = await readEntity(RequestEntity, 'requestId', requestId);
+		const entity = await readEntity(RequestEntity, 'requestId', toIdInt(requestId));
 		await entity.destroy();
 	}
+}
+
+function toIdInt(value: string): string {
+	return Web3.utils.toBN(value).toString();
+}
+
+function toIdHex(value: string): string {
+	return Web3.utils.toHex(Web3.utils.toBN(value));
 }
 
 async function waitForWeb3(): Promise<void> {
@@ -138,13 +181,18 @@ async function currentUser(): Promise<Moralis.User> {
 	return user;
 }
 
-async function readEntity<T extends Moralis.Object>(t: new () => T, column: string, value: any): Promise<T> {
+async function tryReadEntity<T extends Moralis.Object>(t: new () => T, columnName: string, value: any): Promise<T | null> {
 	const entity = await (new Moralis.Query(t)
-		.equalTo(column, value))
+		.equalTo(columnName, value))
 		.first();
+	return entity || null;
+}
+
+async function readEntity<T extends Moralis.Object>(t: new () => T, columnName: string, value: any): Promise<T> {
+	const entity = await tryReadEntity(t, columnName, value);
 	if (!entity) {
 		const className = new t().className;
-		throw new Error(`Cannot find ${className} (${column} = ${value})`);
+		throw new Error(`Cannot find ${className} (${columnName} = ${value})`);
 	}
 	return entity;
 }

@@ -14,3 +14,17 @@ export interface FormDto extends StorageFormDto {
 	maxQuantity: number;
 	requireApproval: boolean;
 }
+
+export interface PreReceiptDto {
+	message: string;
+}
+
+export interface PostReceiptDto {
+	message: string;
+	files: FileDto[];
+}
+
+export interface FileDto {
+	name: string;
+	url: string;
+}

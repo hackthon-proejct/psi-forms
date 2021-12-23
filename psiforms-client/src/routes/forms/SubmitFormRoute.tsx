@@ -63,7 +63,9 @@ export function SubmitFormRoute() {
 			throw e;
 		}
 
-		setNavigateTo('/my-requests');
+		setNavigateTo(state.value.requireApproval
+			? `/forms/${formId}/pre-receipt`
+			: `/forms/${formId}/post-receipt`);
 	}
 
 	if (navigateTo) {

@@ -37,6 +37,12 @@ export function useLoader<T>(factory: () => Promise<T>): LoaderState<T> {
 			}
 		}
 
+		if (!state.isLoading) {
+			setState({
+				loadTime: state.loadTime,
+				isLoading: true
+			});
+		}
 		load();
 	}, [state.loadTime, factory]);
 
@@ -57,6 +63,7 @@ export function useLoader<T>(factory: () => Promise<T>): LoaderState<T> {
 
 export interface LoaderProps<T> {
 	state: LoaderState<T>;
+	loadingText?: string;
 	element: (value: T) => JSX.Element;
 }
 
@@ -64,7 +71,7 @@ export function Loader<T>(props: LoaderProps<T>) {
 	if (props.state.isLoading) {
 		return (
 			<div className="loading">
-				Loading...
+				{props.loadingText ?? 'Loading...'}
 			</div>
 		);
 	}
