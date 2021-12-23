@@ -3,20 +3,22 @@ import { Navigate, useParams } from 'react-router';
 
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { useWallet } from '../../components/wallet/WalletContext';
+import { StorageClient } from '../../storage/StorageClient';
+import { RequestDto } from '../../storage/StorageModel';
 
 export function FormRequestsRoute() {
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();
 
 	const { id } = useParams();
-	const adBoxId = id as string;
+	const formId = id as string;
 
 	const [statuses, setStatuses] = useState<(boolean | null)[]>();
 	const [navigateTo, setNavigateTo] = useState<string>();
-	const state = useLoader<number[]>(
+	const state = useLoader<RequestDto[]>(
 		useCallback(async () => {
-			return [];
-		}, [adBoxId]));
+			return StorageClient.getFormRequests(formId);
+		}, [formId]));
 
 	function setStatus(status: boolean | null, index: number) {
 		if (!state.value) {
@@ -65,16 +67,16 @@ export function FormRequestsRoute() {
 						</tr>
 					</thead>
 					<tbody>
-					{ads.map((_, index) =>
+					{ads.map((request, index) =>
 						<tr key={index}>
 							<td>
-
+								{request.status}
 							</td>
 							<td>
 
 							</td>
 							<td className="text-center">
-
+								{request.id} {request.email}
 							</td>
 							<td>
 								{false &&

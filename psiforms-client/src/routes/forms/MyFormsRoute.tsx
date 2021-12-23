@@ -15,7 +15,7 @@ export function MyFormsRoute() {
 	const state = useLoader<StorageFormDto[]>(
 		useCallback(async () => {
 			if (account) {
-				return await StorageClient.getForms(account.address);
+				return await StorageClient.getCreatorForms(account.address);
 			}
 			return [];
 		}, [account]));

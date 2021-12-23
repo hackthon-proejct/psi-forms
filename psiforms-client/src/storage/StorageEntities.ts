@@ -114,3 +114,21 @@ export class RequestEntity extends Moralis.Object {
 		this.setACL(acl);
 	}
 }
+
+export class RequestApprovedEntity extends Moralis.Object {
+	public constructor() {
+		super('RequestApproved');
+	}
+}
+
+export class RequestRejectedEntity extends Moralis.Object {
+	public constructor() {
+		super('RequestRejected');
+	}
+}
+
+export class RequestRolledBackEntity extends Moralis.Object {
+	public constructor() {
+		super('RequestRolledBack');
+	}
+}

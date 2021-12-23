@@ -31,7 +31,16 @@ export interface FileDto {
 
 export interface RequestDto {
 	id: string;
+	status: RequestStatus;
+	sender: string;
 	formId: string;
 	email: string;
 	fields: string;
+}
+
+export enum RequestStatus {
+	waitingForApproval,
+	rejected,
+	approved,
+	rolledBack
 }

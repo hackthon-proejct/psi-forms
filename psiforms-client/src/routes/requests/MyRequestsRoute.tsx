@@ -14,7 +14,7 @@ export function MyRequestsRoute() {
 	const state = useLoader<RequestDto[]>(
 		useCallback(async () => {
 			if (account) {
-				return await StorageClient.getRequests(account.address);
+				return await StorageClient.getSenderRequests(account.address);
 			}
 			return [];
 		}, [account]));
