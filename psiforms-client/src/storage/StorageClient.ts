@@ -192,6 +192,7 @@ async function readRequests(query: Moralis.Query<RequestEntity>): Promise<Reques
 	const requests = requestEntites.map<RequestDto>(entity => {
 		return {
 			id: entity.get('requestId'),
+			createdAt: new Date(entity.get('createdAt')),
 			formId: toHexId(entity.get('formId')),
 			email: entity.get('email'),
 			fields: entity.get('fields'),

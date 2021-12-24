@@ -32,6 +32,7 @@ export interface FileDto {
 export interface RequestDto {
 	id: string;
 	status: RequestStatus;
+	createdAt: Date;
 	sender: string;
 	formId: string;
 	email: string;

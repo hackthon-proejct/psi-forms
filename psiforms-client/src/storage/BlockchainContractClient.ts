@@ -3,7 +3,7 @@ import { Contract } from 'web3-eth-contract';
 
 import network1 from '../assets/abi/psiforms-1.json';
 import abi from '../assets/abi/psiforms-abi.json';
-import { Account } from '../components/wallet/WalletContext';
+import { Account, useWallet } from '../components/wallet/WalletContext';
 
 export class BlockchainContractClient {
 
@@ -61,8 +61,8 @@ export class BlockchainContractClient {
 		return result.transactionHash;
 	}
 
-	public async approveOrRejectRequest(formId: string, requestIds: string[], statuses: boolean[]) {
-		const result = await this.contract.methods['approveOrRejectRequest'](
+	public async approveOrRejectRequests(formId: string, requestIds: string[], statuses: boolean[]) {
+		const result = await this.contract.methods['approveOrRejectRequests'](
 			formId,
 			requestIds,
 			statuses).send() as ContractResult;

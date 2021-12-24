@@ -1,6 +1,7 @@
 import { Fragment, useCallback } from 'react';
 
 import { Loader, useLoader } from '../../components/layout/Loader';
+import { RequestStatusInfo } from '../../components/request/RequestStatusInfo';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { StorageClient } from '../../storage/StorageClient';
@@ -46,14 +47,18 @@ export function MyRequestsRoute() {
 						<table>
 							<thead>
 								<tr>
+									<th>Status</th>
 									<th>Id</th>
 								</tr>
 							</thead>
 							<tbody>
-								{requests.map((as, index) =>
+								{requests.map((request, index) =>
 									<tr key={index}>
+										<td>
+											<RequestStatusInfo status={request.status} />
+										</td>
 										<td width="15%">
-											{as.id}
+											{request.id}
 										</td>
 									</tr>)}
 							</tbody>
