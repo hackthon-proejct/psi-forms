@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 
-import { PostReceipt, PreReceipt } from '../../Form';
+import { FilesContainer } from '../../../../storage/FilesContainer';
+import { PostReceipt, PreReceipt } from '../../Receipt';
 
-export interface ReceiptEditorProps {
+export interface ReceiptGroupProps {
 	requireApproval: boolean;
 	preReceipt: PreReceipt;
 	postReceipt: PostReceipt;
@@ -10,7 +11,14 @@ export interface ReceiptEditorProps {
 	onPostReceiptChange: (preReceipt: PostReceipt) => void;
 }
 
-export function ReceiptEditor(props: ReceiptEditorProps) {
+export function ReceiptGroup(props: ReceiptGroupProps) {
+
+	function updateFiles(files: FilesContainer) {
+		props.onPostReceiptChange({
+			message: props.postReceipt.message,
+			files
+		});
+	}
 
 	function onPreMessageChanged(message: string) {
 		props.onPreReceiptChange({ message });
@@ -23,28 +31,29 @@ export function ReceiptEditor(props: ReceiptEditorProps) {
 		});
 	}
 
-	function onFileChanged(input: HTMLInputElement) {
+	function onUploaded(input: HTMLInputElement) {
 		if (!input.files) {
 			return;
 		}
 
-		const files = [...props.postReceipt.files];
-		for (let i =0; i < input.files.length; i++) {
-			files.push(input.files[i]);
+		const files = props.postReceipt.files.clone();
+		for (let i = 0; i < input.files.length; i++) {
+			files.add(input.files[i]);
 		}
 
-		props.onPostReceiptChange({
-			message: props.postReceipt.message,
-			files
-		});
-
+		updateFiles(files);
 		input.value = '';
 	}
 
+	function onFileDeleted(index: number) {
+		const files = props.postReceipt.files.clone();
+		files.delete(index);
+		updateFiles(files);
+	}
+
+	const fileNames = props.postReceipt.files.getFileNames();
 	return (
 		<Fragment>
-			<h2>Receipt</h2>
-
 			{props.requireApproval &&
 				<div className="form-section">
 					<h4>After Submission &amp; Payment</h4>
@@ -64,11 +73,13 @@ export function ReceiptEditor(props: ReceiptEditorProps) {
 				</div>
 
 				<div className="form-group">
-					<label>Files to Download ({props.postReceipt.files.length} files)</label>
-					<input type="file" onChange={e => onFileChanged(e.target)} />
+					<label>Files to Download ({fileNames.length} files)</label>
+					<input type="file" onChange={e => onUploaded(e.target)} />
 
-					{props.postReceipt.files.map((file, index) =>
-						<span key={index}>{file.name}</span>)}
+					<ul>
+					{fileNames.map((fileName, index) =>
+						<li key={index}>&bull; {fileName} <button onClick={() => onFileDeleted(index)}>x</button></li>)}
+					</ul>
 				</div>
 			</div>
 		</Fragment>

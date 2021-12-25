@@ -2,17 +2,17 @@ import { useState } from 'react';
 
 import { FormBlock } from '../../layout/FormBlock';
 import { Field, Form, StorageForm } from '../Form';
-import { BasicsFormEditor } from './basics/BasicsFormEditor';
-import { FieldsFormEditor } from './fields/FieldsFormEditor';
+import { BasicsFormGroup } from './groups/BasicsFormGroup';
+import { FieldsFormGroup } from './groups/fields/FieldsFormGroup';
 
-export interface EditStorageFormEditorProps {
+export interface StorageFormEditorProps {
 	name: string;
 	description: string;
 	fields: string;
 	onSave: (form: StorageForm) => Promise<boolean>;
 }
 
-export function EditStorageFormEditor(props: EditStorageFormEditorProps) {
+export function StorageFormEditor(props: StorageFormEditorProps) {
 
 	const [form, setForm] = useState<StorageForm>(() => {
 		return {
@@ -40,9 +40,9 @@ export function EditStorageFormEditor(props: EditStorageFormEditorProps) {
 
 	return (
 		<FormBlock title="Edit Form" submitText="Edit Form" onSubmit={onSubmit}>
-			<BasicsFormEditor isReadonly={false} name={form.name} description={form.description}
+			<BasicsFormGroup isReadonly={false} name={form.name} description={form.description}
 				onChange={onBasicsChanged} />
-			<FieldsFormEditor fields={form.fields} onChange={onFieldsChanged} />
+			<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />
 		</FormBlock>
 	);
 }

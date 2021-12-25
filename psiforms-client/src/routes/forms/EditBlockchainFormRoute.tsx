@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 import { BlockchainForm } from '../../components/form/Form';
-import { EditBlockchainFormEditor } from '../../components/form/form-editor/EditBlockchainFormEditor';
+import { BlockchainFormEditor } from '../../components/form/form-editor/BlockchainFormEditor';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
@@ -47,7 +47,7 @@ export function EditBlockchainFormRoute() {
 			<React.Fragment>
 				<ConnectYourWallet requiredNetworkId={1} />
 				{result?.form &&
-					<EditBlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
+					<BlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
 						onSave={save} />}
 			</React.Fragment>
 		))} />

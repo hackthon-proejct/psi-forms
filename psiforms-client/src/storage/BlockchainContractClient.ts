@@ -3,7 +3,7 @@ import { Contract } from 'web3-eth-contract';
 
 import network1 from '../assets/abi/psiforms-1.json';
 import abi from '../assets/abi/psiforms-abi.json';
-import { Account, useWallet } from '../components/wallet/WalletContext';
+import { Account } from '../components/wallet/WalletContext';
 
 export class BlockchainContractClient {
 

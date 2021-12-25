@@ -1,5 +1,7 @@
 import Moralis from 'moralis';
 
+import { FilePointer } from './FilesContainer';
+
 export class FormEntity extends Moralis.Object {
 
 	public static create(creator: string, formId: string, name: string, description: string, fields: string): FormEntity {
@@ -63,7 +65,7 @@ export class PreReceiptEntity extends Moralis.Object {
 
 export class PostReceiptEntity extends Moralis.Object {
 
-	public static create(formId: string, message: string, files: Moralis.File[]): PostReceiptEntity {
+	public static create(formId: string, message: string, files: FilePointer[]): PostReceiptEntity {
 		const entity = new PostReceiptEntity();
 		entity.set('formId', formId);
 		entity.set('message', message);

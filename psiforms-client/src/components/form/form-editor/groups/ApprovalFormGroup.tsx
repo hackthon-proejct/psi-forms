@@ -1,11 +1,11 @@
 
-export interface ApprovalFormEditorProps {
+export interface ApprovalFormGroupProps {
 	isReadonly: boolean;
 	requireApproval: boolean;
 	onChange: (requireApproval: boolean) => void;
 }
 
-export function ApprovalFormEditor(props: ApprovalFormEditorProps) {
+export function ApprovalFormGroup(props: ApprovalFormGroupProps) {
 	return (
 		<div className="form-section">
 			<h4>Approval</h4>

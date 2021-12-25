@@ -1,12 +1,12 @@
 
-export interface BasicsFormEditorProps {
+export interface BasicsFormGroupProps {
 	isReadonly: boolean;
 	name: string;
 	description: string;
 	onChange: (name: string, description: string) => void;
 }
 
-export function BasicsFormEditor(props: BasicsFormEditorProps) {
+export function BasicsFormGroup(props: BasicsFormGroupProps) {
 
 	function onNameChanged(text: string) {
 		props.onChange(text, props.description);

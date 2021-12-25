@@ -1,6 +1,8 @@
 import BN from 'bn.js';
 
-import { Form, PostReceipt, PreReceipt } from '../Form';
+import { StorageClient } from '../../../storage/StorageClient';
+import { Form } from '../Form';
+import { PostReceipt, PreReceipt } from '../Receipt';
 
 export function initializeNewForm(): Form {
 	return {
@@ -24,6 +26,6 @@ export function initializePreReceipt(): PreReceipt {
 export function initializePostReceipt(): PostReceipt {
 	return {
 		message: '',
-		files: []
+		files: StorageClient.createFiles()
 	};
 }

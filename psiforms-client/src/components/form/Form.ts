@@ -48,12 +48,3 @@ export enum FileType {
 }
 
 export const fileTypes = [ FileType.any, FileType.image, FileType.pdf ];
-
-export interface PreReceipt {
-	message: string;
-}
-
-export interface PostReceipt {
-	message: string;
-	files: File[];
-}

@@ -1,4 +1,4 @@
-import { Field, FieldType, FileField, FileType, NumberField, TextField } from '../../Form';
+import { Field, FieldType, FileField, FileType, NumberField, TextField } from '../../../Form';
 
 export function initializeField(type: FieldType): Field {
 	switch (type) {

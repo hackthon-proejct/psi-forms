@@ -1,4 +1,4 @@
-import { Field, TextField } from '../../Form';
+import { Field, TextField } from '../../../Form';
 
 export interface TextFieldEditorProps {
 	field: TextField;

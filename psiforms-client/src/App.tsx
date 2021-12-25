@@ -7,6 +7,7 @@ import { Meta } from './components/layout/Meta';
 import { WalletContext } from './components/wallet/WalletContext';
 import { CreateFormRoute } from './routes/forms/CreateFormRoute';
 import { EditBlockchainFormRoute } from './routes/forms/EditBlockchainFormRoute';
+import { EditReceiptRoute } from './routes/forms/EditReceiptRoute';
 import { EditStorageFormRoute } from './routes/forms/EditStorageFormRoute';
 import { MyFormsRoute } from './routes/forms/MyFormsRoute';
 import { PostReceiptRoute } from './routes/forms/PostReceiptRoute';
@@ -44,6 +45,7 @@ function AppRoutes() {
 			<Route path="/forms" element={<Meta title="My Forms" element={<MyFormsRoute />} />} />
 			<Route path="/forms/:id/blockchain" element={<Meta title="Edit Earnings of Form" element={<EditBlockchainFormRoute />} />} />
 			<Route path="/forms/:id/storage" element={<Meta title="Edit Form" element={<EditStorageFormRoute />} />} />
+			<Route path="/forms/:id/receipt" element={<Meta title="Edit Receipt" element={<EditReceiptRoute />} />} />
 
 			<Route path="/forms/:id" element={<Meta title="Submit Form" element={<SubmitFormRoute />} />} />
 			<Route path="/forms/:id/pre-receipt" element={<Meta title="Form Submitted" element={<PreReceiptRoute />} />} />

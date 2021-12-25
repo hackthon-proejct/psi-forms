@@ -2,14 +2,15 @@ import { Fragment, useState } from 'react';
 
 import { FormBlock } from '../../layout/FormBlock';
 import { useWallet } from '../../wallet/WalletContext';
-import { BlockchainForm, Field, Form, PostReceipt, PreReceipt } from '../Form';
+import { BlockchainForm, Field, Form } from '../Form';
 import { FormGenerator } from '../form-generator/FormGenerator';
-import { ApprovalFormEditor } from './approval/ApprovalFormEditor';
-import { BasicsFormEditor } from './basics/BasicsFormEditor';
-import { FieldsFormEditor } from './fields/FieldsFormEditor';
+import { PostReceipt, PreReceipt } from '../Receipt';
+import { ReceiptGroup } from '../receipt-editor/groups/ReceiptGroup';
+import { ApprovalFormGroup } from './groups/ApprovalFormGroup';
+import { BasicsFormGroup } from './groups/BasicsFormGroup';
+import { FieldsFormGroup } from './groups/fields/FieldsFormGroup';
+import { PricingFormGroup } from './groups/PricingFormGroup';
 import { initializeNewForm, initializePostReceipt, initializePreReceipt } from './NewFormInitializator';
-import { PricingFormEditor } from './pricing/PricingFormEditor';
-import { ReceiptEditor } from './receipt/ReceiptEditor';
 
 export interface NewFormEditorProps {
 	onSave: (form: Form, preReceipt: PreReceipt, post: PostReceipt) => Promise<boolean>;
@@ -51,14 +52,14 @@ export function NewFormEditor(props: NewFormEditorProps) {
 	return (
 		<Fragment>
 			<FormBlock title="Create Form" submitText="Create Form" onSubmit={onSubmited}>
-				<BasicsFormEditor isReadonly={isReadonly} name={form.name} description={form.description}
+				<BasicsFormGroup isReadonly={isReadonly} name={form.name} description={form.description}
 					onChange={onBasicsChanged} />
-				<PricingFormEditor isReadonly={isReadonly} form={form}
+				<PricingFormGroup isReadonly={isReadonly} form={form}
 					onChange={onEarningsChanged}/>
-				<ApprovalFormEditor isReadonly={isReadonly} requireApproval={form.requireApproval}
+				<ApprovalFormGroup isReadonly={isReadonly} requireApproval={form.requireApproval}
 					onChange={onRequireApprovalChanged} />
-				<FieldsFormEditor fields={form.fields} onChange={onFieldsChanged} />
-				<ReceiptEditor requireApproval={form.requireApproval} preReceipt={preReceipt} postReceipt={postReceipt}
+				<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />
+				<ReceiptGroup requireApproval={form.requireApproval} preReceipt={preReceipt} postReceipt={postReceipt}
 					onPreReceiptChange={setPreReceipt} onPostReceiptChange={setPostReceipt} />
 			</FormBlock>
 

@@ -60,6 +60,8 @@ export function MyFormsRoute() {
 											{' '}
 											<Link to={`/forms/${ab.id}/storage`} className="btn btn-white">Edit Description</Link>
 											{' '}
+											<Link to={`/forms/${ab.id}/receipt`} className="btn btn-white">Edit Receipt</Link>
+											{' '}
 											<Link to={`/forms/${ab.id}`} className="btn btn-white" title="Submit Form">
 												<i className="ico ico-purchase-black" />
 											</Link>

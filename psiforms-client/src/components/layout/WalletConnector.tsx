@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 
-import { EthFormatter } from '../../core/EthFormatter';
+import { HexFormatter } from '../../core/HexFormatter';
 import { useWallet } from '../wallet/WalletContext';
 
 export function WalletConnector() {
@@ -54,7 +54,7 @@ export function WalletConnector() {
 				</Fragment>}
 			<button className="btn btn-black" onClick={togglePopup}>
 				<i className="ico ico-mr ico-wallet-white" />
-				{isConnected ? EthFormatter.formatAddress(wallet.getAccount().address) : 'Connect wallet'}
+				{isConnected ? HexFormatter.formatHex(wallet.getAccount().address) : 'Connect wallet'}
 			</button>
 		</Fragment>
 	);

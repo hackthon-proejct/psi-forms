@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 import { StorageForm } from '../../components/form/Form';
-import { EditStorageFormEditor } from '../../components/form/form-editor/EditStorageFormEditor';
+import { StorageFormEditor } from '../../components/form/form-editor/StorageFormEditor';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
@@ -46,7 +46,7 @@ export function EditStorageFormRoute() {
 			<React.Fragment>
 				<ConnectYourWallet requiredNetworkId={1} />
 				{result?.form &&
-					<EditStorageFormEditor name={result.form.name} description={result.form.description} fields={result.form.fields} onSave={save} />}
+					<StorageFormEditor name={result.form.name} description={result.form.description} fields={result.form.fields} onSave={save} />}
 			</React.Fragment>
 		))} />
 	);

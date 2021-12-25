@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import Web3 from 'web3';
 
-import { Form, PostReceipt, PreReceipt } from '../../components/form/Form';
+import { Form } from '../../components/form/Form';
 import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
+import { PostReceipt, PreReceipt } from '../../components/form/Receipt';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';

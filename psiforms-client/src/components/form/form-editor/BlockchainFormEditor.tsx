@@ -3,9 +3,9 @@ import Web3 from 'web3';
 
 import { FormBlock } from '../../layout/FormBlock';
 import { BlockchainForm } from '../Form';
-import { PricingFormEditor } from './pricing/PricingFormEditor';
+import { PricingFormGroup } from './groups/PricingFormGroup';
 
-export interface EditBlockchainFormEditorProps {
+export interface BlockchainFormEditorProps {
 	isEnabled: boolean;
 	unitPrice: string;
 	minQuantity: number;
@@ -13,7 +13,7 @@ export interface EditBlockchainFormEditorProps {
 	onSave: (form: BlockchainForm) => Promise<boolean>;
 }
 
-export function EditBlockchainFormEditor(props: EditBlockchainFormEditorProps) {
+export function BlockchainFormEditor(props: BlockchainFormEditorProps) {
 
 	const [form, setForm] = useState<BlockchainForm>(() => {
 		return {
@@ -30,7 +30,7 @@ export function EditBlockchainFormEditor(props: EditBlockchainFormEditorProps) {
 
 	return (
 		<FormBlock title="Edit Earnings of Form" submitText="Edit Form" onSubmit={onSubmit}>
-			<PricingFormEditor isReadonly={false} form={form} onChange={setForm} />
+			<PricingFormGroup isReadonly={false} form={form} onChange={setForm} />
 		</FormBlock>
 	);
 }

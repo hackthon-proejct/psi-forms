@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { RequestStatusInfo } from '../../components/request/RequestStatusInfo';
 import { useWallet } from '../../components/wallet/WalletContext';
-import { EthFormatter } from '../../core/EthFormatter';
+import { HexFormatter } from '../../core/HexFormatter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { StorageClient } from '../../storage/StorageClient';
 import { RequestDto, RequestStatus } from '../../storage/StorageModel';
@@ -81,8 +81,8 @@ export function FormRequestsRoute() {
 					<thead>
 						<tr>
 							<th>Status</th>
-							<th>Created At</th>
 							<th>ID</th>
+							<th>Created At</th>
 							<th>New Status</th>
 							<th>Actions</th>
 						</tr>
@@ -94,10 +94,10 @@ export function FormRequestsRoute() {
 								<RequestStatusInfo status={request.status} />
 							</td>
 							<td>
-								{request.createdAt.toLocaleString()}
+								{HexFormatter.formatHex(request.id)}
 							</td>
 							<td>
-								{EthFormatter.formatAddress(request.id)}
+								{request.createdAt.toLocaleString()}
 							</td>
 							<td className="text-center">
 								{request.status === RequestStatus.waitingForApproval &&

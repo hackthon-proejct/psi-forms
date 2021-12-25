@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { Field, NumberField } from '../../Form';
+import { Field, NumberField } from '../../../Form';
 
 export interface NumberFieldEditorProps {
 	field: NumberField;

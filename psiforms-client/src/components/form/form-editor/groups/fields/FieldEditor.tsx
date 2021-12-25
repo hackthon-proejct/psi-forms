@@ -1,4 +1,4 @@
-import { Field, FieldType, FileField, NumberField, TextField } from '../../Form';
+import { Field, FieldType, FileField, NumberField, TextField } from '../../../Form';
 import { FileFieldEditor } from './FileFieldEditor';
 import { NumberFieldEditor } from './NumberFieldEditor';
 import { TextFieldEditor } from './TextFieldEditor';

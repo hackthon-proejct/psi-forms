@@ -1,14 +1,13 @@
-import { Field, FieldType } from '../../Form';
+import { Field, FieldType } from '../../../Form';
 import { initializeField } from './FieldInitializator';
 import { FieldEditor } from './FieldEditor';
 
-
-export interface FieldsFormEditorProps {
+export interface FieldsFormGroupProps {
 	fields: Field[];
 	onChange: (fields: Field[]) => void;
 }
 
-export function FieldsFormEditor(props: FieldsFormEditorProps) {
+export function FieldsFormGroup(props: FieldsFormGroupProps) {
 
 	function deleteFieldClicked(index: number) {
 		const fields = props.fields.filter((_, i) => i !== index);

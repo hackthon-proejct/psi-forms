@@ -3,13 +3,13 @@ import { Fragment, useState } from 'react';
 import { UnitsConverter } from '../../../../core/UnitsConverter';
 import { BlockchainForm } from '../../Form';
 
-export interface PricingFormEditorProps {
+export interface PricingFormGroupProps {
 	isReadonly: boolean;
 	form: BlockchainForm;
 	onChange: (form: BlockchainForm) => void;
 }
 
-export function PricingFormEditor(props: PricingFormEditorProps) {
+export function PricingFormGroup(props: PricingFormGroupProps) {
 
 	const [hasQuantity, setHasQuantity] = useState(() => props.form.maxQuantity > 1);
 	const unitPriceDecimal = UnitsConverter.toDecimalETH(props.form.unitPrice);
