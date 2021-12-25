@@ -45,13 +45,14 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 		input.value = '';
 	}
 
-	function onFileDeleted(index: number) {
+	function onFileDeleted(fileId: number) {
+		console.log('index', fileId);
 		const files = props.postReceipt.files.clone();
-		files.delete(index);
+		files.delete(fileId);
 		updateFiles(files);
 	}
 
-	const fileNames = props.postReceipt.files.getFileNames();
+	const files = props.postReceipt.files.getDeltas();
 	return (
 		<Fragment>
 			{props.requireApproval &&
@@ -73,12 +74,17 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 				</div>
 
 				<div className="form-group">
-					<label>Files to Download ({fileNames.length} files)</label>
+					<label>Files to Download ({files.length} files)</label>
 					<input type="file" onChange={e => onUploaded(e.target)} />
 
 					<ul>
-					{fileNames.map((fileName, index) =>
-						<li key={index}>&bull; {fileName} <button onClick={() => onFileDeleted(index)}>x</button></li>)}
+					{files.map((file) =>
+						<li key={file.id}>&bull;
+							{file.url
+								? <a href={file.url} target="_blank" rel="noreferrer">{file.name}</a>
+								: <span>{file.name}</span>}
+							{' '}({Math.round(file.size / 1024)} KB){' '}
+						<button onClick={() => onFileDeleted(file.id)}>x</button></li>)}
 					</ul>
 				</div>
 			</div>

@@ -1,91 +1,89 @@
 import Moralis from 'moralis';
 
-import { FilePointer, FilesContainer } from './FilesContainer';
-import { FileDto } from './StorageModel';
+import { DeltaFile, DeltaFileStatus, FilePointer, FilesContainer } from './FilesContainer';
 
 export class MoralisFilesContainer implements FilesContainer {
 
-	public static createFromPointers(files?: FilePointer[]): MoralisFilesContainer {
-		return new MoralisFilesContainer(files ? files.map(f => {
+	public static createFromPointers(pointers?: FilePointer[]): MoralisFilesContainer {
+		return new MoralisFilesContainer(pointers ? pointers.map((pointer, index) => {
 			return {
-				status: 'uploaded',
-				name: f.name,
-				url: f.url
+				status: DeltaFileStatus.uploaded,
+				id: index,
+				name: pointer.name,
+				size: pointer.size,
+				url: pointer.url
 			};
 		}) : []);
 	}
 
 	private constructor(
-		private readonly operations: Operation[]) {
+		private readonly deltas: DeltaFile[]) {
 	}
 
 	public clone(): FilesContainer {
-		return new MoralisFilesContainer(this.operations.map(o => {
+		return new MoralisFilesContainer(this.deltas.map(o => {
 			return Object.assign({}, o);
 		}));
 	}
 
 	public add(file: File) {
-		this.operations.push({
-			status: 'toUpload',
+		this.deltas.push({
+			status: DeltaFileStatus.toUpload,
+			id: this.deltas.length,
 			name: file.name,
+			size: file.size,
 			file
 		});
 	}
 
-	public delete(index: number) {
-		const operation = this.operations[index];
-		switch (operation.status) {
-			case 'toUpload':
-				this.operations.splice(index, 1);
+	public delete(id: number) {
+		const index = this.deltas.findIndex(o => o.id === id);
+		if (index < 0) {
+			throw new Error(`Not found id ${id}`);
+		}
+		const delta = this.deltas[index];
+		switch (delta.status) {
+			case DeltaFileStatus.toUpload:
+				this.deltas.splice(index, 1);
 				return;
-			case 'toDelete':
-				return;
-			case 'uploaded':
-				operation.status = 'toDelete';
+			case DeltaFileStatus.uploaded:
+				delta.status = DeltaFileStatus.toDelete;
 				return;
 			default:
 				throw new Error('Unsupported status');
 		}
 	}
 
-	public getFileNames(): string[] {
-		return this.operations
-			.filter(o => o.status !== 'toDelete')
-			.map(o => o.name);
+	public getDeltas(): DeltaFile[] {
+		return this.deltas
+			.filter(o => o.status !== DeltaFileStatus.toDelete);
 	}
 
 	public async save(): Promise<void> {
-		for (let operation of this.operations.filter(o => o.status === 'toDelete')) {
+		for (let delta of this.deltas.filter(o => o.status === DeltaFileStatus.toDelete)) {
 			// TODO: Moralis does not support deleting by public user, here should be a notification to backend with unused file info.
-			const index = this.operations.indexOf(operation);
-			this.operations.splice(index, 1);
+			const index = this.deltas.indexOf(delta);
+			this.deltas.splice(index, 1);
 		}
 
-		for (let operation of this.operations.filter(o => o.status === 'toUpload')) {
-			const file = new Moralis.File(operation.name, operation.file as File);
+		for (let delta of this.deltas.filter(o => o.status === DeltaFileStatus.toUpload)) {
+			const file = new Moralis.File(delta.name, delta.file as File);
 			await file.save();
-			operation.status = 'uploaded';
-			operation.url = file.url();
+			delta.status = DeltaFileStatus.uploaded;
+			delta.url = file.url();
 		}
 	}
 
-	public toPointers(): FileDto[] {
-		if (this.operations.some(o => o.status !== 'uploaded')) {
+	public toPointers(): FilePointer[] {
+		if (this.deltas.some(o => o.status !== DeltaFileStatus.uploaded)) {
 			throw new Error('Invalid state');
 		}
-		return this.operations.map(o => {
+		return this.deltas.map(d => {
 			return {
-				name: o.name,
-				url: o.url as string
+				name: d.name,
+				size: d.size,
+				url: d.url as string
 			};
 		});
 	}
-}
-
-interface Operation {
-	status: 'uploaded' | 'toUpload' | 'toDelete';
-	name: string;
-	url?: string;
-	file?: File;
 }

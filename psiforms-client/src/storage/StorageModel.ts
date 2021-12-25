@@ -26,6 +26,7 @@ export interface PostReceiptDto {
 
 export interface FileDto {
 	name: string;
+	size: number;
 	url: string;
 }
 
