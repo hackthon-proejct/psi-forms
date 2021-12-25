@@ -1,5 +1,4 @@
-import { RequestStatus } from '../../storage/StorageModel';
-
+import { RequestStatus } from '../../storage/Model';
 
 export interface RequestStatusInfoProps {
 	status: RequestStatus;

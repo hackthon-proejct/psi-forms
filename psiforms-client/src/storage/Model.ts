@@ -1,0 +1,59 @@
+
+
+// files
+
+export interface FilePointer {
+	name: string;
+	size: number;
+	url: string;
+}
+
+// fields
+
+export enum FieldType {
+	text = 'text',
+	number = 'number',
+	file = 'file'
+}
+
+export interface Field {
+	type: FieldType;
+	isRequired: boolean;
+	label: string;
+}
+
+export interface TextField extends Field {
+}
+
+export interface NumberField extends Field {
+	min?: number;
+	max?: number;
+}
+
+export interface FileField extends Field {
+	fileType: FileType;
+}
+
+export enum FileType {
+	any = 'any',
+	image = 'image',
+	pdf = 'pdf'
+}
+
+// fields data
+
+export interface FieldData {
+	type: FieldType;
+	label: string;
+	value?: string;
+	files?: FilePointer[];
+}
+
+// request
+
+export enum RequestStatus {
+	waitingForApproval,
+	rejected,
+	approved,
+	rolledBack
+}

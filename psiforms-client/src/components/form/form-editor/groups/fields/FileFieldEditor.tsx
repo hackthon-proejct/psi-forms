@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 
-import { Field, FileField, FileType, fileTypes } from '../../../Form';
+import { Field, FileField, FileType } from '../../../../../storage/Model';
+import { fileTypes } from '../../../Form';
 
 export interface FileFieldEditorProps {
 	field: FileField;

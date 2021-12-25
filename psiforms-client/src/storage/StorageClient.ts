@@ -1,6 +1,7 @@
 import Moralis from 'moralis';
 
-import { FilePointer, FilesContainer } from './FilesContainer';
+import { FilesContainer } from './FilesContainer';
+import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 import { MoralisFilesContainer } from './MoralisFilesContainer';
 import { currentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './MoralisUtils';
 import {
@@ -14,11 +15,11 @@ import {
     RequestRejectedEntity,
     RequestRolledBackEntity,
 } from './StorageEntities';
-import { FormDto, PostReceiptDto, PreReceiptDto, RequestDto, RequestStatus, StorageFormDto } from './StorageModel';
+import { FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
 
-	public static async createForm(creator: string, formId: string, name: string, description: string, fields: string): Promise<void> {
+	public static async createForm(creator: string, formId: string, name: string, description: string, fields: Field[]): Promise<void> {
 		const user = await currentUser();
 
 		const entity = FormEntity.create(creator, toNumericId(formId), name, description, fields);
@@ -26,7 +27,7 @@ export class StorageClient {
 		await entity.save();
 	}
 
-	public static async updateForm(formId: string, name: string, description: string, fields: string): Promise<void> {
+	public static async updateForm(formId: string, name: string, description: string, fields: Field[]): Promise<void> {
 		const entity = await readEntity(FormEntity, 'formId', toNumericId(formId));
 		entity.set('name', name);
 		entity.set('description', description);
@@ -58,23 +59,19 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async createPostReceipt(formId: string, message: string, files: FilesContainer): Promise<void> {
+	public static async createPostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
 		const user = await currentUser();
 
-		await files.save();
-
-		const entity = PostReceiptEntity.create(toNumericId(formId), message, files.toPointers());
+		const entity = PostReceiptEntity.create(toNumericId(formId), message, files);
 		entity.setAccess(user.id);
 		await entity.save();
 	}
 
-	public static async updatePostReceipt(formId: string, message: string, files: FilesContainer): Promise<void> {
+	public static async updatePostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
 		const entity = await readEntity(PostReceiptEntity, 'formId', toNumericId(formId));
 
-		await files.save();
-
 		entity.set('message', message);
-		entity.set('files', files.toPointers());
+		entity.set('files', files);
 		await entity.save();
 	}
 
@@ -154,7 +151,7 @@ export class StorageClient {
 		return form as FormDto;
 	}
 
-	public static async createRequest(sender: string, requestId: string, formId: string, email: string, fields: string): Promise<void> {
+	public static async createRequest(sender: string, requestId: string, formId: string, email: string, fields: FieldData[]): Promise<void> {
 		const senderUser = await currentUser();
 
 		const formEntity = await readEntity(FormEntity, 'formId', toNumericId(formId));
@@ -187,7 +184,7 @@ export class StorageClient {
 			.addDescending('createdAt'));
 	}
 
-	public static createFiles(files?: FilePointer[]): FilesContainer {
+	public static createFilesContainer(files?: FilePointer[]): FilesContainer {
 		return MoralisFilesContainer.createFromPointers(files);
 	}
 }

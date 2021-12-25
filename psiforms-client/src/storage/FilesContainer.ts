@@ -1,3 +1,4 @@
+import { FilePointer } from "./Model";
 
 export interface FilesContainer {
 	clone(): FilesContainer;
@@ -21,10 +22,4 @@ export enum DeltaFileStatus {
 	uploaded,
 	toUpload,
 	toDelete
-}
-
-export interface FilePointer {
-	name: string;
-	size: number;
-	url: string;
 }

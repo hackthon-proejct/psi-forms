@@ -1,10 +1,10 @@
 import Moralis from 'moralis';
 
-import { FilePointer } from './FilesContainer';
+import { Field, FieldData, FilePointer } from './Model';
 
 export class FormEntity extends Moralis.Object {
 
-	public static create(creator: string, formId: string, name: string, description: string, fields: string): FormEntity {
+	public static create(creator: string, formId: string, name: string, description: string, fields: Field[]): FormEntity {
 		const entity = new FormEntity();
 		entity.set('creator', creator);
 		entity.set('formId', formId);
@@ -89,7 +89,7 @@ export class PostReceiptEntity extends Moralis.Object {
 
 export class RequestEntity extends Moralis.Object {
 
-	public static create(sender: string, requestId: string, formId: string, email: string, fields: string): RequestEntity {
+	public static create(sender: string, requestId: string, formId: string, email: string, fields: FieldData[]): RequestEntity {
 		const entity = new RequestEntity();
 		entity.set('sender', sender);
 		entity.set('requestId', requestId);

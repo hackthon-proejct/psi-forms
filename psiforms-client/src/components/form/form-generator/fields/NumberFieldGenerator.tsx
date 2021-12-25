@@ -1,9 +1,9 @@
-import { NumberField } from '../../Form';
+import { NumberField } from '../../../../storage/Model';
 
 export interface NumberFieldGeneratorProps {
 	field: NumberField;
-	value: string | null;
-	onChanged: (value: string | null, isValid: boolean) => void;
+	value: string | undefined;
+	onChanged: (value: string | undefined, isValid: boolean) => void;
 }
 
 export function NumberFieldGenerator(props: NumberFieldGeneratorProps) {

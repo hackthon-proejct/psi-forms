@@ -1,4 +1,5 @@
 import BN from 'bn.js';
+import { Field, FileType } from '../../storage/Model';
 
 export interface BlockchainForm {
 	isEnabled: boolean;
@@ -17,34 +18,8 @@ export interface Form extends BlockchainForm, StorageForm {
 	requireApproval: boolean;
 }
 
-export enum FieldType {
-	text = 'text',
-	number = 'number',
-	file = 'file'
-}
-
-export interface Field {
-	type: FieldType;
-	isRequired: boolean;
-	label: string;
-}
-
-export interface TextField extends Field {
-}
-
-export interface NumberField extends Field {
-	min?: number;
-	max?: number;
-}
-
-export interface FileField extends Field {
-	fileType: FileType;
-}
-
-export enum FileType {
-	any = 'any',
-	image = 'image',
-	pdf = 'pdf'
-}
-
-export const fileTypes = [ FileType.any, FileType.image, FileType.pdf ];
+export const fileTypes = [
+	FileType.any,
+	FileType.image,
+	FileType.pdf
+];

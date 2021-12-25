@@ -46,7 +46,6 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 	}
 
 	function onFileDeleted(fileId: number) {
-		console.log('index', fileId);
 		const files = props.postReceipt.files.clone();
 		files.delete(fileId);
 		updateFiles(files);

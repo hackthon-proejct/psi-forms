@@ -1,8 +1,8 @@
-import { TextField } from '../../Form';
+import { TextField } from '../../../../storage/Model';
 
 export interface TextFieldGeneratorProps {
 	field: TextField;
-	value: string | null;
+	value: string | undefined;
 	onChanged: (value: string, isValid: boolean) => void;
 }
 

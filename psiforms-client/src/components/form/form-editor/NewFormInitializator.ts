@@ -26,6 +26,6 @@ export function initializePreReceipt(): PreReceipt {
 export function initializePostReceipt(): PostReceipt {
 	return {
 		message: '',
-		files: StorageClient.createFiles()
+		files: StorageClient.createFilesContainer()
 	};
 }

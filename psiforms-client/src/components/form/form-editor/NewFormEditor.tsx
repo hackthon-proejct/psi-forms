@@ -1,8 +1,9 @@
 import { Fragment, useState } from 'react';
 
+import { Field } from '../../../storage/Model';
 import { FormBlock } from '../../layout/FormBlock';
 import { useWallet } from '../../wallet/WalletContext';
-import { BlockchainForm, Field, Form } from '../Form';
+import { BlockchainForm, Form } from '../Form';
 import { FormGenerator } from '../form-generator/FormGenerator';
 import { PostReceipt, PreReceipt } from '../Receipt';
 import { ReceiptGroup } from '../receipt-editor/groups/ReceiptGroup';

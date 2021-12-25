@@ -1,7 +1,8 @@
-import { Field, FieldType, FileField, NumberField, TextField } from '../../../Form';
+import { Field, FieldType, FileField, NumberField, TextField } from '../../../../../storage/Model';
 import { FileFieldEditor } from './FileFieldEditor';
 import { NumberFieldEditor } from './NumberFieldEditor';
 import { TextFieldEditor } from './TextFieldEditor';
+
 
 export interface FieldEditorProps {
 	index: number;

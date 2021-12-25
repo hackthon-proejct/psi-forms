@@ -6,8 +6,9 @@ import { RequestStatusInfo } from '../../components/request/RequestStatusInfo';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { HexFormatter } from '../../core/HexFormatter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { RequestStatus } from '../../storage/Model';
 import { StorageClient } from '../../storage/StorageClient';
-import { RequestDto, RequestStatus } from '../../storage/StorageModel';
+import { RequestDto } from '../../storage/StorageModel';
 
 export function FormRequestsRoute() {
 	const wallet = useWallet();

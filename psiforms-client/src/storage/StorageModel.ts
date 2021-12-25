@@ -1,9 +1,10 @@
+import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 
 export interface StorageFormDto {
 	id: string;
 	name: string;
 	description: string;
-	fields: string;
+	fields: Field[];
 	creator: string;
 }
 
@@ -21,13 +22,7 @@ export interface PreReceiptDto {
 
 export interface PostReceiptDto {
 	message: string;
-	files: FileDto[];
-}
-
-export interface FileDto {
-	name: string;
-	size: number;
-	url: string;
+	files: FilePointer[];
 }
 
 export interface RequestDto {
@@ -37,12 +32,5 @@ export interface RequestDto {
 	sender: string;
 	formId: string;
 	email: string;
-	fields: string;
-}
-
-export enum RequestStatus {
-	waitingForApproval,
-	rejected,
-	approved,
-	rolledBack
+	fields: FieldData[];
 }

@@ -23,7 +23,7 @@ export function CreateFormRoute() {
 		let preReceiptCreated = false;
 		let postReceiptCreated = false;
 		try {
-			await StorageClient.createForm(account.address, formId, form.name, form.description, JSON.stringify(form.fields));
+			await StorageClient.createForm(account.address, formId, form.name, form.description, form.fields);
 			formCreated = true;
 
 			if (form.requireApproval) {
@@ -31,7 +31,9 @@ export function CreateFormRoute() {
 				preReceiptCreated = true;
 			}
 
-			await StorageClient.createPostReceipt(formId, postReceipt.message, postReceipt.files);
+			await postReceipt.files.save();
+
+			await StorageClient.createPostReceipt(formId, postReceipt.message, postReceipt.files.toPointers());
 			postReceiptCreated = true;
 
 			const contract = new BlockchainContractClient(account);

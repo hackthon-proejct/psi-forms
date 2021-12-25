@@ -1,6 +1,6 @@
-import { Field, FieldType } from '../../../Form';
 import { initializeField } from './FieldInitializator';
 import { FieldEditor } from './FieldEditor';
+import { Field, FieldType } from '../../../../../storage/Model';
 
 export interface FieldsFormGroupProps {
 	fields: Field[];

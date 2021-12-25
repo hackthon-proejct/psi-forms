@@ -10,6 +10,7 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
+import { FieldData } from '../../storage/Model';
 import { StorageClient } from '../../storage/StorageClient';
 import { FormDto } from '../../storage/StorageModel';
 
@@ -18,7 +19,7 @@ function convertToForm(dto: FormDto): Form {
 		name: dto.name,
 		description: dto.description,
 		isEnabled: dto.isEnabled,
-		fields: JSON.parse(dto.fields),
+		fields: dto.fields,
 		maxQuantity: dto.maxQuantity,
 		minQuantity: dto.minQuantity,
 		requireApproval: dto.requireApproval,
@@ -50,8 +51,25 @@ export function SubmitFormRoute() {
 
 		let requestCreated = false;
 		try {
+			const fields: FieldData[] = [];
+			for (let f of data.fields) {
+				if (f.files) {
+					await f.files.save();
+					fields.push({
+						label: f.label,
+						type: f.type,
+						files: f.files.toPointers()
+					});
+				} else if (f.value) {
+					fields.push({
+						label: f.label,
+						type: f.type,
+						files: f.files
+					});
+				}
+			}
 
-			await StorageClient.createRequest(account.address, requestId, formId, data.email, JSON.stringify(data.fields));
+			await StorageClient.createRequest(account.address, requestId, formId, data.email, fields);
 			requestCreated = true;
 
 			const contract = new BlockchainContractClient(account);

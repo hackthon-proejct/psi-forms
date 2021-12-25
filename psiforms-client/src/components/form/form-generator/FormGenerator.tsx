@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { validateEmail } from '../../../core/EmailValidator';
 import { UnitsConverter } from '../../../core/UnitsConverter';
+import { FilesContainer } from '../../../storage/FilesContainer';
 import { Form } from '../Form';
 import { FieldGenerator } from './fields/FieldGenerator';
 import { FormData } from './FormData';
@@ -13,9 +14,11 @@ export interface FormGeneratorProps {
 }
 
 interface FieldState {
-	value: string | null;
+	value?: string;
+	files?: FilesContainer;
 	isValid: boolean;
 }
+
 export function FormGenerator(props: FormGeneratorProps) {
 
 	const [error, setError] = useState<string>();
@@ -23,7 +26,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 	const [quantityText, setQuantityText] = useState<string>(() => `${props.form.minQuantity}`);
 	const [fieldStates, setFieldStates] = useState<FieldState[]>(() => props.form.fields.map(f => {
 		return {
-			value: null,
+			value: undefined,
 			isValid: !f.isRequired
 		};
 	}));
@@ -31,9 +34,15 @@ export function FormGenerator(props: FormGeneratorProps) {
 	const totalPrice = props.form.unitPrice
 		.mul(new BN(isNaN(quantity) ? 1 : Math.abs(quantity)));
 
-	function onFieldChanged(value: string | null, isValid: boolean, index: number) {
+	function onFieldValueChanged(value: string | undefined, isValid: boolean, index: number) {
 		const values = [...fieldStates];
 		values[index] = { value, isValid };
+		setFieldStates(values);
+	}
+
+	function onFieldFilesChanged(files: FilesContainer, isValid: boolean, index: number) {
+		const values = [...fieldStates];
+		values[index] = { files, isValid };
 		setFieldStates(values);
 	}
 
@@ -65,7 +74,8 @@ export function FormGenerator(props: FormGeneratorProps) {
 				return {
 					type: field.type,
 					label: field.label,
-					value: state.value as string
+					value: state.value,
+					files: state.files
 				};
 			})
 		};
@@ -93,7 +103,12 @@ export function FormGenerator(props: FormGeneratorProps) {
 			<p>Total price: {UnitsConverter.toDecimalETH(totalPrice)} AVAX</p>
 
 			{props.form.fields.map((fm, index) =>
-				<FieldGenerator key={index} field={fm} value={fieldStates[index]?.value || null} onChanged={(v, iv) => onFieldChanged(v, iv, index)} />)}
+				<FieldGenerator key={index}
+					field={fm}
+					value={fieldStates[index]?.value}
+					files={fieldStates[index]?.files}
+					onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
+					onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
 
 			{error && <p className="form-error">Error: {error}</p>}
 

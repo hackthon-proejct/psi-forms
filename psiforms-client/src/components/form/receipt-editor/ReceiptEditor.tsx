@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { FilePointer } from '../../../storage/Model';
 
 import { StorageClient } from '../../../storage/StorageClient';
-import { FileDto } from '../../../storage/StorageModel';
 import { FormBlock } from '../../layout/FormBlock';
 import { PostReceipt, PreReceipt } from '../Receipt';
 import { ReceiptGroup } from './groups/ReceiptGroup';
@@ -10,7 +10,7 @@ export interface ReceiptEditorProps {
 	requireApproval: boolean;
 	preMessage?: string;
 	postMessage: string;
-	postFiles: FileDto[];
+	postFiles: FilePointer[];
 	onSave: (preReceipt: PreReceipt, postReceipt: PostReceipt) => Promise<boolean>;
 }
 
@@ -22,7 +22,7 @@ export function ReceiptEditor(props: ReceiptEditorProps) {
 		};
 		const postReceipt: PostReceipt = {
 			message: props.postMessage,
-			files: StorageClient.createFiles(props.postFiles)
+			files: StorageClient.createFilesContainer(props.postFiles)
 		};
 		return { preReceipt, postReceipt };
 	});
