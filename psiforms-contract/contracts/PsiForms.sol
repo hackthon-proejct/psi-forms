@@ -88,7 +88,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 
 	enum RequestStatus {
 		__,
-		waitingForApproval,
+		pending,
 		approved,
 		rejected,
 		rolledBack
@@ -161,7 +161,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 		_request.quantity = _quantity;
 		_request.value = _value;
 		_request.createdAt = block.timestamp;
-		_request.status = RequestStatus.waitingForApproval;
+		_request.status = RequestStatus.pending;
 
 		emit RequestCreated(_formId, _requestId, msg.sender, _quantity, _value);
 
@@ -173,7 +173,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 	function rollBackRequest(uint128 _formId, uint128 _requestId) public onlyNotPaused {
 		Request storage _request = requests[_formId][_requestId];
 		_requireSender(_request);
-		require(_request.status == RequestStatus.waitingForApproval, 'Request has wrong status');
+		require(_request.status == RequestStatus.pending, 'Request has wrong status');
 		require(_request.createdAt + minApprovalTime <= block.timestamp, 'Too early');
 
 		_rollBackRequest(_formId, _requestId, _request);
@@ -190,7 +190,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 			uint128 _requestId = _requestIds[_i];
 			Request storage _request = requests[_formId][_requestId];
 			require(_request.sender != address(0), 'Request does not exist');
-			require(_request.status == RequestStatus.waitingForApproval, 'Request has wrong status');
+			require(_request.status == RequestStatus.pending, 'Request has wrong status');
 
 			if (_statuses[_i]) {
 				_approveRequest(_formId, _form, _requestId, _request);

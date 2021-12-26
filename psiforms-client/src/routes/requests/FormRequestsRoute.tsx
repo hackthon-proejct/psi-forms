@@ -101,7 +101,7 @@ export function FormRequestsRoute() {
 								{request.createdAt.toLocaleString()}
 							</td>
 							<td className="text-center">
-								{request.status === RequestStatus.waitingForApproval &&
+								{request.status === RequestStatus.pending &&
 									<Fragment>
 										{statuses && statuses[index] !== null &&
 											<Fragment>
@@ -110,10 +110,10 @@ export function FormRequestsRoute() {
 													: <span className="status status-danger">Rejected</span>}
 											</Fragment>}
 									</Fragment>}
-								{request.status !== RequestStatus.waitingForApproval && <Fragment>-</Fragment>}
+								{request.status !== RequestStatus.pending && <Fragment>-</Fragment>}
 							</td>
 							<td>
-								{(request.status === RequestStatus.waitingForApproval) &&
+								{(request.status === RequestStatus.pending) &&
 									<Fragment>
 										<button className="btn btn-white" onClick={() => setStatus(true, index)}>Approve</button>
 										{' '}

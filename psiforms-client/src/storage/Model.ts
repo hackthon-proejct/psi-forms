@@ -52,7 +52,7 @@ export interface FieldData {
 // request
 
 export enum RequestStatus {
-	waitingForApproval,
+	pending,
 	rejected,
 	approved,
 	rolledBack

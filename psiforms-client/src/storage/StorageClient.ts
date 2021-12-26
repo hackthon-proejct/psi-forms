@@ -206,7 +206,7 @@ async function readRequests(query: Moralis.Query<RequestEntity>): Promise<Reques
 			email: entity.get('email'),
 			fields: entity.get('fields'),
 			sender: entity.get('sender'),
-			status: RequestStatus.waitingForApproval
+			status: RequestStatus.pending
 		};
 	});
 	const requestIdInts = requestEntites.map(e => e.get('requestId'));

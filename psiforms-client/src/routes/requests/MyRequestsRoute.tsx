@@ -30,7 +30,7 @@ export function MyRequestsRoute() {
 
 	function canRollback(request: RequestDto): boolean {
 		return (
-			request.status === RequestStatus.waitingForApproval &&
+			request.status === RequestStatus.pending &&
 			request.createdAt.getTime() < rollBackLimit
 		);
 	}
