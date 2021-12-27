@@ -69,9 +69,13 @@ export class MoralisFilesContainer implements FilesContainer {
 
 		for (let delta of this.deltas.filter(o => o.status === DeltaFileStatus.toUpload)) {
 			const file = new Moralis.File(delta.name, delta.file as File);
-			await file.save();
+			await file.saveIPFS();
+			const fileJSON = file.toJSON() as any;
+			const ipfsUrl = fileJSON['ipfs'];
+			const ipfsHash = fileJSON['hash'];
 			delta.status = DeltaFileStatus.uploaded;
-			delta.url = file.url();
+			delta.url = ipfsUrl;
+			delta.hash = ipfsHash;
 		}
 	}
 
@@ -83,6 +87,7 @@ export class MoralisFilesContainer implements FilesContainer {
 			return {
 				name: d.name,
 				size: d.size,
+				hash: d.hash as string,
 				url: d.url as string
 			};
 		});

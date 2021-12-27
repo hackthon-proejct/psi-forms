@@ -5,6 +5,7 @@
 export interface FilePointer {
 	name: string;
 	size: number;
+	hash: string;
 	url: string;
 }
 

@@ -1,4 +1,4 @@
-import { FilePointer } from "./Model";
+import { FilePointer } from './Model';
 
 export interface FilesContainer {
 	clone(): FilesContainer;
@@ -15,6 +15,7 @@ export interface DeltaFile {
 	name: string;
 	size: number;
 	url?: string;
+	hash?: string;
 	file?: File;
 }
 
