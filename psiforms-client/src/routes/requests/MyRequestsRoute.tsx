@@ -1,7 +1,7 @@
 import { Fragment, useCallback } from 'react';
 
 import { Loader, useLoader } from '../../components/layout/Loader';
-import { RequestStatusInfo } from '../../components/request/RequestStatusInfo';
+import { RequestStatusInfo } from '../../components/requests/RequestStatusInfo';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { HexFormatter } from '../../core/HexFormatter';

@@ -61,6 +61,7 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 					<div className="form-group">
 						<label>Message</label>
 						<input type="text" value={props.preReceipt.message} onChange={e => onPreMessageChanged(e.target.value)} />
+						<span>This message is not visible for your customer until confirmed payment on blockchain.</span>
 					</div>
 				</div>}
 
@@ -70,6 +71,7 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 				<div className="form-group">
 					<label>Message</label>
 					<input type="text" value={props.postReceipt.message} onChange={e => onPostMessageChanged(e.target.value)} />
+					<span>This message is not visible for your customer until confirmed payment on blockchain and your approval.</span>
 				</div>
 
 				<div className="form-group">

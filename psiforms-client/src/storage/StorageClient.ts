@@ -184,6 +184,14 @@ export class StorageClient {
 			.addDescending('createdAt'));
 	}
 
+	public static async getCreatorPendingRequests(creator: string): Promise<RequestDto[]> {
+		await waitForWeb3();
+
+		return await readRequests(new Moralis.Query(RequestEntity)
+			.equalTo('creator', creator)
+			.addDescending('createdAt'));
+	}
+
 	public static createFilesContainer(files?: FilePointer[]): FilesContainer {
 		return MoralisFilesContainer.createFromPointers(files);
 	}
@@ -209,13 +217,15 @@ async function readRequests(query: Moralis.Query<RequestEntity>): Promise<Reques
 			status: RequestStatus.pending
 		};
 	});
-	const requestIdInts = requestEntites.map(e => e.get('requestId'));
 
-	await Promise.all([
-		readRequestStatuses(RequestApprovedEntity, requestIdInts, requests, RequestStatus.approved),
-		readRequestStatuses(RequestRejectedEntity, requestIdInts, requests, RequestStatus.rejected),
-		readRequestStatuses(RequestRolledBackEntity, requestIdInts, requests, RequestStatus.rolledBack)
-	]);
+	const requestIdInts = requestEntites.map(e => e.get('requestId')) as string[];
+	if (requestIdInts.length > 0) {
+		await Promise.all([
+			readRequestStatuses(RequestApprovedEntity, requestIdInts, requests, RequestStatus.approved),
+			readRequestStatuses(RequestRejectedEntity, requestIdInts, requests, RequestStatus.rejected),
+			readRequestStatuses(RequestRolledBackEntity, requestIdInts, requests, RequestStatus.rolledBack)
+		]);
+	}
 
 	requests.forEach(request => {
 		request.id = toHexId(request.id);

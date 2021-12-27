@@ -16,6 +16,7 @@ import { SubmitFormRoute } from './routes/forms/SubmitFormRoute';
 import { HomeRoute } from './routes/home/HomeRoute';
 import { FormRequestsRoute } from './routes/requests/FormRequestsRoute';
 import { MyRequestsRoute } from './routes/requests/MyRequestsRoute';
+import { PendingRequestsRoute } from './routes/requests/PendingRequestsRoute';
 import { Examples } from './routes/statics/Examples';
 import { FAQ } from './routes/statics/FAQ';
 import { HowItWorksRoute } from './routes/statics/HowItWorksRoute';
@@ -52,6 +53,7 @@ function AppRoutes() {
 			<Route path="/forms/:id/post-receipt" element={<Meta title="Form Receipt" element={<PostReceiptRoute />} />} />
 			<Route path="/forms/:id/requests" element={<Meta title="Form Requests" element={<FormRequestsRoute />} />} />
 			<Route path="/requests" element={<Meta title="My Requests" element={<MyRequestsRoute />} />} />
+			<Route path="/pending-requests" element={<Meta title="Pending Requests" element={<PendingRequestsRoute />} />} />
 
 			<Route path="/terms" element={<Meta title="Terms and Conditions" element={<TermsRoute />} />} />
 			<Route path="/how-it-works" element={<Meta title="How it Works" element={<HowItWorksRoute />} />} />

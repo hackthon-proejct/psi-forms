@@ -15,6 +15,7 @@ export function Header() {
 				<nav>
 					<Link to="/create-form">Create Form</Link>
 					<Link to="/forms">My Forms</Link>
+					<Link to="/pending-requests">Pending Requests</Link>
 					<Link to="/requests">My Requests</Link>
 				</nav>
 			</div>
