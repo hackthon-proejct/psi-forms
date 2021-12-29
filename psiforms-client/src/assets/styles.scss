@@ -1,16 +1,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
-html, body, code, h1, h2, h3, h4, h5, input, button, select {font: 14px/1.3em Inter, 'Open Sans', Verdana, Tahoma; font-weight: 500;}
 
-body {color: #000; min-height: 100%; background: #FFF; background-repeat: no-repeat; background-attachment: fixed;}
 body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input {margin: 0; padding: 0; border: 0; list-style-type: none;}
 strong, em {font-weight: normal; font-style: normal;}
 a {text-decoration: none; color: #000;}
 
 /* utils */
 
-$app-max-width: 1100px;
+$app-max-width: 1150px;
 $desktop: "(min-width: 820px)";
 $phone: "(max-width: 819px)";
 
@@ -19,179 +17,129 @@ $phone: "(max-width: 819px)";
 	line-height: $lineHeight;
 }
 
-@mixin center-box($i: 1) {
-	width: 100%;
-	max-width: $app-max-width * $i;
-	margin: 0 auto;
+/* common */
+
+$radius: 20px;
+
+@mixin centered() {
+	& {margin: 0 auto; width: 100%; max-width: $app-max-width;}
 }
 
-@mixin gradient-gray() {
-	background: #ECECEC;
-	background: linear-gradient(45deg, #ECECEC 0%, #F4F4F4 50%, #ECECEC 100%);
+@mixin gradient-text($a, $b) {
+	background-color: $a;
+	background-image: linear-gradient(45deg, $a, $b);
+	background-size: 100%;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
 }
 
-@mixin gradient-black {
-	background: #000;
-	background: linear-gradient(45deg, #000 0%, #1B1B1B 50%, #000 100%);
+@mixin orange-gradient-text() {
+	& {@include gradient-text(#D7143B, #D76215);}
 }
 
-.btn {display: inline-block; padding: 8px 12px; background: #000; cursor: pointer; vertical-align: middle; text-decoration: none !important;
-	transition: background-color 150ms linear;}
-.btn-large {padding: 15px 25px; @include font-size(15px);}
-.btn-ml {margin-left: 5px;}
-.btn-black {background: #000; color: #FFF;}
-.btn-black:hover {background: #2C2C2C;}
-.btn-white {background: #FFF; color: #000;}
-.btn-white:hover {background: #ECECEC;}
-
-.ico {display: inline-block; width: 18px; height: 18px; vertical-align: middle; background-size: 18px 18px;}
-.ico-mr {margin-right: 5px;}
-.ico-ml {margin-left: 5px;}
-.ico-wallet-white {background-image: url('./icon-wallet-white.svg');}
-.ico-network-white {background-image: url('./icon-network-white.svg');}
-.ico-chain-black {background-image: url('./icon-chain-black.svg');}
-.ico-chain-white {background-image: url('./icon-chain-white.svg');}
-.ico-reload-black {background-image: url('./icon-reload-black.svg');}
-.ico-reload-white {background-image: url('./icon-reload-white.svg');}
-.ico-purchase-black {background-image: url('./icon-purchase-black.svg');}
-
-.ico-rotating {animation: rotation 500ms infinite linear;}
-@keyframes rotation {
-	from { transform: rotate(0deg);	}
-	to { transform: rotate(359deg); }
+@mixin violet-gradient-text() {
+	& {@include gradient-text(#2528BD, #8B24BD);}
+}
+@mixin black-gradient-text() {
+	& {@include gradient-text(#000, #313131);}
+}
+@mixin azure-gradient-text() {
+	& {@include gradient-text(#49B0C9, #4F8DCB);}
 }
 
-.status {padding: 6px 8px; @include font-size(12px); white-space: nowrap;}
-.status-idle {color: #FFF; background: #0524C9;}
-.status-success {color: #FFF; background: #00932E;}
-.status-danger {color: #FFF; background: #D31515;}
-.status-neutral {color: #B9B9B9;}
+.btn {display: inline-block; padding: 12px 20px; cursor: pointer; vertical-align: middle; text-decoration: none !important; border-radius: $radius;
+	transition: opacity 150ms linear;}
+.btn:hover {opacity: 0.7;}
+.btn-black {color: #FFF; background: #000;
+	background: linear-gradient(90deg, #000 0%, #313131 100%);}
 
-@media #{$desktop} {
-	.row {display: table; width: 100%;}
-	.row .col {display: table-cell; width: 50%;}
-}
+.icn {display: inline-block; width: 18px; height: 18px; vertical-align: middle; background-size: 18px 18px;}
 
 /* main */
 
-html {min-height: 100%;}
-body {min-height: 100%; @include gradient-black();}
+html, body, code, h1, h2, h3, h4, h5, input, button, select {font: 14px/1.3em Inter, 'Open Sans', Verdana, Tahoma; font-weight: 500;}
 
+body {color: #000; min-height: 100%; background: #151515;}
 .main {background: #FFF;}
 
-.cookies-bar {text-align: center; margin: 0 0 15px; padding: 10px 20px; @include gradient-gray();}
-
-.app-header {@include center-box();}
-.app-header h1 {display: inline-block; vertical-align: middle; @include font-size(26px); font-weight: 700; letter-spacing: -0.02em;}
-.app-header h1 .logo {display: inline-block; margin: -6px 10px 0 0; width: 36px; height: 36px; vertical-align: middle; background: url('./logo.png'); background-size: 36px 36px;}
-.app-header nav a {@include font-size(16px); margin: 0 10px;}
-.app-header nav a:hover {text-decoration: underline;}
-
-.select-wallet {position: fixed; z-index: 100;  padding: 15px; box-sizing: border-box; background: #FFF; text-align: center; border: 1px solid #000; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);}
-.select-wallet h4 {font-weight: 700; @include font-size(20px);}
-.select-wallet .wallet {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
-	transition: opacity 150ms linear;}
-.select-wallet .wallet:hover {opacity: 0.8;}
-.select-wallet .wallet strong {display: block; padding-top: 130px;}
-.select-wallet .wallet-metamask {background-image: url('./logo-metamask.svg');}
-.select-wallet .cancel {padding-top: 15px;}
-@media #{$desktop} {
-	.select-wallet {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
-}
-@media #{$phone} {
-	.select-wallet {top: 10px; left: 10px; right: 10px;}
+@mixin dotted-nav($dotColor) {
+	& li {position: relative; display: inline-block; margin: 0 22px;}
+	& li::before {position: absolute; content: ' '; display: block; top: 50%; left: -26px; margin-top: -4px; width: 8px; height: 8px; border-radius: 50% 50%; background: $dotColor;}
+	& li:first-child::before {display: none;}
 }
 
-@media #{$desktop} {
-	.app-header {display: table;}
-	.app-header .header {display: table-cell; vertical-align: middle; padding: 40px 0 40px 25px;}
-	.app-header .header h1 {display: inline-block; vertical-align: middle;}
-	.app-header .header nav {display: inline-block; margin: 2px 10px 0; vertical-align: middle;}
-	.app-header .aside {display: table-cell; vertical-align: middle; text-align: right; padding: 40px 25px 40px 0;}
-}
-@media #{$phone} {
-	.app-header {text-align: center;}
-	.app-header .header {padding-top: 20px;}
-	.app-header .header nav {margin: 20px 0;}
-	.app-header .aside {padding-bottom: 20px;}
-
+.app-header .header {
+	& {display: flex; align-items: center; @include centered();}
+	.logo {padding-left: 10px;}
+	.logo h1 {@include font-size(36px); font-weight: 700; letter-spacing: -0.02em;}
+	.nav {flex: 1; padding: 42px 0; text-align: center; @include dotted-nav(#E7E7E7);}
+	.nav li a {@include font-size(17px); letter-spacing: -0.01em;}
+	.nav li a:hover {text-decoration: underline;}
+	.session {padding-right: 10px;}
 }
 
 .app-footer {
-	& {color: #FFF; text-align: center;}
-	a {color: #FFF;}
-	a:hover {text-decoration: underline;}
-	.rigths {padding: 0 0 30px; color: #6E6E6E;}
-	.rigths a {color: #6E6E6E;}
-	.rigths p {padding: 5px 0;}
-
-	@media #{$desktop} {
-		.links {padding: 50px 0 30px;}
-		.links a {margin: 0 15px;}
-	}
-	@media #{$phone} {
-		.links {padding: 20px 0 10px;}
-		.links a {display: block; margin: 10px 0;}
-	}
+	& {text-align: center; color: #414141;}
+	.links {padding: 50px 0; @include dotted-nav(#303030);}
+	.links li a {color: #FFF;}
+	.links li a:hover {text-decoration: underline;}
+	.powered-by strong {display: block; padding: 0 0 15px;}
+	.powered-by img {max-width: 100%; height: auto;}
+	.rigths {padding: 40px 0;}
 }
 
-.form {
-	& {@include center-box(0.9); padding: 0 0 25px; margin: 0 auto;}
-	h2 {padding: 10px 0; text-align: center; font-weight: 700; @include font-size(40px); letter-spacing: -0.02em;}
+/* home */
 
-	h4 {padding: 0 10px; font-weight: 700; @include font-size(20px);}
-
-	p.preamble {padding: 5px 0; text-align: center;}
-	a {text-decoration: underline;}
-	a:hover {text-decoration: none;}
-	label {display: block; font-weight: bold; padding: 10px;}
-	label em {color: #9F9F9F;}
-	input[type=text], input[type=number], select, textarea {width: 100%; padding: 10px; color: #000; @include gradient-gray(); border: 0; outline: 0; box-sizing: border-box;}
-	input[type=text]:read-only, input[type=number]:read-only, select:disabled {color: #B9B9B9;}
-	input[type=file] {margin: 5px 0;}
-	.form-group {padding: 5px 0;}
-	.form-error {margin: 10px; padding: 10px; color: #FFF; background: #D31515;}
-	.form-submit {padding: 15px 0; text-align: center;}
-
-	.form-section {margin: 10px 0; padding: 10px; border: 1px solid silver;}
-
-	.image-preview {text-align: center; padding: 15px 0;}
-	.image-preview .file-size {display: block; color: #B9B9B9;}
-	.final-price {padding: 0 10px; color: #00932E;}
-	.final-price strong {font-weight: 700; @include font-size(26px); letter-spacing: -0.02em;}
+.home-intro {
+	& {display: flex; align-items: center; @include centered();}
+	.info {flex: 1;}
+	.info h4 {@include font-size(58px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: -10px; @include orange-gradient-text();}
+	.info h3 {@include font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
+	.info .subtitle {padding: 15px 0 25px; @include font-size(20px); color: #929292;}
+	.picture .frame {width: 300px; height: 510px; overflow: hidden; border-radius: $radius;}
+	.picture .frame img {margin-left: -50%; width: auto; height: 510px;}
 }
 
-.wallet-alert {
-	& {padding: 15px 20px; @include center-box(0.7); margin-bottom: 25px; color: #FFF; text-align: center; background: #D31515;}
-	.btn {margin-top: 10px;}
+.home-possibilities {
+	& {@include centered(); padding: 40px 10px; box-sizing: border-box;}
+	ul {display: table; width: 100%;}
+	ul li {display: table-cell; width: 25%;}
+	ul li:nth-child(1) .line {@include orange-gradient-text();}
+	ul li:nth-child(2) .line {@include violet-gradient-text();}
+	ul li:nth-child(3) .line {@include black-gradient-text();}
+	ul li:nth-child(4) .line {@include azure-gradient-text();}
+	ul li .icon {float: left; margin: 10px 17px 0 0;}
+	ul li .text {@include font-size(28px);}
+	ul li .text .line {display: block; margin: -2px 0; font-weight: 700; letter-spacing: -0.02em;}
 }
 
-.loading {padding: 100px 0; @include center-box(); text-align: center;}
+.home-gray {background: #F6F6F6; overflow: hidden;}
 
-.list {
-	& {@include center-box(); padding: 0 0 25px; margin: 0 auto;}
-	.header {position: relative; text-align: center;}
-	.header h2 {display: inline-block; padding: 10px 0; text-align: center; font-weight: 700; @include font-size(40px); letter-spacing: -0.02em;}
-	.header .btn {position: absolute; top: 15px; margin-left: 10px;}
-
-	.table {width: 100%; overflow-x: auto;}
-	table {width: 100%; border-spacing: 0;}
-	table th {padding: 15px 10px; text-align: left;}
-	table td {padding: 8px 10px;}
-	table td.actions {text-align: right;}
-	table tbody tr:nth-child(odd) {@include gradient-gray();}
-	table code {font-family: 'Courier New', Courier, monospace;}
-
-	.list-submit {padding: 20px 0 0; text-align: center;}
+.home-pricing {
+	& {display: flex; align-items: center; width: 100%; max-width: 700px; margin: 70px auto;}
+	.picture .frame {width: 260px; height: 260px; border-radius: $radius; overflow: hidden;}
+	.info {flex: 1; padding-left: 60px;}
+	.info h3 {@include font-size(90px); font-weight: 700; letter-spacing: -0.04em; @include orange-gradient-text();}
+	.info h4 {@include font-size(50px); font-weight: 700; letter-spacing: -0.035em;}
+	.info p {padding-top: 10px; color: #929292; @include font-size(18px);}
 }
 
-.article {
-	& {@include center-box(0.7); padding: 0 10px 25px; margin: 0 auto; box-sizing: border-box;}
-	h2 {padding: 10px 0; text-align: center; font-weight: 700; @include font-size(40px); letter-spacing: -0.02em;}
-	h4 {padding: 0 0 15px; font-weight: 700; @include font-size(20px);}
-	a {text-decoration: underline;}
-	a:hover {text-decoration: none;}
-	p {padding-bottom: 15px; line-height: 1.5em;}
-	strong {font-weight: 700;}
-	img {max-width: 100%; height: auto;}
+.home-statistics {
+	& {@include centered(); padding: 0 0 60px;}
+	ul {display: table; width: 100%;}
+	ul li {display: table-cell; width: 33%;}
+	ul li .value {display: block; margin: 0 20px; padding: 15px 0; text-align: center; background: #FFF; border-radius: $radius;}
+	ul li .value .text {@include font-size(56px); font-weight: 700; letter-spacing: -0.035em;}
+	ul li:nth-child(1) .value .text {@include orange-gradient-text();}
+	ul li:nth-child(2) .value .text {@include violet-gradient-text();}
+	ul li:nth-child(3) .value .text {@include azure-gradient-text();}
+	ul li .label {display: block; margin: 0 40px; padding: 13px 0; background: #E6E6E6; text-align: center; border-bottom-left-radius: $radius; border-bottom-right-radius: $radius;}
+}
+
+.home-start {
+	& {background: #000; padding: 70px 0; color: #FFF; text-align: center;}
+	h3 {@include font-size(50px); font-weight: 700; letter-spacing: -0.02em;}
+	p {margin: 20px 0;}
 }
