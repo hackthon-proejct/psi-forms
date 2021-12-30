@@ -92,7 +92,7 @@ export function HomeRoute() {
 			<div className="home-start">
 				<h3>Start Your Crypto Business</h3>
 
-				<p><img src="images/home-flow.jpg" width={658} height={339} alt="" /></p>
+				<p><img src="images/home-flow.png" width={658} height={339} alt="" /></p>
 
 				<Link to="/create-form" className="btn btn-black">
 					Create Form for Free
