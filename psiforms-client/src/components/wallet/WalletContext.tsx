@@ -91,7 +91,7 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 		}
 
 		const user = await Moralis.Web3.authenticate({
-			signingMessage: 'Login'
+			signingMessage: 'PsiForms Authentication'
 		});
 		if (user) {
 			const account = await tryReadAccount();

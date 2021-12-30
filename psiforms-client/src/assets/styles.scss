@@ -1,28 +1,41 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
-
 body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input {margin: 0; padding: 0; border: 0; list-style-type: none;}
 strong, em {font-weight: normal; font-style: normal;}
 a {text-decoration: none; color: #000;}
 
 /* utils */
 
-$app-max-width: 1150px;
+$app-max-width: 1100px;
 $desktop: "(min-width: 820px)";
 $phone: "(max-width: 819px)";
-
-@mixin font-size($size, $lineHeight: 1.3em) {
-	font-size: $size;
-	line-height: $lineHeight;
-}
 
 /* common */
 
 $radius: 20px;
+$screen-padding: 10px;
 
 @mixin centered() {
-	& {margin: 0 auto; width: 100%; max-width: $app-max-width;}
+	@media #{$desktop} {
+		& {margin: 0 auto; width: 100%; max-width: $app-max-width;}
+	}
+	@media #{$phone} {
+		& {margin: 0 $screen-padding;}
+	}
+}
+
+@mixin font-size($size, $lineHeight: 1.3em) {
+	& {font-size: $size; line-height: $lineHeight;}
+}
+
+@mixin auto-font-size($size, $lineHeight: 1.3em) {
+	@media #{$desktop} {
+		& {font-size: $size; line-height: $lineHeight;}
+	}
+	@media #{$phone} {
+		& {font-size: $size * 0.8; line-height: $lineHeight;}
+	}
 }
 
 @mixin gradient-text($a, $b) {
@@ -50,12 +63,18 @@ $radius: 20px;
 }
 
 .btn {display: inline-block; padding: 12px 20px; cursor: pointer; vertical-align: middle; text-decoration: none !important; border-radius: $radius;
-	transition: opacity 150ms linear;}
+	transition: opacity 150ms linear; background: green;}
 .btn:hover {opacity: 0.7;}
 .btn-black {color: #FFF; background: #000;
 	background: linear-gradient(90deg, #000 0%, #313131 100%);}
+.btn-gray {background: #E6E6E6;}
 
-.icn {display: inline-block; width: 18px; height: 18px; vertical-align: middle; background-size: 18px 18px;}
+.ico {display: inline-block; width: 18px; height: 18px; margin: -6px 0 -4px; vertical-align: middle; background-size: 18px 18px;}
+.ico-mr {margin-right: 6px;}
+.ico-ml {margin-left: 6px;}
+.ico-wallet-white {background-image: url('./icons/ico-wallet-white.svg');}
+.ico-chain-black {background-image: url('./icons/ico-chain-black.svg');}
+.ico-arrow-right-white {background-image: url('./icons/ico-arrow-right-white.svg');}
 
 /* main */
 
@@ -64,82 +83,165 @@ html, body, code, h1, h2, h3, h4, h5, input, button, select {font: 14px/1.3em In
 body {color: #000; min-height: 100%; background: #151515;}
 .main {background: #FFF;}
 
-@mixin dotted-nav($dotColor) {
-	& li {position: relative; display: inline-block; margin: 0 22px;}
-	& li::before {position: absolute; content: ' '; display: block; top: 50%; left: -26px; margin-top: -4px; width: 8px; height: 8px; border-radius: 50% 50%; background: $dotColor;}
-	& li:first-child::before {display: none;}
+@mixin dotted-desktop-nav($dotColor) {
+	@media #{$desktop} {
+		& li {position: relative; display: inline-block; margin: 0 22px;}
+		& li::before {position: absolute; content: ' '; display: block; top: 50%; left: -26px; margin-top: -4px; width: 8px; height: 8px; border-radius: 50% 50%; background: $dotColor;}
+		& li:first-child::before {display: none;}
+	}
 }
 
 .app-header .header {
-	& {display: flex; align-items: center; @include centered();}
-	.logo {padding-left: 10px;}
-	.logo h1 {@include font-size(36px); font-weight: 700; letter-spacing: -0.02em;}
-	.nav {flex: 1; padding: 42px 0; text-align: center; @include dotted-nav(#E7E7E7);}
-	.nav li a {@include font-size(17px); letter-spacing: -0.01em;}
+	& {@include centered();}
+	.logo h1 {@include font-size(36px); font-weight: 700; letter-spacing: -0.03em;}
+	.nav {flex: 1; text-align: center; @include dotted-desktop-nav(#E7E7E7);}
 	.nav li a:hover {text-decoration: underline;}
-	.session {padding-right: 10px;}
+
+	@media #{$desktop} {
+		& {display: flex; align-items: center;}
+		.nav {padding: 42px 0;}
+		.nav li a {@include font-size(17px); letter-spacing: -0.01em;}
+	}
+	@media #{$phone} {
+		& {padding: 15px 0; text-align: center;}
+		.nav {padding: 20px 0;}
+		.nav li {display: inline-block; padding: 0 10px;}
+	}
+}
+
+.wallet-connector {
+	& {position: fixed; z-index: 100;  padding: 15px; box-sizing: border-box; background: #FFF; text-align: center; border-radius: $radius; border: 1px solid #000; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);}
+	h4 {@include auto-font-size(30px); font-weight: 700;}
+	.wallets .wallet {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
+		transition: opacity 150ms linear;}
+	.wallets .wallet:hover {opacity: 0.8;}
+	.wallets .wallet strong {display: block; padding-top: 130px;}
+	.wallets .wallet-metamask {background-image: url('./logo-metamask.svg');}
+	.cancel {padding-top: 15px;}
+
+	@media #{$desktop} {
+		& {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
+	}
+	@media #{$phone} {
+		& {top: 10px; left: 10px; right: 10px;}
+	}
 }
 
 .app-footer {
 	& {text-align: center; color: #414141;}
-	.links {padding: 50px 0; @include dotted-nav(#303030);}
+	.links {@include dotted-desktop-nav(#303030);}
 	.links li a {color: #FFF;}
 	.links li a:hover {text-decoration: underline;}
-	.powered-by strong {display: block; padding: 0 0 15px;}
-	.powered-by img {max-width: 100%; height: auto;}
-	.rigths {padding: 40px 0;}
+	.providers strong {display: block; padding: 0 0 15px;}
+	.providers .provider {height: 48px; text-indent: -9999px; background: url('./footer-providers.png'); background-repeat: no-repeat; background-size: 656px 48px;
+		transition: opacity 150ms linear;}
+	.providers .provider:hover {opacity: 0.8;}
+	.providers .provider.moralis {width: 145px; background-position-x: 0;}
+	.providers .provider.ipfs {width: 44px; background-position-x: -176px;}
+	.providers .provider.avalanche {width: 210px; background-position-x: -257px;}
+	.providers .provider.covalent {width: 158px; background-position-x: -498px;}
+
+	@media #{$desktop} {
+		.links {padding: 50px 0;}
+		.providers .provider {display: inline-block; margin: 0 10px;}
+		.rigths {padding: 40px 0;}
+	}
+	@media #{$phone} {
+		.links {padding: 30px 0;}
+		.links li a {display: inline-block; margin: 5px 0;}
+		.providers .provider {display: block; margin: 5px auto;}
+		.rigths {padding: 30px 0;}
+	}
 }
 
 /* home */
 
 .home-intro {
-	& {display: flex; align-items: center; @include centered();}
-	.info {flex: 1;}
-	.info h4 {@include font-size(58px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: -10px; @include orange-gradient-text();}
-	.info h3 {@include font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
-	.info .subtitle {padding: 15px 0 25px; @include font-size(20px); color: #929292;}
-	.picture .frame {width: 300px; height: 510px; overflow: hidden; border-radius: $radius;}
-	.picture .frame img {margin-left: -50%; width: auto; height: 510px;}
+	& {@include centered();}
+	.info h4 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.05em; margin-bottom: -10px; @include orange-gradient-text();}
+	.info h3 {@include auto-font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
+	.info .subtitle {padding: 15px 0 25px; @include auto-font-size(20px); color: #929292;}
+
+	@media #{$desktop} {
+		& {display: flex; align-items: center;}
+		.info {flex: 1;}
+		.picture .frame {width: 300px; height: 510px; overflow: hidden; border-radius: $radius;}
+		.picture .frame img {margin-left: -50%; width: auto; height: 510px;}
+	}
+	@media #{$phone} {
+		& {text-align: center}
+		.picture {padding-top: 30px;}
+		.picture .frame img {max-width: 100%; height: auto; margin: 0 auto; border-radius: $radius;}
+	}
 }
 
 .home-possibilities {
-	& {@include centered(); padding: 40px 10px; box-sizing: border-box;}
-	ul {display: table; width: 100%;}
-	ul li {display: table-cell; width: 25%;}
+	& {@include centered();}
+	ul li {position: relative; padding-left: 60px;}
 	ul li:nth-child(1) .line {@include orange-gradient-text();}
 	ul li:nth-child(2) .line {@include violet-gradient-text();}
 	ul li:nth-child(3) .line {@include black-gradient-text();}
 	ul li:nth-child(4) .line {@include azure-gradient-text();}
-	ul li .icon {float: left; margin: 10px 17px 0 0;}
-	ul li .text {@include font-size(28px);}
-	ul li .text .line {display: block; margin: -2px 0; font-weight: 700; letter-spacing: -0.02em;}
+	ul li .icon {position: absolute; left: 0; top: 8px;}
+	ul li .text .line {display: block; margin: -2px 0; @include font-size(28px); font-weight: 700; letter-spacing: -0.03em;}
+
+	@media #{$desktop} {
+		ul {display: table; width: 100%; margin: 40px 0;}
+		ul li {display: table-cell; width: 25%;}
+	}
+	@media #{$phone} {
+		ul {max-width: 300px; margin: 30px auto;}
+		ul li {margin-bottom: 10px;}
+	}
 }
 
 .home-gray {background: #F6F6F6; overflow: hidden;}
 
 .home-pricing {
-	& {display: flex; align-items: center; width: 100%; max-width: 700px; margin: 70px auto;}
-	.picture .frame {width: 260px; height: 260px; border-radius: $radius; overflow: hidden;}
-	.info {flex: 1; padding-left: 60px;}
-	.info h3 {@include font-size(90px); font-weight: 700; letter-spacing: -0.04em; @include orange-gradient-text();}
-	.info h4 {@include font-size(50px); font-weight: 700; letter-spacing: -0.035em;}
-	.info p {padding-top: 10px; color: #929292; @include font-size(18px);}
+	.info h3 {@include auto-font-size(90px); font-weight: 700; letter-spacing: -0.04em; @include orange-gradient-text();}
+	.info h4 {@include auto-font-size(50px); font-weight: 700; letter-spacing: -0.035em;}
+	.info p {padding-top: 10px; color: #929292; @include auto-font-size(18px);}
+
+	@media #{$desktop} {
+		& {display: flex; align-items: center; width: 100%; max-width: 700px; margin: 70px auto;}
+		.info {flex: 1; padding-left: 60px;}
+		.picture .frame {width: 260px; height: 260px; border-radius: $radius; overflow: hidden;}
+	}
+	@media #{$phone} {
+		& {padding: 30px 0; text-align: center;}
+		.picture .frame img {max-width: 100%; height: auto; border-radius: $radius;}
+	}
 }
 
 .home-statistics {
-	& {@include centered(); padding: 0 0 60px;}
-	ul {display: table; width: 100%;}
-	ul li {display: table-cell; width: 33%;}
+	& {@include centered();}
 	ul li .value {display: block; margin: 0 20px; padding: 15px 0; text-align: center; background: #FFF; border-radius: $radius;}
-	ul li .value .text {@include font-size(56px); font-weight: 700; letter-spacing: -0.035em;}
+	ul li .value .text {@include auto-font-size(56px); font-weight: 700; letter-spacing: -0.035em;}
 	ul li:nth-child(1) .value .text {@include orange-gradient-text();}
 	ul li:nth-child(2) .value .text {@include violet-gradient-text();}
 	ul li:nth-child(3) .value .text {@include azure-gradient-text();}
 	ul li .label {display: block; margin: 0 40px; padding: 13px 0; background: #E6E6E6; text-align: center; border-bottom-left-radius: $radius; border-bottom-right-radius: $radius;}
+
+	@media #{$desktop} {
+		ul {display: table; width: 100%; margin-bottom: 60px;}
+		ul li {display: table-cell; width: 33%;}
+	}
+	@media #{$phone} {
+		ul {padding-bottom: 30px;}
+		ul li {margin: 0 auto 10px; max-width: 350px;}
+	}
 }
 
 .home-start {
-	& {background: #000; padding: 70px 0; color: #FFF; text-align: center;}
-	h3 {@include font-size(50px); font-weight: 700; letter-spacing: -0.02em;}
+	& {background: #000; color: #FFF; text-align: center;}
+	h3 {@include auto-font-size(50px); font-weight: 700; letter-spacing: -0.02em;}
 	p {margin: 20px 0;}
+	p img {max-width: 100%; height: auto;}
+
+	@media #{$desktop} {
+		& {padding: 70px 0;}
+	}
+	@media #{$phone} {
+		& {padding: 50px 0;}
+	}
 }

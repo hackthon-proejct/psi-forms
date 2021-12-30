@@ -9,11 +9,14 @@ export function HomeRoute() {
 					<h4>Sell Your Digital Files</h4>
 					<h3>Anywhere</h3>
 					<p className="subtitle">Earn in AVAX cryptocurrency</p>
-					<Link to="/create-form" className="btn btn-black">Create Form for Free</Link>
+					<Link to="/create-form" className="btn btn-black">
+						Create Form for Free
+						<i className="ico ico-ml ico-arrow-right-white" />
+					</Link>
 				</div>
 				<div className="picture">
 					<div className="frame">
-						<img src="images/home-intro-man.jpg" width={1020} height={1020} alt="" />
+						<img src="images/home-intro-man.jpg" width={510} height={510} alt="" />
 					</div>
 				</div>
 			</div>
@@ -87,11 +90,14 @@ export function HomeRoute() {
 			</div>
 
 			<div className="home-start">
-				<h3>Start Your Business Today</h3>
+				<h3>Start Your Crypto Business</h3>
 
 				<p><img src="images/home-flow.jpg" width={658} height={339} alt="" /></p>
 
-				<Link to="/create-form" className="btn btn-black">Create Form for Free</Link>
+				<Link to="/create-form" className="btn btn-black">
+					Create Form for Free
+					<i className="ico ico-ml ico-arrow-right-white" />
+				</Link>
 			</div>
 		</Fragment>
 	);

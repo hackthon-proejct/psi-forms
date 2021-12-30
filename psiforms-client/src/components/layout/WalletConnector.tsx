@@ -33,7 +33,7 @@ export function WalletConnector() {
 	return (
 		<Fragment>
 			{isOpened &&
-				<div className="select-wallet">
+				<div className="wallet-connector">
 					<h4>Sellect your Wallet</h4>
 
 					<div className="wallets">
@@ -46,7 +46,7 @@ export function WalletConnector() {
 				</div>}
 			{isConnected &&
 				<Fragment>
-					<button className="btn btn-white">
+					<button className="btn btn-gray">
 						<i className="ico ico-mr ico-chain-black" />
 						{wallet.getAccount().network.name}
 					</button>

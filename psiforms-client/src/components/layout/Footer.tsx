@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export function Footer() {
 	const year = new Date().getFullYear();
@@ -15,13 +15,16 @@ export function Footer() {
 				</ul>
 			</div>
 
-			<div className="powered-by">
+			<div className="providers">
 				<strong>Powered By</strong>
-				<img src="images/footer-powered-by.jpg" width={656} height={48} alt="Moralis | IPFS | Avalanche | Covalent" />
+				<a href="https://moralis.io/" className="provider moralis" target="_blank" rel="noreferrer">Moralis</a>
+				<a href="https://ipfs.io/" className="provider ipfs" target="_blank" rel="noreferrer">IPFS</a>
+				<a href="https://www.avax.network/" className="provider avalanche" target="_blank" rel="noreferrer">Avalanche</a>
+				<a href="https://www.covalenthq.com/" className="provider covalent" target="_blank" rel="noreferrer">Covalent</a>
 			</div>
 
 			<div className="rigths">
-				&copy;{year} ΨForms - All rights reserved
+				&copy;{year} PsiForms.com - All rights reserved
 			</div>
 		</footer>
 	);
