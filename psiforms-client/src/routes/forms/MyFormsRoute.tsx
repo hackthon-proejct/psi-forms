@@ -25,19 +25,20 @@ export function MyFormsRoute() {
 	}
 
 	return (
-		<Fragment>
+		<main className="page">
 			<ConnectYourWallet />
 			<Loader state={state} element={(adBoxes => (
-				<section className="list">
-					<div className="header">
+				<section className="section">
+					<div className="section-header">
 						<h2>My Forms</h2>
 
-						<button className="btn btn-white" title="Reload" onClick={onRefreshClicked}>
-							<i className="ico ico-reload-black" />
-						</button>
+						<div className="actions">
+							<button className="btn btn-white" title="Refresh" onClick={onRefreshClicked}>
+								<i className="ico ico-refresh-black" />
+							</button>
+						</div>
 					</div>
-
-					<div className="table">
+					<div className="section-body">
 						<table>
 							<thead>
 								<tr>
@@ -72,6 +73,6 @@ export function MyFormsRoute() {
 					</div>
 				</section>
 			))} />
-		</Fragment>
+		</main>
 	);
 }

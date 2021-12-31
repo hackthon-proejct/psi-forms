@@ -5,6 +5,7 @@ import { BlockchainContractClient } from '../../storage/BlockchainContractClient
 import { RequestStatus } from '../../storage/Model';
 import { RequestDto } from '../../storage/StorageModel';
 import { Loader, useLoader } from '../layout/Loader';
+import { ConnectYourWallet } from '../wallet/ConnectYourWallet';
 import { useWallet } from '../wallet/WalletContext';
 import { RequestStatusInfo } from './RequestStatusInfo';
 
@@ -78,65 +79,71 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 	}
 
 	return (
-		<Loader state={state} element={(ads => (
-			<section className="list">
-				<div className="header">
-					<h2>{props.title}</h2>
+		<main className="page">
+			<ConnectYourWallet />
+			<Loader state={state} element={(ads => (
+				<section className="section">
+					<div className="section-header">
+						<h2>{props.title}</h2>
 
-					<button className="btn btn-white" title="Reload" onClick={state.reload}>
-						<i className="ico ico-reload-black" />
-					</button>
-				</div>
-
-				<table>
-					<thead>
-						<tr>
-							<th>Status</th>
-							<th>Request ID</th>
-							<th>Form ID</th>
-							<th>Created At</th>
-							<th>New Status</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-					{ads.map((request, index) =>
-						<tr key={index}>
-							<td><RequestStatusInfo status={request.status} /></td>
-							<td>{HexFormatter.formatHex(request.id)}</td>
-							<td>{HexFormatter.formatHex(request.formId)}</td>
-							<td>
-								{request.createdAt.toLocaleString()}
-							</td>
-							<td className="text-center">
-								{request.status === RequestStatus.pending &&
-									<Fragment>
-										{statuses && statuses[index] !== null &&
+						<div className="actions">
+							<button className="btn btn-white" title="Refresh" onClick={state.reload}>
+								<i className="ico ico-refresh-black" />
+							</button>
+						</div>
+					</div>
+					<div className="section-body">
+						<table>
+							<thead>
+								<tr>
+									<th>Status</th>
+									<th>Request ID</th>
+									<th>Form ID</th>
+									<th>Created At</th>
+									<th>New Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+							{ads.map((request, index) =>
+								<tr key={index}>
+									<td><RequestStatusInfo status={request.status} /></td>
+									<td>{HexFormatter.formatHex(request.id)}</td>
+									<td>{HexFormatter.formatHex(request.formId)}</td>
+									<td>
+										{request.createdAt.toLocaleString()}
+									</td>
+									<td className="text-center">
+										{request.status === RequestStatus.pending &&
 											<Fragment>
-												{statuses && statuses[index]
-													? <span className="status status-success">Approved</span>
-													: <span className="status status-danger">Rejected</span>}
+												{statuses && statuses[index] !== null &&
+													<Fragment>
+														{statuses && statuses[index]
+															? <span className="status status-success">Approved</span>
+															: <span className="status status-danger">Rejected</span>}
+													</Fragment>}
 											</Fragment>}
-									</Fragment>}
-								{request.status !== RequestStatus.pending && <Fragment>-</Fragment>}
-							</td>
-							<td>
-								{(request.status === RequestStatus.pending) &&
-									<Fragment>
-										<button className="btn btn-white" onClick={() => setStatus(true, index)}>Approve</button>
-										{' '}
-										<button className="btn btn-white" onClick={() => setStatus(false, index)}>Reject</button>
-									</Fragment>}
-							</td>
-						</tr>)}
-					</tbody>
-				</table>
+										{request.status !== RequestStatus.pending && <Fragment>-</Fragment>}
+									</td>
+									<td>
+										{(request.status === RequestStatus.pending) &&
+											<Fragment>
+												<button className="btn btn-white" onClick={() => setStatus(true, index)}>Approve</button>
+												{' '}
+												<button className="btn btn-white" onClick={() => setStatus(false, index)}>Reject</button>
+											</Fragment>}
+									</td>
+								</tr>)}
+							</tbody>
+						</table>
 
-				{hasAnyPending &&
-					<div className="list-submit">
-						<button className="btn btn-black btn-large" onClick={save}>Save</button>
-					</div>}
-			</section>
-		))} />
+						{hasAnyPending &&
+							<div className="list-submit">
+								<button className="btn btn-black btn-large" onClick={save}>Save</button>
+							</div>}
+					</div>
+				</section>
+			))} />
+		</main>
 	);
 }

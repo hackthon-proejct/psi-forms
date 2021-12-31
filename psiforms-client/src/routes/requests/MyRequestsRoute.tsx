@@ -50,48 +50,53 @@ export function MyRequestsRoute() {
 	}
 
 	return (
-		<Fragment>
+		<main className="page">
 			<ConnectYourWallet />
 			<Loader state={state} element={(requests => (
-				<section className="list">
-					<div className="header">
+				<section className="section">
+					<div className="section-header">
 						<h2>My Requests</h2>
 
-						<button className="btn btn-white" title="Reload" onClick={onRefreshClicked}>
-							<i className="ico ico-reload-black" />
-						</button>
+						<div className="actions">
+							<button className="btn btn-white" title="Refresh" onClick={onRefreshClicked}>
+								<i className="ico ico-refresh-black" />
+							</button>
+						</div>
 					</div>
+					<div className="section-body">
 
-					<div className="table">
-						<table>
-							<thead>
-								<tr>
-									<th>Status</th>
-									<th>Id</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{requests.map((request, index) =>
-									<tr key={index}>
-										<td>
-											<RequestStatusInfo status={request.status} />
-										</td>
-										<td>
-											{HexFormatter.formatHex(request.id)}
-										</td>
-										<td>
-											{canRollback(request) &&
-												<Fragment>
-													<button className="btn btn-white" onClick={() => onRollbackClicked(request)}>Roll Back</button>
-												</Fragment>}
-										</td>
-									</tr>)}
-							</tbody>
-						</table>
+						<div className="request-list">
+							<table>
+								<thead>
+									<tr>
+										<th>Status</th>
+										<th>Id</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{requests.map((request, index) =>
+										<tr key={index}>
+											<td>
+												<RequestStatusInfo status={request.status} />
+											</td>
+											<td>
+												{HexFormatter.formatHex(request.id)}
+											</td>
+											<td>
+												{canRollback(request) &&
+													<Fragment>
+														<button className="btn btn-white" onClick={() => onRollbackClicked(request)}>Roll Back</button>
+													</Fragment>}
+											</td>
+										</tr>)}
+								</tbody>
+							</table>
+						</div>
+
 					</div>
 				</section>
 			))} />
-		</Fragment>
+		</main>
 	);
 }
