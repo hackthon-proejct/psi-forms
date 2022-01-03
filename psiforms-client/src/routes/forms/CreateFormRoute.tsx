@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Navigate } from 'react-router';
 import Web3 from 'web3';
 
 import { Form } from '../../components/form/Form';
@@ -11,6 +13,7 @@ import { StorageClient } from '../../storage/StorageClient';
 export function CreateFormRoute() {
 
 	const wallet = useWallet();
+	const [navigateTo, setNavigateTo] = useState<string>();
 
 	async function save(form: Form, preReceipt: PreReceipt, postReceipt: PostReceipt): Promise<boolean> {
 		const account = wallet.getAccount();
@@ -48,9 +51,14 @@ export function CreateFormRoute() {
 			}
 			throw e;
 		}
-		return false;
+
+		setNavigateTo('/forms');
+		return true;
 	}
 
+	if (navigateTo) {
+		return <Navigate to={navigateTo} />
+	}
 	return (
 		<main className="page">
 			<ConnectYourWallet />

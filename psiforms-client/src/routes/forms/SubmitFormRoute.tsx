@@ -64,7 +64,7 @@ export function SubmitFormRoute() {
 					fields.push({
 						label: f.label,
 						type: f.type,
-						files: f.files
+						value: f.value
 					});
 				}
 			}

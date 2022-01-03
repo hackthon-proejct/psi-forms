@@ -70,21 +70,19 @@ export interface LoaderProps<T> {
 export function Loader<T>(props: LoaderProps<T>) {
 	if (props.state.isLoading) {
 		return (
-			<div className="loading">
+			<div className="loading-idle">
+				<i className="ico ico-mr ico-refresh-black ico-rotating" />
 				{props.loadingText ?? 'Loading...'}
 			</div>
 		);
 	}
 	if (props.state.error) {
 		return (
-			<section className="form">
-				<h2>Error</h2>
-				<p className="preamble">{props.state.error}</p>
+			<div className="loading-error">
+				<p className="message">Error: {props.state.error}</p>
 
-				<div className="form-submit">
-					<button className="btn btn-black btn-large" onClick={props.state.reload}>Try Again</button>
-				</div>
-			</section>
+				<button className="btn btn-black btn-large" onClick={props.state.reload}>Try Again</button>
+			</div>
 		);
 	}
 	if (props.state.value) {

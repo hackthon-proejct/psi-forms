@@ -47,11 +47,9 @@ $screen-padding: 10px;
 	-webkit-text-fill-color: transparent;
 	-moz-text-fill-color: transparent;
 }
-
 @mixin orange-gradient-text() {
 	& {@include gradient-text(#D7143B, #D76215);}
 }
-
 @mixin violet-gradient-text() {
 	& {@include gradient-text(#2528BD, #8B24BD);}
 }
@@ -60,6 +58,16 @@ $screen-padding: 10px;
 }
 @mixin azure-gradient-text() {
 	& {@include gradient-text(#49B0C9, #4F8DCB);}
+}
+
+@mixin black-gradient-background() {
+	& {background: linear-gradient(90deg, #000 0%, #313131 100%);}
+}
+@mixin orange-gradient-background() {
+	& {background: linear-gradient(90deg, #D7143B 0%, #D76215 100%);}
+}
+@mixin violet-gradient-background() {
+	& {background: linear-gradient(90deg, #2528BD 0%, #8B24BD 100%);}
 }
 
 .btn {display: inline-block; padding: 12px 20px; cursor: pointer; vertical-align: middle; text-decoration: none !important; border-radius: $radius;
@@ -77,7 +85,15 @@ $screen-padding: 10px;
 .ico-wallet-white {background-image: url('./icons/ico-wallet-white.svg');}
 .ico-chain-black {background-image: url('./icons/ico-chain-black.svg');}
 .ico-arrow-right-white {background-image: url('./icons/ico-arrow-right-white.svg');}
+.ico-save-white {background-image: url('./icons/ico-save-white.svg');}
 .ico-refresh-black {background-image: url('./icons/ico-refresh-black.svg');}
+.ico-refresh-white {background-image: url('./icons/ico-refresh-white.svg');}
+
+.ico-rotating {animation: rotation 500ms infinite linear;}
+@keyframes rotation {
+	from { transform: rotate(0deg);	}
+	to { transform: rotate(359deg); }
+}
 
 /* main */
 
@@ -251,6 +267,16 @@ body {color: #000; min-height: 100%; background: #151515;}
 
 /* section */
 
+.page {background: #F6F6F6;}
+
+.wallet-alert {color: #FFF; padding: 15px; text-align: center; @include black-gradient-background();}
+
+.loading-idle {padding: 80px 0; text-align: center;}
+.loading-error {
+	& {padding: 80px 0; text-align: center;}
+	.message {padding-bottom: 10px;}
+}
+
 .section {
 	& {@include centered(); padding-bottom: 30px;}
 
@@ -268,15 +294,10 @@ body {color: #000; min-height: 100%; background: #151515;}
 
 	.section-body {
 		& {background: #FFF; padding: 10px; border-radius: $radius;}
+		.no-content {padding: 5px 0; text-align: center;}
 		a {text-decoration: underline;}
 		a:hover {text-decoration: none;}
 	}
-}
-
-.page {
-	& {background: #F6F6F6;}
-
-	.wallet-alert {color: #FFF; padding: 15px; text-align: center; background: linear-gradient(90deg, #000 0%, #313131 100%);}
 }
 
 .table {
@@ -315,4 +336,42 @@ body {color: #000; min-height: 100%; background: #151515;}
 	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: $radius / 2;}
 	textarea {resize: vertical;}
 }
+.form-error {padding: 15px 0 5px; color: #D7143B; @include font-size(16px); font-weight: bold;}
 .form-submit {padding: 15px 0 5px; text-align: center;}
+
+.status {
+	& {display: inline-block; padding: 7px 15px; border-radius: $radius; vertical-align: middle;}
+	&.status-idle {color: #FFF; @include orange-gradient-background();}
+	&.status-success {color: #FFF; @include violet-gradient-background();}
+}
+
+.requests-header {
+	h3 {@include auto-font-size(28px); font-weight: 700; letter-spacing: -0.02em;}
+
+	@media #{$desktop} {
+		& {position: relative;}
+		.actions {position: absolute; right: 0; top: 0;}
+	}
+}
+.request-details {
+	& {margin-top: 10px; padding: 6px; background: #F6F6F6; border-radius: $radius;}
+	.details {display: table; width: 100%;}
+	.details .basic-info .value {display: inline-block; margin: 0 15px; @include font-size(16px); font-weight: bold; color: #D72633; vertical-align: middle;}
+	.details .meta-info {color: #929292;}
+	.details .meta-info em {color: #000;}
+	.values {overflow: auto;}
+	.values table {width: 100%; min-width: 700px; border-spacing: 4px;}
+	.values table td {background: #FFF; padding: 10px; border-radius: $radius / 2;}
+
+	@media #{$desktop} {
+		.details .basic-info {display: table-cell; vertical-align: middle; padding: 6px;}
+		.details .meta-info {display: table-cell; vertical-align: middle; text-align: right; padding: 6px;}
+		.details .meta-info .meta {display: inline-block; vertical-align: middle;}
+		.details .meta-info .actions {margin-left: 20px;}
+	}
+	@media #{$phone} {
+		.details {padding: 6px;}
+		.details .meta-info {padding-top: 6px;}
+		.details .meta-info .actions {display: block; padding-top: 6px;}
+	}
+}

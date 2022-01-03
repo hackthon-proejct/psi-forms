@@ -5,25 +5,25 @@ export function TermsRoute() {
 		<article className="article">
 			<h2>Terms and Conditions</h2>
 
-			<p>These terms and conditions outline the rules and regulations for the use of CryptoAdBox.com. The legal owner of CryptoAdBox.com is N4NO.com.</p>
+			<p>These terms and conditions outline the rules and regulations for the use of PsiForms.com. The legal owner of PsiForms.com is Bartlomiej Tadych.</p>
 
-			<p>By accessing this website we assume you accept these terms and conditions. Do not continue to use CryptoAdBox.com if you do not agree to take all of the terms and conditions stated on this page.</p>
+			<p>By accessing this website we assume you accept these terms and conditions. Do not continue to use PsiForms.com if you do not agree to take all of the terms and conditions stated on this page.</p>
 
 			<h4>§1 The Service</h4>
 
 			<p>
-				CryptoAdBox.com offers the advertise system, which allows the advertiser buy ad space on the website of the publisher.
+				PsiForms.com offers the advertise system, which allows the advertiser buy ad space on the website of the publisher.
 				The money transfer is fully powered by the smart contract in the one of supported blockchains. The smart contract is open source, everyone can access to the source code.
-				CryptoAdBox.com can not access to transferring money between the advertiser and the publisher in a different way than described in the smart contract.
+				PsiForms.com can not access to transferring money between the advertiser and the publisher in a different way than described in the smart contract.
 			</p>
 
-			<p>CryptoAdBox.com only takes the fee when the publisher accepts an ad from the advertiser. The fee amount is defined in the smart contract.</p>
+			<p>PsiForms.com only takes the fee when the publisher accepts an ad from the advertiser. The fee amount is defined in the smart contract.</p>
 
-			<p>CryptoAdBox.com shares the JavaScript widget for publishers which should be embedded on the publisher website.</p>
+			<p>PsiForms.com shares the JavaScript widget for publishers which should be embedded on the publisher website.</p>
 
 			<p>
 				We do our best to keep our service high-quality and available. But we inform you, in case of technical problems, hacker attack, network errors or unpredictable events our service can be temporally unavailable.
-				In case of the unavailability, CryptoAdBox.com may increase the display time of advertiser ads to reward the inaccessibility.
+				In case of the unavailability, PsiForms.com may increase the display time of advertiser ads to reward the inaccessibility.
 			</p>
 
 			<p>The publisher obliges himself to keep the JavaScript widget on his website until advertiser ads are valid.</p>
@@ -45,7 +45,7 @@ export function TermsRoute() {
 
 			<p>You agree not to attempt to probe, scan, or test the vulnerability of any system or network any security or authentication measures.</p>
 
-			<p>CryptoAdBox.com can block access to our service when these rules are not followed.</p>
+			<p>PsiForms.com can block access to our service when these rules are not followed.</p>
 		</article>
 	);
 }

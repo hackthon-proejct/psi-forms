@@ -36,12 +36,14 @@ export function FormBlock(props: FormBlockProps) {
 			<div className="section-body">
 				{props.children}
 
-				{error && <p className="form-error">Error: {error}</p>}
+				{error &&
+					<div className="form-error">Error: {error}</div>}
 
 				<div className="form-submit">
 					<button className="btn btn-black btn-large" onClick={onSubmited}>
+						{!isProcessing && <i className="ico ico-mr ico-save-white" />}
+						{isProcessing && <i className="ico ico-mr ico-refresh-white ico-rotating" />}
 						{props.submitText}
-						{isProcessing && <i className="ico ico-reload-white ico-ml ico-rotating" />}
 					</button>
 				</div>
 			</div>

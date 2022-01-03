@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 
+import { Arr } from '../../core/Arr';
 import { HexFormatter } from '../../core/HexFormatter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { RequestStatus } from '../../storage/Model';
@@ -20,19 +21,18 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 
 	const [statuses, setStatuses] = useState<(boolean | null)[]>();
 	const state = useLoader<RequestDto[]>(props.loader);
-	const hasAnyPending = state.value?.some(r => r.status === RequestStatus.pending);
 
-	function setStatus(status: boolean | null, index: number) {
+	function setStatus(status: boolean | null, requestId: string) {
 		if (!state.value) {
 			return;
 		}
-
+		const index = state.value.findIndex(r => r.id === requestId);
 		const newStatuses = statuses ? [...statuses] : state.value.map(() => null);
-		newStatuses[index] = status;
+		newStatuses[index] = (newStatuses[index] === status) ? null : status;
 		setStatuses(newStatuses);
 	}
 
-	async function save() {
+	async function save(formId: string) {
 		if (!account) {
 			alert('Your wallet is not connected.');
 			return;
@@ -44,106 +44,118 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 		const newStatuses = state.value
 			.map((request, index) => {
 				return {
-					requestId: request.id,
-					formId: request.formId,
-					status: statuses[index]
-				};
+					request,
+					status: statuses ? statuses[index] : null,
+					index
+				}
 			})
-			.filter(s => s.status !== null) as { requestId: string, formId: string, status: boolean }[];
-		if (newStatuses.length < 1) {
-			alert('Nothing changed!');
-			return;
-		}
+			.filter(r => r.request.formId === formId && r.status !== null);
 
-		const uniqueFormIds = Array.from(new Set(newStatuses.map(s => s.formId)));
-		if (uniqueFormIds.length > 1) {
-			if (!window.confirm(`This operation requires ${uniqueFormIds.length} blockchain transactions. It's OK?`)) {
-				return;
-			}
-		}
+		try {
+			const client = new BlockchainContractClient(account);
 
-		for (let formId of uniqueFormIds) {
-			const newFormStatuses = newStatuses.filter(s => s.formId === formId);
-			try {
-				const client = new BlockchainContractClient(account);
-
-				await client.approveOrRejectRequests(formId,
-					newFormStatuses.map(s => s.requestId),
-					newFormStatuses.map(s => s.status));
-			} catch (e) {
-				console.error(e);
-				alert('Error: ' + (e as Error).message);
-				break;
-			}
+			await client.approveOrRejectRequests(formId,
+				newStatuses.map(s => s.request.id),
+				newStatuses.map(s => s.status as boolean));
+		} catch (e) {
+			console.error(e);
+			alert('Error: ' + (e as Error).message);
 		}
 	}
 
 	return (
 		<main className="page">
 			<ConnectYourWallet />
-			<Loader state={state} element={(ads => (
-				<section className="section">
-					<div className="section-header">
-						<h2>{props.title}</h2>
+			<Loader state={state} element={(result => {
+				const requestItems = result.map((request, requestIndex) => {
+					return {
+						request,
+						status: statuses ? statuses[requestIndex] : null
+					};
+				});
+				const forms = Arr.distinct(result.map(r => r.formId))
+					.map(formId => {
+						return {
+							formId,
+							hasAnyChange: requestItems.some(ri => ri.status !== null),
+							requestItems: requestItems.filter(r => r.request.formId === formId)
+						};
+					});
 
-						<div className="actions">
-							<button className="btn btn-white" title="Refresh" onClick={state.reload}>
-								<i className="ico ico-refresh-black" />
-							</button>
+				return (
+					<section className="section">
+						<div className="section-header">
+							<h2>{props.title}</h2>
+
+							<div className="actions">
+								<button className="btn btn-white" title="Refresh" onClick={state.reload}>
+									<i className="ico ico-refresh-black" />
+								</button>
+							</div>
 						</div>
-					</div>
-					<div className="section-body">
-						<table>
-							<thead>
-								<tr>
-									<th>Status</th>
-									<th>Request ID</th>
-									<th>Form ID</th>
-									<th>Created At</th>
-									<th>New Status</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-							{ads.map((request, index) =>
-								<tr key={index}>
-									<td><RequestStatusInfo status={request.status} /></td>
-									<td>{HexFormatter.formatHex(request.id)}</td>
-									<td>{HexFormatter.formatHex(request.formId)}</td>
-									<td>
-										{request.createdAt.toLocaleString()}
-									</td>
-									<td className="text-center">
-										{request.status === RequestStatus.pending &&
-											<Fragment>
-												{statuses && statuses[index] !== null &&
-													<Fragment>
-														{statuses && statuses[index]
-															? <span className="status status-success">Approved</span>
-															: <span className="status status-danger">Rejected</span>}
-													</Fragment>}
-											</Fragment>}
-										{request.status !== RequestStatus.pending && <Fragment>-</Fragment>}
-									</td>
-									<td>
-										{(request.status === RequestStatus.pending) &&
-											<Fragment>
-												<button className="btn btn-white" onClick={() => setStatus(true, index)}>Approve</button>
-												{' '}
-												<button className="btn btn-white" onClick={() => setStatus(false, index)}>Reject</button>
-											</Fragment>}
-									</td>
-								</tr>)}
-							</tbody>
-						</table>
+						<div className="section-body">
+							{forms.length === 0 &&
+								<div className="no-content">No requests.</div>}
+							{forms.map(form =>
+								<Fragment key={form.formId}>
+									<div className="requests-header">
+										<h3>{HexFormatter.formatHex(form.formId)}</h3>
 
-						{hasAnyPending &&
-							<div className="list-submit">
-								<button className="btn btn-black btn-large" onClick={save}>Save</button>
-							</div>}
-					</div>
-				</section>
-			))} />
+										{form.hasAnyChange &&
+											<div className="actions">
+												<button className="btn btn-black btn-large" onClick={() => save(form.formId)}>
+													<i className="ico ico-mr ico-save-white" />
+													Save
+												</button>
+											</div>}
+									</div>
+									{form.requestItems.map(ri =>
+										<div className="request-details" key={ri.request.id}>
+											<div className="details">
+												<div className="basic-info">
+													<RequestStatusInfo status={ri.request.status} />
+													<strong className="value">1.2345 AVAX</strong>
+												</div>
+												<div className="meta-info">
+													<span className="meta">
+														{'created '}
+														<em>{ri.request.createdAt.toLocaleString()}</em>
+														{' by '}
+														<em>{HexFormatter.formatHex(ri.request.sender)}</em>
+													</span>
+													{(ri.request.status === RequestStatus.pending) &&
+														<span className="actions">
+															{' '}
+															<button className={'btn btn-small ' + (ri.status === true ? 'btn-black' : 'btn-white')} onClick={() => setStatus(true, ri.request.id)}>Approve</button>
+															{' '}
+															<button className={'btn btn-small ' + (ri.status === false ? 'btn-black' : 'btn-white')} onClick={() => setStatus(false, ri.request.id)}>Reject</button>
+														</span>}
+												</div>
+											</div>
+											<div className="values">
+												<table>
+													<tbody>
+														<tr>
+															<td width={'30%'}>E-mail</td>
+															<td>
+																<a href={'mailto:' + ri.request.email}>{ri.request.email}</a>
+															</td>
+														</tr>
+														{ri.request.fields.map((field, findex) =>
+															<tr key={findex}>
+																<td>{field.label}</td>
+																<td>{field.value}</td>
+															</tr>)}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									)}
+								</Fragment>)}
+						</div>
+					</section>
+				);
+			})} />
 		</main>
 	);
 }
