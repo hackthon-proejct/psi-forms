@@ -40,7 +40,7 @@ export function StorageFormEditor(props: StorageFormEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Form" submitText="Edit Form" onSubmit={onSubmit}>
+		<FormBlock title="Edit Form" submitText="Save" onSubmit={onSubmit}>
 			<BasicsFormGroup isReadonly={false} name={form.name} description={form.description}
 				onChange={onBasicsChanged} />
 			<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />

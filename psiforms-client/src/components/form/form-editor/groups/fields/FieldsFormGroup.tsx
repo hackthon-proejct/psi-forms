@@ -28,16 +28,22 @@ export function FieldsFormGroup(props: FieldsFormGroupProps) {
 
 	return (
 		<div className="form-section">
-			<h4>Custom fields</h4>
+			<div className="form-section-header">
+				<h3>Custom fields</h3>
 
+				<div className="actions">
+					<button className="btn btn-small btn-black" onClick={() => addFieldClicked(FieldType.text)}>Add Text</button>{' '}
+					<button className="btn btn-small btn-black" onClick={() => addFieldClicked(FieldType.number)}>Add Number</button>{' '}
+					<button className="btn btn-small btn-black" onClick={() => addFieldClicked(FieldType.file)}>Add File</button>
+				</div>
+			</div>
+
+			{props.fields.length === 0 &&
+				<div className="form-group">
+					No custom fields.
+				</div>}
 			{props.fields.map((fm, index) =>
 				<FieldEditor key={index} index={index} field={fm} onChanged={onFieldChanged} onDeleteClicked={deleteFieldClicked} />)}
-
-			<div>
-				<button className="btn btn-black" onClick={() => addFieldClicked(FieldType.text)}>Add Text</button>
-				<button className="btn btn-black" onClick={() => addFieldClicked(FieldType.number)}>Add Number</button>
-				<button className="btn btn-black" onClick={() => addFieldClicked(FieldType.file)}>Add File</button>
-			</div>
 		</div>
 	);
 }

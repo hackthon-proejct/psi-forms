@@ -46,7 +46,7 @@ export function ReceiptEditor(props: ReceiptEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Receipt of Form" submitText="Edit Receipt" onSubmit={onSubmit}>
+		<FormBlock title="Edit Receipt of Form" submitText="Save" onSubmit={onSubmit}>
 			<ReceiptGroup requireApproval={props.requireApproval} preReceipt={state.preReceipt} postReceipt={state.postReceipt}
 				onPreReceiptChange={onPreReceiptChange} onPostReceiptChange={onPostReceiptChange} />
 		</FormBlock>

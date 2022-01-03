@@ -18,14 +18,19 @@ export function BasicsFormGroup(props: BasicsFormGroupProps) {
 
 	return (
 		<div className="form-section">
-			<div className="form-group">
-				<label>Name *</label>
-				<input type="text" value={props.name} readOnly={props.isReadonly} onChange={e => onNameChanged(e.target.value)} />
+			<div className="form-section-header">
+				<h3>General</h3>
 			</div>
+			<div className="form-section-body">
+				<div className="form-group">
+					<label>Name *</label>
+					<input type="text" value={props.name} readOnly={props.isReadonly} onChange={e => onNameChanged(e.target.value)} />
+				</div>
 
-			<div className="form-group">
-				<label>Description *</label>
-				<input type="text" value={props.description} readOnly={props.isReadonly} onChange={e => onDescriptionChanged(e.target.value)} />
+				<div className="form-group">
+					<label>Description *</label>
+					<input type="text" value={props.description} readOnly={props.isReadonly} onChange={e => onDescriptionChanged(e.target.value)} />
+				</div>
 			</div>
 		</div>
 	);

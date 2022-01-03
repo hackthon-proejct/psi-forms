@@ -64,7 +64,14 @@ export function NewFormEditor(props: NewFormEditorProps) {
 					onPreReceiptChange={setPreReceipt} onPostReceiptChange={setPostReceipt} />
 			</FormBlock>
 
-			<FormGenerator form={form} />
+			<section className="section">
+				<div className="section-header">
+					<h2>Form Preview</h2>
+				</div>
+				<div className="section-body">
+					<FormGenerator form={form} />
+				</div>
+			</section>
 		</Fragment>
 	);
 }

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Web3 from 'web3';
 
 import { Form } from '../../components/form/Form';
@@ -12,7 +11,6 @@ import { StorageClient } from '../../storage/StorageClient';
 export function CreateFormRoute() {
 
 	const wallet = useWallet();
-	const createdForm = true;
 
 	async function save(form: Form, preReceipt: PreReceipt, postReceipt: PostReceipt): Promise<boolean> {
 		const account = wallet.getAccount();
@@ -53,21 +51,10 @@ export function CreateFormRoute() {
 		return false;
 	}
 
-	function onCreateNextClicked() {
-	}
-
 	return (
-		<Fragment>
+		<main className="page">
 			<ConnectYourWallet />
 			<NewFormEditor onSave={save} />
-			{createdForm &&
-				<Fragment>
-					<section className="form">
-						<div className="form-submit">
-							<button className="btn btn-black btn-large" onClick={onCreateNextClicked}>Create Next</button>
-						</div>
-					</section>
-				</Fragment>}
-		</Fragment>
+		</main>
 	);
 }

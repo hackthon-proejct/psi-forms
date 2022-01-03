@@ -56,37 +56,43 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 		<Fragment>
 			{props.requireApproval &&
 				<div className="form-section">
-					<h4>After Submission &amp; Payment</h4>
-
-					<div className="form-group">
-						<label>Message</label>
-						<input type="text" value={props.preReceipt.message} onChange={e => onPreMessageChanged(e.target.value)} />
-						<span>This message is not visible for your customer until confirmed payment on blockchain.</span>
+					<div className="form-section-header">
+						<h3>After Submission &amp; Payment</h3>
+					</div>
+					<div className="form-section-body">
+						<div className="form-group">
+							<label>Message</label>
+							<textarea value={props.preReceipt.message} onChange={e => onPreMessageChanged(e.target.value)} />
+							<span>This message is not visible for your customer until confirmed payment on blockchain.</span>
+						</div>
 					</div>
 				</div>}
 
 			<div className="form-section">
-				<h4>{props.requireApproval ? 'After Approval' : 'After Submission & Payment'}</h4>
-
-				<div className="form-group">
-					<label>Message</label>
-					<input type="text" value={props.postReceipt.message} onChange={e => onPostMessageChanged(e.target.value)} />
-					<span>This message is not visible for your customer until confirmed payment on blockchain and your approval.</span>
+				<div className="form-section-header">
+					<h3>{props.requireApproval ? 'After Approval' : 'After Submission & Payment'}</h3>
 				</div>
+				<div className="form-section-body">
+					<div className="form-group">
+						<label>Message</label>
+						<textarea value={props.postReceipt.message} onChange={e => onPostMessageChanged(e.target.value)} />
+						<span>This message is not visible for your customer until confirmed payment on blockchain and your approval.</span>
+					</div>
 
-				<div className="form-group">
-					<label>Files to Download ({files.length} files)</label>
-					<input type="file" onChange={e => onUploaded(e.target)} />
+					<div className="form-group">
+						<label>Files to Download ({files.length} files)</label>
+						<input type="file" onChange={e => onUploaded(e.target)} />
 
-					<ul>
-					{files.map((file) =>
-						<li key={file.id}>&bull;
-							{file.url
-								? <a href={file.url} target="_blank" rel="noreferrer">{file.name}</a>
-								: <span>{file.name}</span>}
-							{' '}({Math.round(file.size / 1024)} KB){' '}
-						<button onClick={() => onFileDeleted(file.id)}>x</button></li>)}
-					</ul>
+						<ul>
+						{files.map((file) =>
+							<li key={file.id}>&bull;
+								{file.url
+									? <a href={file.url} target="_blank" rel="noreferrer">{file.name}</a>
+									: <span>{file.name}</span>}
+								{' '}({Math.round(file.size / 1024)} KB){' '}
+							<button onClick={() => onFileDeleted(file.id)}>x</button></li>)}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</Fragment>

@@ -43,11 +43,11 @@ export function EditStorageFormRoute() {
 	}
 	return (
 		<Loader state={state} element={(result => (
-			<React.Fragment>
+			<main className="page">
 				<ConnectYourWallet requiredNetworkId={1} />
 				{result?.form &&
 					<StorageFormEditor name={result.form.name} description={result.form.description} fields={result.form.fields} onSave={save} />}
-			</React.Fragment>
+			</main>
 		))} />
 	);
 }

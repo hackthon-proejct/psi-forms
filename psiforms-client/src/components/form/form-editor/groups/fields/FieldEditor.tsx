@@ -35,8 +35,12 @@ export function FieldEditor(props: FieldEditorProps) {
 	}
 
 	return (
-		<div className="form-section">
-			<h4>{props.field.type} <button onClick={onDeleteClicked}>x</button></h4>
+		<div className="form-section-body">
+			<span className="form-section-body-title">{props.field.type}</span>
+			<span className="form-section-body-close">
+				<button onClick={onDeleteClicked} className="close">x</button>
+			</span>
+
 			{Editor()}
 		</div>
 	);

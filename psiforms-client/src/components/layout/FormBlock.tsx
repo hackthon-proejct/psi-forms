@@ -29,18 +29,21 @@ export function FormBlock(props: FormBlockProps) {
 	}
 
 	return (
-		<section className="form">
-			<h2>{props.title}</h2>
+		<section className="section">
+			<div className="section-header">
+				<h2>{props.title}</h2>
+			</div>
+			<div className="section-body">
+				{props.children}
 
-			{props.children}
+				{error && <p className="form-error">Error: {error}</p>}
 
-			{error && <p className="form-error">Error: {error}</p>}
-
-			<div className="form-submit">
-				<button className="btn btn-black btn-large" onClick={onSubmited}>
-					{props.submitText}
-					{isProcessing && <i className="ico ico-reload-white ico-ml ico-rotating" />}
-				</button>
+				<div className="form-submit">
+					<button className="btn btn-black btn-large" onClick={onSubmited}>
+						{props.submitText}
+						{isProcessing && <i className="ico ico-reload-white ico-ml ico-rotating" />}
+					</button>
+				</div>
 			</div>
 		</section>
 	);

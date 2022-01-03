@@ -44,12 +44,12 @@ export function EditBlockchainFormRoute() {
 	}
 	return (
 		<Loader state={state} element={(result => (
-			<React.Fragment>
+			<main className="page">
 				<ConnectYourWallet requiredNetworkId={1} />
 				{result?.form &&
 					<BlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
 						onSave={save} />}
-			</React.Fragment>
+			</main>
 		))} />
 	);
 }

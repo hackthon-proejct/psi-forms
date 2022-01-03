@@ -29,7 +29,7 @@ export function BlockchainFormEditor(props: BlockchainFormEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Earnings of Form" submitText="Edit Form" onSubmit={onSubmit}>
+		<FormBlock title="Edit Earnings of Form" submitText="Save" onSubmit={onSubmit}>
 			<PricingFormGroup isReadonly={false} form={form} onChange={setForm} />
 		</FormBlock>
 	);

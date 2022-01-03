@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
-body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input {margin: 0; padding: 0; border: 0; list-style-type: none;}
+body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input, textarea {margin: 0; padding: 0; border: 0; list-style-type: none;}
 strong, em {font-weight: normal; font-style: normal;}
 a {text-decoration: none; color: #000;}
 
@@ -64,6 +64,7 @@ $screen-padding: 10px;
 
 .btn {display: inline-block; padding: 12px 20px; cursor: pointer; vertical-align: middle; text-decoration: none !important; border-radius: $radius;
 	transition: opacity 150ms linear; background: green;}
+.btn-small {padding: 6px 12px;}
 .btn:hover {opacity: 0.7;}
 .btn-black {color: #FFF; background: #000;
 	background: linear-gradient(90deg, #000 0%, #313131 100%);}
@@ -80,7 +81,7 @@ $screen-padding: 10px;
 
 /* main */
 
-html, body, code, h1, h2, h3, h4, h5, input, button, select {font: 14px/1.3em Inter, 'Open Sans', Verdana, Tahoma; font-weight: 500;}
+html, body, code, h1, h2, h3, h4, h5, input, textarea, button, select {font: 14px/1.3em Inter, 'Open Sans', Verdana, Tahoma; font-weight: 500;}
 
 body {color: #000; min-height: 100%; background: #151515;}
 .main {background: #FFF;}
@@ -256,10 +257,20 @@ body {color: #000; min-height: 100%; background: #151515;}
 	.section-header {
 		& {position: relative; text-align: center; padding: 30px 0;}
 		h2 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.045em;}
-		.actions {position: absolute; top: 50%; right: 0; margin-top: -20px;}
+
+		@media #{$desktop} {
+			.actions {position: absolute; top: 50%; right: 0; margin-top: -20px;}
+		}
+		@media #{$phone} {
+			.actions {padding: 10px 0 0;}
+		}
 	}
 
-	.section-body {background: #FFF; padding: 10px; border-radius: $radius;}
+	.section-body {
+		& {background: #FFF; padding: 10px; border-radius: $radius;}
+		a {text-decoration: underline;}
+		a:hover {text-decoration: none;}
+	}
 }
 
 .page {
@@ -267,3 +278,41 @@ body {color: #000; min-height: 100%; background: #151515;}
 
 	.wallet-alert {color: #FFF; padding: 15px; text-align: center; background: linear-gradient(90deg, #000 0%, #313131 100%);}
 }
+
+.table {
+	& {overflow: auto;}
+	table {width: 100%; min-width: 700px; border-spacing: 4px 4px;}
+	th {padding: 12px 8px; background: #000; color: #FFF; border-radius: $radius / 2;}
+	td {padding: 8px; background: #F6F6F6; border-radius: $radius / 2;}
+	td.actions {width: 1%; white-space: nowrap;}
+}
+
+.form-section {
+	.form-section-header {
+		& {position: relative; padding: 15px 0 0;}
+		h3 {@include auto-font-size(22px); font-weight: 700;}
+
+		@media #{$desktop} {
+			.actions {position: absolute; top: 15px; right: 0;}
+		}
+		@media #{$phone} {
+			.actions {padding: 10px 0;}
+		}
+	}
+	.form-section-body {
+		& {position: relative; background: #F6F6F6; padding: 10px 10px 0; margin-top: 15px; border-radius: $radius / 2;}
+
+		.form-section-body-title {position: absolute; left: 50%; top: -10px; width: 100px; margin-left: -50px; padding: 5px 10px; @include font-size(12px); border-radius: $radius; text-align: center; background: #C5C5C5; color: #575757;}
+		.form-section-body-close {position: absolute; top: -10px; right: 0;}
+		.form-section-body-close .close {width: 30px; height: 30px; color: #FFF; background: #D72633; border-radius: 50% 50%; cursor: pointer;}
+		.form-section-body-close .close:hover {background: #A2212C;}
+	}
+}
+.form-group {
+	& {padding: 0 0 10px;}
+	label {display: block; padding: 0 10px 10px;}
+	label.checkbox {padding: 5px 0; cursor: pointer;}
+	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: $radius / 2;}
+	textarea {resize: vertical;}
+}
+.form-submit {padding: 15px 0 5px; text-align: center;}

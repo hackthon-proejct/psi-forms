@@ -33,43 +33,45 @@ export function MyFormsRoute() {
 						<h2>My Forms</h2>
 
 						<div className="actions">
+							<Link to={`/create-form`} className="btn btn-white">Create Form</Link>
+							{' '}
 							<button className="btn btn-white" title="Refresh" onClick={onRefreshClicked}>
 								<i className="ico ico-refresh-black" />
 							</button>
 						</div>
 					</div>
 					<div className="section-body">
-						<table>
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th></th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								{adBoxes.map(ab =>
-									<tr key={ab.id}>
-										<td>
-											{ab.name}
-										</td>
-										<td>
-											<Link to={`/forms/${ab.id}/requests`} className="btn btn-white">Requests</Link>
-										</td>
-										<td className="actions">
-											<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-white">Edit Earnings</Link>
-											{' '}
-											<Link to={`/forms/${ab.id}/storage`} className="btn btn-white">Edit Description</Link>
-											{' '}
-											<Link to={`/forms/${ab.id}/receipt`} className="btn btn-white">Edit Receipt</Link>
-											{' '}
-											<Link to={`/forms/${ab.id}`} className="btn btn-white" title="Submit Form">
-												<i className="ico ico-purchase-black" />
-											</Link>
-										</td>
-									</tr>)}
-							</tbody>
-						</table>
+
+						<div className="table">
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Editing</th>
+										<th>Requests</th>
+									</tr>
+								</thead>
+								<tbody>
+									{adBoxes.map(ab =>
+										<tr key={ab.id}>
+											<td>
+												<Link to={`/forms/${ab.id}`}>{ab.name}</Link>
+											</td>
+											<td className="actions">
+												<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-small btn-white">Edit Earnings</Link>
+												{' '}
+												<Link to={`/forms/${ab.id}/storage`} className="btn btn-small btn-white">Edit Description</Link>
+												{' '}
+												<Link to={`/forms/${ab.id}/receipt`} className="btn btn-small btn-white">Edit Receipt</Link>
+											</td>
+											<td className="actions">
+												<Link to={`/forms/${ab.id}/requests`} className="btn btn-small btn-white">Requests</Link>
+											</td>
+										</tr>)}
+								</tbody>
+							</table>
+						</div>
+
 					</div>
 				</section>
 			))} />

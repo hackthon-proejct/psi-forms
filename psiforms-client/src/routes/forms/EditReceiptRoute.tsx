@@ -45,11 +45,11 @@ export function EditReceiptRoute() {
 	}
 	return (
 		<Loader state={state} element={(result => (
-			<React.Fragment>
+			<main className="page">
 				<ConnectYourWallet requiredNetworkId={1} />
 				<ReceiptEditor requireApproval={!!result.preReceipt} preMessage={result.preReceipt?.message}
 					postMessage={result.postReceipt.message} postFiles={result.postReceipt.files} onSave={onSave} />
-			</React.Fragment>
+			</main>
 		))} />
 	);
 }

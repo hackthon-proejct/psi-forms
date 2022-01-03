@@ -51,43 +51,45 @@ export function PricingFormGroup(props: PricingFormGroupProps) {
 	return (
 		<Fragment>
 			<div className="form-section">
-				<h4>Availability</h4>
-
-				<div className="form-group">
-					<label>Is Enabled *</label>
-					<input type="checkbox" checked={props.form.isEnabled} onChange={onIsEnabledChanged} />
+				<div className="form-section-header">
+					<h3>Availability</h3>
+				</div>
+				<div className="form-section-body">
+					<div className="form-group">
+						<label>Is Enabled *</label>
+						<input type="checkbox" checked={props.form.isEnabled} onChange={onIsEnabledChanged} />
+					</div>
 				</div>
 			</div>
 			<div className="form-section">
-				<h4>Pricing</h4>
-
-				<div className="form-group">
-					<label>Item price *</label>
-					<input type="number" value={unitPriceDecimal} readOnly={props.isReadonly} onChange={e => onItemPriceChanged(e.target.value)} />
+				<div className="form-section-header">
+					<h3>Pricing</h3>
 				</div>
+				<div className="form-section-body">
+					<div className="form-group">
+						<label>Item price *</label>
+						<input type="number" value={unitPriceDecimal} readOnly={props.isReadonly} onChange={e => onItemPriceChanged(e.target.value)} />
+					</div>
 
-				<div className="form-group">
-					<label>
-						<input type="checkbox" checked={hasQuantity} disabled={props.isReadonly} onChange={onHasQuantityChanged} />
-						Allow customers to choose a quantity
-					</label>
-				</div>
+					<div className="form-group">
+						<label className="checkbox">
+							<input type="checkbox" checked={hasQuantity} disabled={props.isReadonly} onChange={onHasQuantityChanged} />
+							{' '}Allow customers to choose a quantity
+						</label>
+					</div>
 
-				{hasQuantity &&
-					<div className="row">
-						<div className="col">
+					{hasQuantity &&
+						<Fragment>
 							<div className="form-group">
 								<label>Min quantity *</label>
 								<input type="number" value={props.form.minQuantity} readOnly={props.isReadonly} onChange={e => onMinQuantityChange(e.target.value)} />
 							</div>
-						</div>
-						<div className="col">
 							<div className="form-group">
 								<label>Max quantity *</label>
 								<input type="number" value={props.form.maxQuantity} readOnly={props.isReadonly} onChange={e => onMaxQuantityChange(e.target.value)} />
 							</div>
-						</div>
-					</div>}
+						</Fragment>}
+				</div>
 			</div>
 		</Fragment>
 	);
