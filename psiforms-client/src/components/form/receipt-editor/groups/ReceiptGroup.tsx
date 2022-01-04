@@ -5,6 +5,7 @@ import { PostReceipt, PreReceipt } from '../../Receipt';
 
 export interface ReceiptGroupProps {
 	requireApproval: boolean;
+	isReadonly: boolean;
 	preReceipt: PreReceipt;
 	postReceipt: PostReceipt;
 	onPreReceiptChange: (preReceipt: PreReceipt) => void;
@@ -62,7 +63,7 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 					<div className="form-section-body">
 						<div className="form-group">
 							<label>Message</label>
-							<textarea value={props.preReceipt.message} onChange={e => onPreMessageChanged(e.target.value)} />
+							<textarea value={props.preReceipt.message} readOnly={props.isReadonly} onChange={e => onPreMessageChanged(e.target.value)} />
 							<span>This message is not visible for your customer until confirmed payment on blockchain.</span>
 						</div>
 					</div>
@@ -75,7 +76,7 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 				<div className="form-section-body">
 					<div className="form-group">
 						<label>Message</label>
-						<textarea value={props.postReceipt.message} onChange={e => onPostMessageChanged(e.target.value)} />
+						<textarea value={props.postReceipt.message} readOnly={props.isReadonly} onChange={e => onPostMessageChanged(e.target.value)} />
 						<span>This message is not visible for your customer until confirmed payment on blockchain and your approval.</span>
 					</div>
 

@@ -334,6 +334,7 @@ body {color: #000; min-height: 100%; background: #151515;}
 	label {display: block; padding: 0 10px 10px;}
 	label.checkbox {padding: 5px 0; cursor: pointer;}
 	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: $radius / 2;}
+	input[type=text]:read-only, input[type=number]:read-only, textarea:disabled {color: #7E7E7E;}
 	textarea {resize: vertical;}
 }
 .form-error {padding: 15px 0 5px; color: #D7143B; @include font-size(16px); font-weight: bold;}

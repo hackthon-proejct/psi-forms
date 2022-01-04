@@ -19,13 +19,13 @@ export function initializeNewForm(): Form {
 
 export function initializePreReceipt(): PreReceipt {
 	return {
-		message: ''
+		message: 'Thanks for filling my form.'
 	};
 }
 
 export function initializePostReceipt(): PostReceipt {
 	return {
-		message: '',
+		message: 'Your request is approved.',
 		files: StorageClient.createFilesContainer()
 	};
 }

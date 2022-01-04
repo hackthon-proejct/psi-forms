@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Loader, useLoader } from '../../components/layout/Loader';
@@ -27,7 +27,7 @@ export function MyFormsRoute() {
 	return (
 		<main className="page">
 			<ConnectYourWallet />
-			<Loader state={state} element={(adBoxes => (
+			<Loader state={state} element={(forms => (
 				<section className="section">
 					<div className="section-header">
 						<h2>My Forms</h2>
@@ -42,35 +42,38 @@ export function MyFormsRoute() {
 					</div>
 					<div className="section-body">
 
-						<div className="table">
-							<table>
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Editing</th>
-										<th>Requests</th>
-									</tr>
-								</thead>
-								<tbody>
-									{adBoxes.map(ab =>
-										<tr key={ab.id}>
-											<td>
-												<Link to={`/forms/${ab.id}`}>{ab.name}</Link>
-											</td>
-											<td className="actions">
-												<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-small btn-white">Edit Earnings</Link>
-												{' '}
-												<Link to={`/forms/${ab.id}/storage`} className="btn btn-small btn-white">Edit Description</Link>
-												{' '}
-												<Link to={`/forms/${ab.id}/receipt`} className="btn btn-small btn-white">Edit Receipt</Link>
-											</td>
-											<td className="actions">
-												<Link to={`/forms/${ab.id}/requests`} className="btn btn-small btn-white">Requests</Link>
-											</td>
-										</tr>)}
-								</tbody>
-							</table>
-						</div>
+						{forms.length === 0 &&
+							<div className="no-content">No forms.</div>}
+						{forms.length > 0 &&
+							<div className="table">
+								<table>
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Editing</th>
+											<th>Requests</th>
+										</tr>
+									</thead>
+									<tbody>
+										{forms.map(ab =>
+											<tr key={ab.id}>
+												<td>
+													<Link to={`/forms/${ab.id}`}>{ab.name}</Link>
+												</td>
+												<td className="actions">
+													<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-small btn-white">Edit Earnings</Link>
+													{' '}
+													<Link to={`/forms/${ab.id}/storage`} className="btn btn-small btn-white">Edit Description</Link>
+													{' '}
+													<Link to={`/forms/${ab.id}/receipt`} className="btn btn-small btn-white">Edit Receipt</Link>
+												</td>
+												<td className="actions">
+													<Link to={`/forms/${ab.id}/requests`} className="btn btn-small btn-white">Requests</Link>
+												</td>
+											</tr>)}
+									</tbody>
+								</table>
+							</div>}
 
 					</div>
 				</section>

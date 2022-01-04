@@ -52,7 +52,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 
 	return (
 		<Fragment>
-			<FormBlock title="Create Form" submitText="Create Form" onSubmit={onSubmited}>
+			<FormBlock title="Create Form" submitText="Create" onSubmit={onSubmited}>
 				<BasicsFormGroup isReadonly={isReadonly} name={form.name} description={form.description}
 					onChange={onBasicsChanged} />
 				<PricingFormGroup isReadonly={isReadonly} form={form}
@@ -60,7 +60,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 				<ApprovalFormGroup isReadonly={isReadonly} requireApproval={form.requireApproval}
 					onChange={onRequireApprovalChanged} />
 				<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />
-				<ReceiptGroup requireApproval={form.requireApproval} preReceipt={preReceipt} postReceipt={postReceipt}
+				<ReceiptGroup requireApproval={form.requireApproval} isReadonly={isReadonly} preReceipt={preReceipt} postReceipt={postReceipt}
 					onPreReceiptChange={setPreReceipt} onPostReceiptChange={setPostReceipt} />
 			</FormBlock>
 

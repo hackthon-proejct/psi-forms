@@ -39,8 +39,10 @@ export function FieldsFormGroup(props: FieldsFormGroupProps) {
 			</div>
 
 			{props.fields.length === 0 &&
-				<div className="form-group">
-					No custom fields.
+				<div className="form-section-body">
+					<div className="form-group">
+						No custom fields.
+					</div>
 				</div>}
 			{props.fields.map((fm, index) =>
 				<FieldEditor key={index} index={index} field={fm} onChanged={onFieldChanged} onDeleteClicked={deleteFieldClicked} />)}

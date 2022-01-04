@@ -113,7 +113,7 @@ export function WalletContext(props: { children: JSX.Element[] }) {
 
 	function getAccount(): Account {
 		if (!account) {
-			throw new Error('Account is not initialized.');
+			throw new Error('Wallet is not connected.');
 		}
 		return account;
 	}

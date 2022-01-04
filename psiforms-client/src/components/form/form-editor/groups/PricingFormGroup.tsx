@@ -56,8 +56,10 @@ export function PricingFormGroup(props: PricingFormGroupProps) {
 				</div>
 				<div className="form-section-body">
 					<div className="form-group">
-						<label>Is Enabled *</label>
-						<input type="checkbox" checked={props.form.isEnabled} onChange={onIsEnabledChanged} />
+						<label className="checkbox">
+							<input type="checkbox" disabled={props.isReadonly} checked={props.form.isEnabled} onChange={onIsEnabledChanged} />
+							{' '}Is Form Enabled
+						</label>
 					</div>
 				</div>
 			</div>
@@ -68,7 +70,7 @@ export function PricingFormGroup(props: PricingFormGroupProps) {
 				<div className="form-section-body">
 					<div className="form-group">
 						<label>Item price *</label>
-						<input type="number" value={unitPriceDecimal} readOnly={props.isReadonly} onChange={e => onItemPriceChanged(e.target.value)} />
+						<input type="number" value={unitPriceDecimal} readOnly={props.isReadonly} step={0.01} onChange={e => onItemPriceChanged(e.target.value)} />
 					</div>
 
 					<div className="form-group">
