@@ -68,9 +68,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 				<div className="section-header">
 					<h2>Form Preview</h2>
 				</div>
-				<div className="section-body">
-					<FormGenerator form={form} />
-				</div>
+				<FormGenerator form={form} />
 			</section>
 		</Fragment>
 	);

@@ -31,7 +31,7 @@ export function useWallet(): Wallet {
 	return wallet;
 }
 
-export function WalletContext(props: { children: JSX.Element[] }) {
+export function WalletContext(props: { children: JSX.Element }) {
 
 	const [account, setAccount] = useState<Account>();
 

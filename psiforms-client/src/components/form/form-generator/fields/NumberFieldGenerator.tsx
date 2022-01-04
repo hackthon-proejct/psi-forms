@@ -19,8 +19,8 @@ export function NumberFieldGenerator(props: NumberFieldGeneratorProps) {
 	}
 
 	return (
-		<div className="xform-field">
-			<label>{props.field.label}{props.field.isRequired && ' *'}</label>
+		<div className="web-form-group">
+			<label>{props.field.label}:{props.field.isRequired && ' *'}</label>
 			<input type="number" value={props.value || ''} min={props.field.min} max={props.field.max} onChange={e => onChanged(e.target.value)} />
 		</div>
 	);

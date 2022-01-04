@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 
@@ -26,12 +27,7 @@ export function App() {
 	return (
 		<HashRouter>
 			<WalletContext>
-				<div className="main">
-					<Header />
-					{/*<CookiesBar />*/}
-					<AppRoutes />
-				</div>
-				<Footer />
+				<AppRoutes />
 			</WalletContext>
 		</HashRouter>
 	);
@@ -40,26 +36,47 @@ export function App() {
 function AppRoutes() {
 	return (
 		<Routes>
-			<Route path="/" element={<Meta title={null} element={<HomeRoute />} />} />
+			<Route path="/" element={<AppPage title={null} element={<HomeRoute />} />} />
 
-			<Route path="/create-form" element={<Meta title="Create Form" element={<CreateFormRoute />} />} />
-			<Route path="/forms" element={<Meta title="My Forms" element={<MyFormsRoute />} />} />
-			<Route path="/forms/:id/blockchain" element={<Meta title="Edit Earnings of Form" element={<EditBlockchainFormRoute />} />} />
-			<Route path="/forms/:id/storage" element={<Meta title="Edit Form" element={<EditStorageFormRoute />} />} />
-			<Route path="/forms/:id/receipt" element={<Meta title="Edit Receipt" element={<EditReceiptRoute />} />} />
+			<Route path="/create-form" element={<AppPage title="Create Form" element={<CreateFormRoute />} />} />
+			<Route path="/forms" element={<AppPage title="My Forms" element={<MyFormsRoute />} />} />
+			<Route path="/forms/:id/blockchain" element={<AppPage title="Edit Earnings of Form" element={<EditBlockchainFormRoute />} />} />
+			<Route path="/forms/:id/storage" element={<AppPage title="Edit Form" element={<EditStorageFormRoute />} />} />
+			<Route path="/forms/:id/receipt" element={<AppPage title="Edit Receipt" element={<EditReceiptRoute />} />} />
 
-			<Route path="/forms/:id" element={<Meta title="Submit Form" element={<SubmitFormRoute />} />} />
-			<Route path="/forms/:id/pre-receipt" element={<Meta title="Form Submitted" element={<PreReceiptRoute />} />} />
-			<Route path="/forms/:id/post-receipt" element={<Meta title="Form Receipt" element={<PostReceiptRoute />} />} />
-			<Route path="/forms/:id/requests" element={<Meta title="Form Requests" element={<FormRequestsRoute />} />} />
-			<Route path="/requests" element={<Meta title="My Requests" element={<MyRequestsRoute />} />} />
-			<Route path="/pending-requests" element={<Meta title="Pending Requests" element={<PendingRequestsRoute />} />} />
+			<Route path="/forms/:id" element={<WebPage title="Submit Form" element={<SubmitFormRoute />} />} />
+			<Route path="/forms/:id/pre-receipt" element={<WebPage title="Form Submitted" element={<PreReceiptRoute />} />} />
+			<Route path="/forms/:id/post-receipt" element={<WebPage title="Form Receipt" element={<PostReceiptRoute />} />} />
 
-			<Route path="/terms" element={<Meta title="Terms and Conditions" element={<TermsRoute />} />} />
-			<Route path="/how-it-works" element={<Meta title="How it Works" element={<HowItWorksRoute />} />} />
-			<Route path="/examples" element={<Meta title="Widget Examples" element={<Examples />} />} />
-			<Route path="/faq" element={<Meta title="FAQ" element={<FAQ />} />} />
+			<Route path="/forms/:id/requests" element={<AppPage title="Form Requests" element={<FormRequestsRoute />} />} />
+			<Route path="/requests" element={<AppPage title="My Requests" element={<MyRequestsRoute />} />} />
+			<Route path="/pending-requests" element={<AppPage title="Pending Requests" element={<PendingRequestsRoute />} />} />
+
+			<Route path="/terms" element={<AppPage title="Terms and Conditions" element={<TermsRoute />} />} />
+			<Route path="/how-it-works" element={<AppPage title="How it Works" element={<HowItWorksRoute />} />} />
+			<Route path="/examples" element={<AppPage title="Widget Examples" element={<Examples />} />} />
+			<Route path="/faq" element={<AppPage title="FAQ" element={<FAQ />} />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
+	);
+}
+
+function AppPage(props: { title: string | null, element: JSX.Element }) {
+	return (
+		<div className="app">
+			<div className="app-main">
+				<Header />
+				<Meta title={props.title} element={props.element} />
+			</div>
+			<Footer />
+		</div>
+	);
+}
+
+function WebPage(props: { title: string | null, element: JSX.Element }) {
+	return (
+		<div className="web">
+			<Meta title={props.title} element={props.element} />
+		</div>
 	);
 }

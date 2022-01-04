@@ -85,36 +85,43 @@ export function FormGenerator(props: FormGeneratorProps) {
 	}
 
 	return (
-		<div className="form xform">
-			<h4>{props.form.name}</h4>
-			<p>{props.form.description}</p>
+		<div className="web-form">
+			<div className="web-form-cover"></div>
 
-			<div className="xform-field">
-				<label>E-mail: *</label>
-				<input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+			<div className="web-form-body">
+				<h2>{props.form.name}</h2>
+
+				<span className="price">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</span>
+
+				<div className="description">
+					<p>{props.form.description}</p>
+				</div>
+
+				<div className="web-form-group">
+					<label>E-mail: *</label>
+					<input type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+				</div>
+
+				{props.form.maxQuantity > 1 &&
+					<div className="web-form-group">
+						<label>Quantity: *</label>
+						<input type="number" value={quantityText} min={props.form.minQuantity} max={props.form.maxQuantity} step={1} onChange={e => setQuantityText(e.target.value)} />
+					</div>}
+
+				{props.form.fields.map((fm, index) =>
+					<FieldGenerator key={index}
+						field={fm}
+						value={fieldStates[index]?.value}
+						files={fieldStates[index]?.files}
+						onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
+						onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
 			</div>
+			<div className="web-form-submit">
+				{error && <p className="form-error">Error: {error}</p>}
 
-			{props.form.maxQuantity > 1 &&
-				<div className="xform-field">
-					<label>Quantity: *</label>
-					<input type="number" value={quantityText} min={props.form.minQuantity} max={props.form.maxQuantity} step={1} onChange={e => setQuantityText(e.target.value)} />
-				</div>}
-
-			<p>Total price: {UnitsConverter.toDecimalETH(totalPrice)} AVAX</p>
-
-			{props.form.fields.map((fm, index) =>
-				<FieldGenerator key={index}
-					field={fm}
-					value={fieldStates[index]?.value}
-					files={fieldStates[index]?.files}
-					onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
-					onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
-
-			{error && <p className="form-error">Error: {error}</p>}
-
-			<div className="xform-footer">
-				<button onClick={onSubmit}>
-					{props.form.requireApproval ? 'Send for approval' : 'Send'}
+				<button onClick={onSubmit} className="btn btn-black">
+					{props.form.requireApproval ? 'Pay and Send for Approval' : 'Pay and Send'}
+					<i className="ico ico-ml ico-arrow-right-white" />
 				</button>
 			</div>
 		</div>

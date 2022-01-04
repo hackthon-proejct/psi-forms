@@ -13,8 +13,8 @@ export function TextFieldGenerator(props: TextFieldGeneratorProps) {
 	}
 
 	return (
-		<div className="xform-field">
-			<label>{props.field.label}{props.field.isRequired && ' *'}</label>
+		<div className="web-form-group">
+			<label>{props.field.label}:{props.field.isRequired && ' *'}</label>
 			<input type="text" value={props.value || ''} onChange={e => onChanged(e.target.value)} />
 		</div>
 	);
