@@ -6,6 +6,7 @@ import { validateEmail } from '../../../core/EmailValidator';
 import { UnitsConverter } from '../../../core/UnitsConverter';
 import { TokenPriceService } from '../../../services/TokenPriceService';
 import { FilesContainer } from '../../../storage/FilesContainer';
+import { SimpleMarkdown } from '../../SimpleMarkdown';
 import { Form } from '../Form';
 import { FieldGenerator } from './fields/FieldGenerator';
 import { FormData } from './FormData';
@@ -111,10 +112,21 @@ export function FormGenerator(props: FormGeneratorProps) {
 			<div className="web-form-cover"></div>
 
 			<div className="web-form-body">
-				<h2>{props.form.name}</h2>
+				<div className="title">
+					<h2>{props.form.name}</h2>
+
+					<div className="total-price">
+						<em>Total Price:</em>{' '}
+						<strong className="value">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</strong>
+						{totalPriceUsd !== null &&
+							<Fragment>
+								{' '}(${totalPriceUsd.toFixed(2)})
+							</Fragment>}
+					</div>
+				</div>
 
 				<div className="description">
-					{props.form.description.split(/(\r\n|\n)/).map((p, index) => <p key={index}>{p}</p>)}
+					<SimpleMarkdown text={props.form.description} />
 				</div>
 
 				<div className="web-form-group">
@@ -135,16 +147,6 @@ export function FormGenerator(props: FormGeneratorProps) {
 						files={fieldStates[index]?.files}
 						onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
 						onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
-
-
-				<div className="total-price">
-					<em>Total Price:</em>{' '}
-					<strong className="value">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</strong>
-					{totalPriceUsd !== null &&
-						<Fragment>
-							{' '}(${totalPriceUsd.toFixed(2)})
-						</Fragment>}
-				</div>
 			</div>
 			{error &&
 				<p className="web-form-error">Error: {error}</p>}

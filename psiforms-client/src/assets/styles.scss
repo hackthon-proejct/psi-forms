@@ -60,14 +60,17 @@ $screen-padding: 10px;
 	& {@include gradient-text(#49B0C9, #4F8DCB);}
 }
 
+@mixin gradient-background($a, $b) {
+	& {background: $a; background: linear-gradient(90deg, $a 0%, $b 100%);}
+}
 @mixin black-gradient-background() {
-	& {background: linear-gradient(90deg, #000 0%, #313131 100%);}
+	& {@include gradient-background(#000, #313131);}
 }
 @mixin orange-gradient-background() {
-	& {background: linear-gradient(90deg, #D7143B 0%, #D76215 100%);}
+	& {@include gradient-background(#D7143B, #D76215);}
 }
 @mixin violet-gradient-background() {
-	& {background: linear-gradient(90deg, #2528BD 0%, #8B24BD 100%);}
+	& {@include gradient-background(#2528BD, #8B24BD);}
 }
 
 .btn {display: inline-block; padding: 12px 20px; cursor: pointer; vertical-align: middle; text-decoration: none !important; border-radius: $radius;
@@ -388,38 +391,54 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 /* .web */
+$web-max-width: 800px;
+
+@mixin web-centered() {
+	@media #{$desktop} {
+		& {margin: 0 auto; width: 100%; max-width: $web-max-width;}
+	}
+	@media #{$phone} {
+		& {margin: 0 $screen-padding;}
+	}
+}
+
 .web {min-height: 100vh; background: #F6F6F6; overflow: hidden;}
 
-.web-header {@include centered(); text-align: right; padding: 30px 0;}
+.web-header {@include web-centered(); text-align: right; padding: 30px 0;}
 .web-footer {
 	& {text-align: center; padding: 30px 0; color: #929292;}
 	a:hover {text-decoration: underline;}
 }
 
 .web-form {
-	& {@include centered(); background: #FFF; border-radius: $radius;}
+	& {@include web-centered(); background: #FFF; border-radius: $radius;}
 	.web-form-cover {@include black-gradient-background(); height: 100px; border-top-left-radius: $radius; border-top-right-radius: $radius;}
 
 	.web-form-body {
-		& {position: relative; padding: 15px;}
-		h2 {@include auto-font-size(34px); font-weight: 700; letter-spacing: -0.02em;}
-		.total-price {padding: 10px 20px; color: #FFF; @include orange-gradient-background();}
-		.total-price em {@include font-size(12px);}
-		.total-price .value {font-weight: 700;}
+		& {position: relative; padding: 15px 0;}
+		.title h2 {flex: 1; padding: 0 15px; @include auto-font-size(34px); font-weight: 700; letter-spacing: -0.02em;}
+		.title .total-price {padding: 10px 20px; color: #FFF; @include orange-gradient-background();}
+		.title .total-price em {@include font-size(12px);}
+		.title .total-price .value {font-weight: 700;}
 
-		.description {padding: 0 0 10px; @include font-size(16px); color: #767676;}
+		.description {padding: 0 15px 10px; @include font-size(16px); color: #767676;}
 		.description p {padding: 10px 0 0;}
+		.description a {text-decoration: underline;}
+		.description a:hover {text-decoration: none;}
 
 		.web-form-group {
+			& {padding: 0 15px;}
 			label {display: block; padding: 10px 0; font-weight: bold;}
 			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: $radius / 2;}
 		}
 
 		@media #{$desktop} {
-			.total-price {position: absolute; top: 10px; right: 0; border-top-left-radius: $radius; border-bottom-left-radius: $radius;}
+			.title {display: flex; align-items: center;}
+			.title h2 {flex: 1;}
+			.title .total-price {border-top-left-radius: $radius; border-bottom-left-radius: $radius;}
 		}
 		@media #{$phone} {
-			.total-price {display: inline-block; margin-top: 10px; border-radius: $radius;}
+			.title .total-price {display: inline-block; margin: 10px 15px 0; border-radius: $radius;}
 		}
 	}
 
@@ -429,5 +448,5 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 .receipt {
-	& {@include centered(); padding: 15px; background: #FFF; border-radius: $radius;}
+	& {@include web-centered(); padding: 15px; background: #FFF; border-radius: $radius;}
 }

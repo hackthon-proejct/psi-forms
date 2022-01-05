@@ -11,7 +11,6 @@ export function NumberFieldEditor(props: NumberFieldEditorProps) {
 
 	function updateField(delta: Partial<NumberField>) {
 		const newField = Object.assign({}, props.field, delta);
-		console.log(newField);
 		props.onChanged(newField);
 	}
 
