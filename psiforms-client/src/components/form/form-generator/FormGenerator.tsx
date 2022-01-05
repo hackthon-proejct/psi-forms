@@ -1,8 +1,10 @@
 import BN from 'bn.js';
+import { Fragment, useEffect } from 'react';
 import { useState } from 'react';
 
 import { validateEmail } from '../../../core/EmailValidator';
 import { UnitsConverter } from '../../../core/UnitsConverter';
+import { TokenPriceService } from '../../../services/TokenPriceService';
 import { FilesContainer } from '../../../storage/FilesContainer';
 import { Form } from '../Form';
 import { FieldGenerator } from './fields/FieldGenerator';
@@ -25,6 +27,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 	const [isProcessing, setIsProcessing] = useState<boolean>(() => false);
 	const [email, setEmail] = useState<string>(() => '');
 	const [quantityText, setQuantityText] = useState<string>(() => `${props.form.minQuantity}`);
+	const [ethUsdPrice, setEthUsdPrice] = useState<number>();
 	const [fieldStates, setFieldStates] = useState<FieldState[]>(() => props.form.fields.map(f => {
 		return {
 			value: undefined,
@@ -34,6 +37,15 @@ export function FormGenerator(props: FormGeneratorProps) {
 	const quantity = parseInt(quantityText, 10);
 	const totalPrice = props.form.unitPrice
 		.mul(new BN(isNaN(quantity) ? 1 : Math.abs(quantity)));
+	const totalPriceUsd = ethUsdPrice
+		? UnitsConverter.toDecimalETH(totalPrice) * ethUsdPrice
+		: null;
+
+	useEffect(() => {
+		TokenPriceService.getAvaxUsdPrice()
+			.then(setEthUsdPrice)
+			.catch(console.error);
+	}, []);
 
 	function onFieldValueChanged(value: string | undefined, isValid: boolean, index: number) {
 		const values = [...fieldStates];
@@ -101,10 +113,8 @@ export function FormGenerator(props: FormGeneratorProps) {
 			<div className="web-form-body">
 				<h2>{props.form.name}</h2>
 
-				<span className="price">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</span>
-
 				<div className="description">
-					{props.form.description.split(/(\r\n|\n)/).map(p => <p>{p}</p>)}
+					{props.form.description.split(/(\r\n|\n)/).map((p, index) => <p key={index}>{p}</p>)}
 				</div>
 
 				<div className="web-form-group">
@@ -125,6 +135,16 @@ export function FormGenerator(props: FormGeneratorProps) {
 						files={fieldStates[index]?.files}
 						onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
 						onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
+
+
+				<div className="total-price">
+					<em>Total Price:</em>{' '}
+					<strong className="value">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</strong>
+					{totalPriceUsd !== null &&
+						<Fragment>
+							{' '}(${totalPriceUsd.toFixed(2)})
+						</Fragment>}
+				</div>
 			</div>
 			{error &&
 				<p className="web-form-error">Error: {error}</p>}

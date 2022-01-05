@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useParams } from 'react-router';
 
 import { Receipt } from '../../components/receipt/Receipt';
@@ -8,8 +9,10 @@ export function PreReceiptRoute() {
 	const { id } = useParams();
 	const formId = id as string;
 
-	return <PreReceiptLoader formId={formId}
-		loader={(id) => StorageClient.tryGetPreReceipt(id)}
+	return <PreReceiptLoader
+		loader={useCallback(() => {
+			return StorageClient.tryGetPreReceipt(formId);
+		}, [formId])}
 		element={receipt => {
 			return <Receipt message={receipt.message} />;
 		}} />;
