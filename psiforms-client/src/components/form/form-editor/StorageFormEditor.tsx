@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Field } from '../../../storage/Model';
-import { FormBlock } from '../../layout/FormBlock';
+import { FormSection } from '../../layout/FormSection';
 import { Form, StorageForm } from '../Form';
 import { BasicsFormGroup } from './groups/BasicsFormGroup';
 import { FieldsFormGroup } from './groups/fields/FieldsFormGroup';
@@ -40,10 +40,10 @@ export function StorageFormEditor(props: StorageFormEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Form" submitText="Save" onSubmit={onSubmit}>
+		<FormSection title="Edit Form" submitText="Save" onSubmit={onSubmit}>
 			<BasicsFormGroup isReadonly={false} name={form.name} description={form.description}
 				onChange={onBasicsChanged} />
 			<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />
-		</FormBlock>
+		</FormSection>
 	);
 }

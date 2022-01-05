@@ -102,6 +102,36 @@ html, body, code, h1, h2, h3, h4, h5, input, textarea, button, select {font: 14p
 html {height: 100%;}
 body, #root {color: #000; min-height: 100vh;}
 
+.wallet-connector {
+	& {position: fixed; z-index: 100;  padding: 15px; box-sizing: border-box; background: #FFF; text-align: center; border-radius: $radius; border: 1px solid #000; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);}
+	h4 {@include auto-font-size(30px); font-weight: 700;}
+	.wallets .wallet {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
+		transition: opacity 150ms linear;}
+	.wallets .wallet:hover {opacity: 0.8;}
+	.wallets .wallet strong {display: block; padding-top: 130px;}
+	.wallets .wallet-metamask {background-image: url('./logo-metamask.svg');}
+	.cancel {padding-top: 15px;}
+
+	@media #{$desktop} {
+		& {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
+	}
+	@media #{$phone} {
+		& {top: 10px; left: 10px; right: 10px;}
+	}
+}
+
+.wallet-alert {
+	&.mt {padding-top: 20px;}
+	&.mb {padding-bottom: 20px;}
+	.warning {@include centered(); color: #FFF; padding: 15px; box-sizing: border-box; text-align: center; @include black-gradient-background(); border-radius: $radius;}
+}
+
+.loading-idle {padding: 80px 0; text-align: center;}
+.loading-error {
+	& {padding: 80px 0; text-align: center;}
+	.message {padding-bottom: 10px;}
+}
+
 /* .app */
 
 @mixin dotted-desktop-nav($dotColor) {
@@ -129,24 +159,6 @@ body, #root {color: #000; min-height: 100vh;}
 		& {padding: 15px 0; text-align: center;}
 		.nav {padding: 20px 0;}
 		.nav li {display: inline-block; padding: 0 10px;}
-	}
-}
-
-.wallet-connector {
-	& {position: fixed; z-index: 100;  padding: 15px; box-sizing: border-box; background: #FFF; text-align: center; border-radius: $radius; border: 1px solid #000; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);}
-	h4 {@include auto-font-size(30px); font-weight: 700;}
-	.wallets .wallet {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
-		transition: opacity 150ms linear;}
-	.wallets .wallet:hover {opacity: 0.8;}
-	.wallets .wallet strong {display: block; padding-top: 130px;}
-	.wallets .wallet-metamask {background-image: url('./logo-metamask.svg');}
-	.cancel {padding-top: 15px;}
-
-	@media #{$desktop} {
-		& {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
-	}
-	@media #{$phone} {
-		& {top: 10px; left: 10px; right: 10px;}
 	}
 }
 
@@ -275,14 +287,6 @@ body, #root {color: #000; min-height: 100vh;}
 
 .page {background: #F6F6F6;}
 
-.wallet-alert {color: #FFF; padding: 15px; text-align: center; @include black-gradient-background();}
-
-.loading-idle {padding: 80px 0; text-align: center;}
-.loading-error {
-	& {padding: 80px 0; text-align: center;}
-	.message {padding-bottom: 10px;}
-}
-
 .section {
 	& {@include centered(); padding-bottom: 30px;}
 
@@ -386,14 +390,20 @@ body, #root {color: #000; min-height: 100vh;}
 /* .web */
 .web {min-height: 100vh; background: #F6F6F6; overflow: hidden;}
 
+.web-header {@include centered(); text-align: right; padding: 20px 0;}
+.web-footer {
+	& {text-align: center; padding: 20px 0; color: #929292;}
+	a:hover {text-decoration: underline;}
+}
+
 .web-form {
-	& {background: #FFF; max-width: 900px; width: 100%; margin: 30px auto; border-radius: $radius;}
+	& {@include centered(); background: #FFF; border-radius: $radius;}
 	.web-form-cover {@include black-gradient-background(); height: 100px; border-top-left-radius: $radius; border-top-right-radius: $radius;}
 
 	.web-form-body {
 		& {position: relative; padding: 15px;}
 		h2 {@include auto-font-size(28px); font-weight: 700; letter-spacing: -0.02em;}
-		.price {position: absolute; top: 10px; right: 0; padding: 10px 20px; font-weight: bold; color: #FFF; @include orange-gradient-background(); border-top-left-radius: $radius; border-bottom-left-radius: $radius;}
+		.price {padding: 10px 20px; font-weight: bold; color: #FFF; @include orange-gradient-background();}
 		.description {padding: 0 0 10px; color: #767676;}
 		.description p {padding: 10px 0 0;}
 
@@ -401,7 +411,20 @@ body, #root {color: #000; min-height: 100vh;}
 			label {display: block; padding: 10px 0; font-weight: bold;}
 			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: $radius / 2;}
 		}
+
+		@media #{$desktop} {
+			.price {position: absolute; top: 10px; right: 0; border-top-left-radius: $radius; border-bottom-left-radius: $radius;}
+		}
+		@media #{$phone} {
+			.price {display: inline-block; margin-top: 10px; border-radius: $radius;}
+		}
 	}
 
+	.web-form-error {padding: 15px; color: #FFF; font-weight: bold; @include orange-gradient-background();}
+
 	.web-form-submit {padding: 15px; text-align: center; background: #E8E8E8; border-bottom-left-radius: $radius; border-bottom-right-radius: $radius;}
+}
+
+.receipt {
+	& {@include centered(); padding: 15px; background: #FFF; border-radius: $radius;}
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FilePointer } from '../../../storage/Model';
 
 import { StorageClient } from '../../../storage/StorageClient';
-import { FormBlock } from '../../layout/FormBlock';
+import { FormSection } from '../../layout/FormSection';
 import { PostReceipt, PreReceipt } from '../Receipt';
 import { ReceiptGroup } from './groups/ReceiptGroup';
 
@@ -46,9 +46,9 @@ export function ReceiptEditor(props: ReceiptEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Receipt of Form" submitText="Save" onSubmit={onSubmit}>
+		<FormSection title="Edit Receipt of Form" submitText="Save" onSubmit={onSubmit}>
 			<ReceiptGroup requireApproval={props.requireApproval} isReadonly={false} preReceipt={state.preReceipt} postReceipt={state.postReceipt}
 				onPreReceiptChange={onPreReceiptChange} onPostReceiptChange={onPostReceiptChange} />
-		</FormBlock>
+		</FormSection>
 	);
 }

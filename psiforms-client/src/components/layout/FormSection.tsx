@@ -1,13 +1,13 @@
 import { ReactNode, useState } from 'react';
 
-export interface FormBlockProps {
+export interface FormSectionProps {
 	title: string;
 	submitText: string;
 	children: ReactNode;
 	onSubmit: () => Promise<boolean>;
 }
 
-export function FormBlock(props: FormBlockProps) {
+export function FormSection(props: FormSectionProps) {
 
 	const [isProcessing, setIsProcessing] = useState<boolean>(() => false);
 	const [error, setError] = useState<string>();

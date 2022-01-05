@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 
 import { Field } from '../../../storage/Model';
-import { FormBlock } from '../../layout/FormBlock';
+import { FormSection } from '../../layout/FormSection';
 import { useWallet } from '../../wallet/WalletContext';
 import { BlockchainForm, Form } from '../Form';
 import { FormGenerator } from '../form-generator/FormGenerator';
@@ -52,7 +52,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 
 	return (
 		<Fragment>
-			<FormBlock title="Create Form" submitText="Create" onSubmit={onSubmited}>
+			<FormSection title="Create Form" submitText="Create" onSubmit={onSubmited}>
 				<BasicsFormGroup isReadonly={isReadonly} name={form.name} description={form.description}
 					onChange={onBasicsChanged} />
 				<PricingFormGroup isReadonly={isReadonly} form={form}
@@ -62,7 +62,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 				<FieldsFormGroup fields={form.fields} onChange={onFieldsChanged} />
 				<ReceiptGroup requireApproval={form.requireApproval} isReadonly={isReadonly} preReceipt={preReceipt} postReceipt={postReceipt}
 					onPreReceiptChange={setPreReceipt} onPostReceiptChange={setPostReceipt} />
-			</FormBlock>
+			</FormSection>
 
 			<section className="section">
 				<div className="section-header">

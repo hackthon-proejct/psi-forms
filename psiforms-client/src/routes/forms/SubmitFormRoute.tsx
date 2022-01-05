@@ -7,6 +7,7 @@ import { Form } from '../../components/form/Form';
 import { FormData } from '../../components/form/form-generator/FormData';
 import { FormGenerator } from '../../components/form/form-generator/FormGenerator';
 import { Loader, useLoader } from '../../components/layout/Loader';
+import { Meta } from '../../components/layout/Meta';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
@@ -92,8 +93,8 @@ export function SubmitFormRoute() {
 	return (
 		<Loader state={state} element={(form =>
 			<Fragment>
-				<ConnectYourWallet requiredNetworkId={1} />
-				<FormGenerator form={form} onSave={save} />
+				<ConnectYourWallet requiredNetworkId={1} className="mb" />
+				<Meta title={form.name} element={<FormGenerator form={form} onSave={save} />} />
 			</Fragment>)} />
 	);
 }

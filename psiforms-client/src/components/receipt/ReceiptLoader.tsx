@@ -5,24 +5,24 @@ import { useWallet } from '../wallet/WalletContext';
 import { delay } from '../../core/Delay';
 import { PostReceiptDto, PreReceiptDto } from '../../storage/StorageModel';
 
-export interface ReceiptViewerProps<T> {
+export interface ReceiptLoaderProps<T> {
 	formId: string;
 	loader: (formId: string) => Promise<T | null>;
 	element: (receipt: T) => JSX.Element;
 }
 
-export function PostReceiptViewer(props: ReceiptViewerProps<PostReceiptDto>) {
-	return ReceiptViewer(props);
+export function PostReceiptLoader(props: ReceiptLoaderProps<PostReceiptDto>) {
+	return ReceiptLoader(props);
 }
 
-export function PreReceiptViewer(props: ReceiptViewerProps<PreReceiptDto>) {
-	return ReceiptViewer(props);
+export function PreReceiptLoader(props: ReceiptLoaderProps<PreReceiptDto>) {
+	return ReceiptLoader(props);
 }
 
 const ATTEMPS = 15;
 const ATTEMP_DELAY = 10000;
 
-function ReceiptViewer<T>(props: ReceiptViewerProps<T>) {
+function ReceiptLoader<T>(props: ReceiptLoaderProps<T>) {
 
 	const wallet = useWallet();
 	const account = wallet.tryGetAccount();

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { WalletConnector } from './WalletConnector';
 
-export function Header() {
+export function AppHeader() {
 	return (
 		<header className="app-header">
 			<div className="header">

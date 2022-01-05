@@ -1,10 +1,11 @@
-import { Fragment } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 
-import { Footer } from './components/layout/Footer';
-import { Header } from './components/layout/Header';
+import { AppFooter } from './components/layout/AppFooter';
+import { AppHeader } from './components/layout/AppHeader';
 import { Meta } from './components/layout/Meta';
+import { WebFooter } from './components/layout/WebFooter';
+import { WebHeader } from './components/layout/WebHeader';
 import { WalletContext } from './components/wallet/WalletContext';
 import { CreateFormRoute } from './routes/forms/CreateFormRoute';
 import { EditBlockchainFormRoute } from './routes/forms/EditBlockchainFormRoute';
@@ -65,10 +66,10 @@ function AppPage(props: { title: string | null, element: JSX.Element }) {
 	return (
 		<div className="app">
 			<div className="app-main">
-				<Header />
+				<AppHeader />
 				<Meta title={props.title} element={props.element} />
 			</div>
-			<Footer />
+			<AppFooter />
 		</div>
 	);
 }
@@ -76,7 +77,9 @@ function AppPage(props: { title: string | null, element: JSX.Element }) {
 function WebPage(props: { title: string | null, element: JSX.Element }) {
 	return (
 		<div className="web">
-			<Meta title={props.title} element={props.element} />
+			<WebHeader />
+			{props.element}
+			<WebFooter />
 		</div>
 	);
 }

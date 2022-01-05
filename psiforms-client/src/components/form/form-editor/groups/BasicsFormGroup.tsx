@@ -29,7 +29,7 @@ export function BasicsFormGroup(props: BasicsFormGroupProps) {
 
 				<div className="form-group">
 					<label>Description *</label>
-					<input type="text" value={props.description} readOnly={props.isReadonly} onChange={e => onDescriptionChanged(e.target.value)} />
+					<textarea value={props.description} readOnly={props.isReadonly} onChange={e => onDescriptionChanged(e.target.value)} />
 				</div>
 			</div>
 		</div>

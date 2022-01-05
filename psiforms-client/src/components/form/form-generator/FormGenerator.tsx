@@ -22,6 +22,7 @@ interface FieldState {
 export function FormGenerator(props: FormGeneratorProps) {
 
 	const [error, setError] = useState<string>();
+	const [isProcessing, setIsProcessing] = useState<boolean>(() => false);
 	const [email, setEmail] = useState<string>(() => '');
 	const [quantityText, setQuantityText] = useState<string>(() => `${props.form.minQuantity}`);
 	const [fieldStates, setFieldStates] = useState<FieldState[]>(() => props.form.fields.map(f => {
@@ -47,6 +48,9 @@ export function FormGenerator(props: FormGeneratorProps) {
 	}
 
 	async function onSubmit() {
+		if (isProcessing) {
+			return;
+		}
 		if (!email || !validateEmail(email)) {
 			setError('E-mail is invalid');
 			return;
@@ -80,8 +84,14 @@ export function FormGenerator(props: FormGeneratorProps) {
 			})
 		};
 
-		setError(undefined);
-		await props.onSave(data);
+		setIsProcessing(true);
+		try {
+			await props.onSave(data);
+		} catch (e) {
+			console.error(e);
+			setError((e as Error).message);
+		}
+		setIsProcessing(false);
 	}
 
 	return (
@@ -94,7 +104,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 				<span className="price">{UnitsConverter.toDecimalETH(totalPrice)} AVAX</span>
 
 				<div className="description">
-					<p>{props.form.description}</p>
+					{props.form.description.split(/(\r\n|\n)/).map(p => <p>{p}</p>)}
 				</div>
 
 				<div className="web-form-group">
@@ -116,12 +126,14 @@ export function FormGenerator(props: FormGeneratorProps) {
 						onValueChanged={(v, iv) => onFieldValueChanged(v, iv, index)}
 						onFilesChanged={(f, iv) => onFieldFilesChanged(f, iv, index)} />)}
 			</div>
+			{error &&
+				<p className="web-form-error">Error: {error}</p>}
 			<div className="web-form-submit">
-				{error && <p className="form-error">Error: {error}</p>}
-
 				<button onClick={onSubmit} className="btn btn-black">
 					{props.form.requireApproval ? 'Pay and Send for Approval' : 'Pay and Send'}
-					<i className="ico ico-ml ico-arrow-right-white" />
+					<i className={isProcessing ?
+						'ico ico-ml ico-refresh-white ico-rotating' :
+						'ico ico-ml ico-arrow-right-white'} />
 				</button>
 			</div>
 		</div>

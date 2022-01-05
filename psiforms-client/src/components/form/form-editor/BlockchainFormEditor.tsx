@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Web3 from 'web3';
 
-import { FormBlock } from '../../layout/FormBlock';
+import { FormSection } from '../../layout/FormSection';
 import { BlockchainForm } from '../Form';
 import { PricingFormGroup } from './groups/PricingFormGroup';
 
@@ -29,8 +29,8 @@ export function BlockchainFormEditor(props: BlockchainFormEditorProps) {
 	}
 
 	return (
-		<FormBlock title="Edit Earnings of Form" submitText="Save" onSubmit={onSubmit}>
+		<FormSection title="Edit Earnings of Form" submitText="Save" onSubmit={onSubmit}>
 			<PricingFormGroup isReadonly={false} form={form} onChange={setForm} />
-		</FormBlock>
+		</FormSection>
 	);
 }

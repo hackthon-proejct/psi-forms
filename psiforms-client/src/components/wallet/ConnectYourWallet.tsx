@@ -4,18 +4,22 @@ import { getNetworkInfo, networkInfos } from '../../core/NetworkInfo';
 import { useWallet } from './WalletContext';
 
 export interface ConnectYourWalletProps {
+	className?: string;
 	requiredNetworkId?: number;
 }
 
 export function ConnectYourWallet(props: ConnectYourWalletProps) {
 
 	const wallet = useWallet();
+	const className = 'wallet-alert ' + (props.className || 'mt');
 
 	if (!wallet.isConnected()) {
 		return (
-			<div className="wallet-alert">
-				<i className="ico ico-mr ico-wallet-white" />
-				Your wallet is not connected.
+			<div className={className}>
+				<div className="warning">
+					<i className="ico ico-mr ico-wallet-white" />
+					Your wallet is not connected.
+				</div>
 			</div>
 		);
 	}
@@ -29,14 +33,11 @@ export function ConnectYourWallet(props: ConnectYourWalletProps) {
 	if (requiredNetworkId !== undefined && account.network.id !== requiredNetworkId) {
 		const networkInfo = getNetworkInfo(requiredNetworkId);
 		return (
-			<div className="wallet-alert">
-				<p>
-					<i className="ico ico-mr ico-chain-white" />
-					Sorry, you have connected unsupported blockchain network.
-				</p>
-				<button className="btn btn-white" onClick={() => wallet.switchNetwork(networkInfo)}>
-					Switch to {networkInfo.name}
-				</button>
+			<div className={className}>
+				<div className="warning">
+					Sorry, you have connected unsupported blockchain network. Please switch to Avalanche Network.
+					{false && <button className="btn btn-small btn-white" onClick={() => wallet.switchNetwork(networkInfo)}>Switch</button>}
+				</div>
 			</div>
 		)
 	}
