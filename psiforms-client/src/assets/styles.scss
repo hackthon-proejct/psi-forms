@@ -16,15 +16,6 @@ $phone: '(max-width: 819px)';
 $radius: 20px;
 $screen-padding: 10px;
 
-@mixin centered() {
-	@media #{$desktop} {
-		& {margin: 0 auto; width: 100%; max-width: $app-max-width;}
-	}
-	@media #{$phone} {
-		& {margin: 0 $screen-padding;}
-	}
-}
-
 @mixin font-size($size, $lineHeight: 1.3em) {
 	& {font-size: $size; line-height: $lineHeight;}
 }
@@ -126,7 +117,7 @@ body, #root {color: #000; min-height: 100vh;}
 .wallet-alert {
 	&.mt {padding-top: 20px;}
 	&.mb {padding-bottom: 20px;}
-	.warning {@include centered(); color: #FFF; padding: 15px; box-sizing: border-box; text-align: center; @include black-gradient-background(); border-radius: $radius;}
+	.warning {color: #FFF; padding: 15px; box-sizing: border-box; text-align: center; @include black-gradient-background(); border-radius: $radius;}
 }
 
 .loading-idle {padding: 80px 0; text-align: center;}
@@ -137,18 +128,28 @@ body, #root {color: #000; min-height: 100vh;}
 
 /* .app */
 
-@mixin dotted-desktop-nav($dotColor) {
+@mixin app-centered() {
+	@media #{$desktop} {
+		& {margin: 0 auto; width: 100%; max-width: $app-max-width;}
+	}
+	@media #{$phone} {
+		& {margin: 0 $screen-padding;}
+	}
+}
+
+@mixin dotted-desktop-nav($dot-color) {
 	@media #{$desktop} {
 		& li {position: relative; display: inline-block; margin: 0 22px;}
-		& li::before {position: absolute; content: ' '; display: block; top: 50%; left: -26px; margin-top: -4px; width: 8px; height: 8px; border-radius: 50% 50%; background: $dotColor;}
+		& li::before {position: absolute; content: ' '; display: block; top: 50%; left: -26px; margin-top: -4px; width: 8px; height: 8px; border-radius: 50% 50%; background: $dot-color;}
 		& li:first-child::before {display: none;}
 	}
 }
 
 .app {min-height: 100vh; background: #151515;}
+.app-main {background: #FFF;}
 
 .app-header .header {
-	& {@include centered();}
+	& {@include app-centered();}
 	.logo h1 {@include font-size(36px); font-weight: 700; letter-spacing: -0.03em;}
 	.nav {flex: 1; text-align: center; @include dotted-desktop-nav(#E7E7E7);}
 	.nav li a:hover {text-decoration: underline;}
@@ -165,7 +166,8 @@ body, #root {color: #000; min-height: 100vh;}
 	}
 }
 
-.app-main {background: #FFF;}
+.app-page {background: #F6F6F6; padding: 0 0 30px;}
+.app-page-body {@include app-centered();}
 
 .app-footer {
 	& {text-align: center; color: #414141;}
@@ -197,7 +199,8 @@ body, #root {color: #000; min-height: 100vh;}
 /* home */
 
 .home-intro {
-	& {@include centered();}
+	& {@include app-centered();}
+
 	.info h4 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.05em; margin-bottom: -10px; @include orange-gradient-text();}
 	.info h3 {@include auto-font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
 	.info .subtitle {padding: 15px 0 25px; @include auto-font-size(20px); color: #929292;}
@@ -216,7 +219,8 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 .home-possibilities {
-	& {@include centered();}
+	& {@include app-centered();}
+
 	ul li {position: relative; padding-left: 60px;}
 	ul li:nth-child(1) .line {@include orange-gradient-text();}
 	ul li:nth-child(2) .line {@include violet-gradient-text();}
@@ -238,6 +242,8 @@ body, #root {color: #000; min-height: 100vh;}
 .home-gray {background: #F6F6F6; overflow: hidden;}
 
 .home-pricing {
+	& {@include app-centered();}
+
 	.info h3 {@include auto-font-size(90px); font-weight: 700; letter-spacing: -0.04em; @include orange-gradient-text();}
 	.info h4 {@include auto-font-size(50px); font-weight: 700; letter-spacing: -0.035em;}
 	.info p {padding-top: 10px; color: #929292; @include auto-font-size(18px);}
@@ -254,7 +260,8 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 .home-statistics {
-	& {@include centered();}
+	& {@include app-centered();}
+
 	ul li .value {display: block; margin: 0 20px; padding: 15px 0; text-align: center; background: #FFF; border-radius: $radius;}
 	ul li .value .text {@include auto-font-size(56px); font-weight: 700; letter-spacing: -0.035em;}
 	ul li:nth-child(1) .value .text {@include orange-gradient-text();}
@@ -288,11 +295,7 @@ body, #root {color: #000; min-height: 100vh;}
 
 /* section */
 
-.page {background: #F6F6F6; padding-bottom: 30px;}
-
 .section {
-	& {@include centered();}
-
 	.section-header {
 		& {position: relative; text-align: center; padding: 30px 0;}
 		h2 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.045em;}
@@ -393,25 +396,22 @@ body, #root {color: #000; min-height: 100vh;}
 /* .web */
 $web-max-width: 800px;
 
-@mixin web-centered() {
-	@media #{$desktop} {
-		& {margin: 0 auto; width: 100%; max-width: $web-max-width;}
-	}
-	@media #{$phone} {
-		& {margin: 0 $screen-padding;}
-	}
+.web {min-height: 100vh; background: #F6F6F6; overflow: hidden;}
+@media #{$desktop} {
+	.web-main {margin: 0 auto; width: 100%; max-width: $web-max-width;}
+}
+@media #{$phone} {
+	.web-main {margin: 0 $screen-padding;}
 }
 
-.web {min-height: 100vh; background: #F6F6F6; overflow: hidden;}
-
-.web-header {@include web-centered(); text-align: right; padding: 30px 0;}
+.web-header {text-align: right; padding: 30px 0;}
 .web-footer {
 	& {text-align: center; padding: 30px 0; color: #929292;}
 	a:hover {text-decoration: underline;}
 }
 
 .web-form {
-	& {@include web-centered(); background: #FFF; border-radius: $radius;}
+	& {margin: 0 auto; width: 100%; max-width: $web-max-width; background: #FFF; border-radius: $radius;}
 	.web-form-cover {@include black-gradient-background(); height: 100px; border-top-left-radius: $radius; border-top-right-radius: $radius;}
 
 	.web-form-body {
@@ -448,5 +448,13 @@ $web-max-width: 800px;
 }
 
 .receipt {
-	& {@include web-centered(); padding: 15px; background: #FFF; border-radius: $radius;}
+	& {padding: 5px 15px 15px; background: #FFF; border-radius: $radius;}
+	.description {@include font-size(16px); color: #767676;}
+	.description p {padding: 10px 0 0;}
+	.description a {text-decoration: underline;}
+	.description a:hover {text-decoration: none;}
+
+	.files {padding-top: 20px;}
+	.files a {text-decoration: underline;}
+	.files a:hover {text-decoration: none;}
 }

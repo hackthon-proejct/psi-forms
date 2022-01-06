@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 import { StorageForm } from '../../components/form/Form';
 import { StorageFormEditor } from '../../components/form/form-editor/StorageFormEditor';
+import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
@@ -43,11 +44,11 @@ export function EditStorageFormRoute() {
 	}
 	return (
 		<Loader state={state} element={(result => (
-			<main className="page">
+			<AppPage>
 				<ConnectYourWallet requiredNetworkId={1} />
 				{result?.form &&
 					<StorageFormEditor name={result.form.name} description={result.form.description} fields={result.form.fields} onSave={save} />}
-			</main>
+			</AppPage>
 		))} />
 	);
 }

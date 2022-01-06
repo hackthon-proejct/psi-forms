@@ -5,7 +5,7 @@ export interface SimpleMarkdownProps {
 }
 
 export function SimpleMarkdown(props: SimpleMarkdownProps) {
-	const paragraphs = props.text.split(/[\r\n][\r\n]/g);
+	const paragraphs = props.text.split(/[\r\n][\r\n]+/g);
 	let key = 0;
 
 	return (

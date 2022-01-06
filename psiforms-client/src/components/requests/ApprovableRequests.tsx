@@ -5,6 +5,7 @@ import { HexFormatter } from '../../core/HexFormatter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { RequestStatus } from '../../storage/Model';
 import { RequestDto } from '../../storage/StorageModel';
+import { AppPage } from '../layout/AppPage';
 import { Loader, useLoader } from '../layout/Loader';
 import { ConnectYourWallet } from '../wallet/ConnectYourWallet';
 import { useWallet } from '../wallet/WalletContext';
@@ -64,7 +65,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 	}
 
 	return (
-		<main className="page">
+		<AppPage>
 			<ConnectYourWallet />
 			<Loader state={state} element={(result => {
 				const requestItems = result.map((request, requestIndex) => {
@@ -156,6 +157,6 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 					</section>
 				);
 			})} />
-		</main>
+		</AppPage>
 	);
 }

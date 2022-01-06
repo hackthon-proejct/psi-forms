@@ -77,9 +77,11 @@ function AppPage(props: { title: string | null, element: JSX.Element }) {
 function WebPage(props: { title: string | null, element: JSX.Element }) {
 	return (
 		<div className="web">
-			<WebHeader />
-			{props.element}
-			<WebFooter />
+			<div className="web-main">
+				<WebHeader />
+				{props.element}
+				<WebFooter />
+			</div>
 		</div>
 	);
 }

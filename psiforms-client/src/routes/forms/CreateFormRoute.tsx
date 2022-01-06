@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import { Form } from '../../components/form/Form';
 import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
 import { PostReceipt, PreReceipt } from '../../components/form/Receipt';
+import { AppPage } from '../../components/layout/AppPage';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
@@ -60,9 +61,9 @@ export function CreateFormRoute() {
 		return <Navigate to={navigateTo} />
 	}
 	return (
-		<main className="page">
+		<AppPage>
 			<ConnectYourWallet />
 			<NewFormEditor onSave={save} />
-		</main>
+		</AppPage>
 	);
 }

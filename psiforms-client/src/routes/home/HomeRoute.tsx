@@ -1,9 +1,8 @@
-import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 export function HomeRoute() {
 	return (
-		<Fragment>
+		<section className="home">
 			<div className="home-intro">
 				<div className="info">
 					<h4>Sell Your Digital Files</h4>
@@ -99,6 +98,6 @@ export function HomeRoute() {
 					<i className="ico ico-ml ico-arrow-right-white" />
 				</Link>
 			</div>
-		</Fragment>
+		</section>
 	);
 }

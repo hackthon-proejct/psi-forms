@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
@@ -25,7 +26,7 @@ export function MyFormsRoute() {
 	}
 
 	return (
-		<main className="page">
+		<AppPage>
 			<ConnectYourWallet />
 			<Loader state={state} element={(forms => (
 				<section className="section">
@@ -78,6 +79,6 @@ export function MyFormsRoute() {
 					</div>
 				</section>
 			))} />
-		</main>
+		</AppPage>
 	);
 }

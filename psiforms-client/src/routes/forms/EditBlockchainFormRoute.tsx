@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 import { BlockchainForm } from '../../components/form/Form';
 import { BlockchainFormEditor } from '../../components/form/form-editor/BlockchainFormEditor';
+import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
@@ -43,13 +44,15 @@ export function EditBlockchainFormRoute() {
 		return <Navigate to={navigateTo} />
 	}
 	return (
-		<Loader state={state} element={(result => (
-			<main className="page">
-				<ConnectYourWallet requiredNetworkId={1} />
-				{result?.form &&
-					<BlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
-						onSave={save} />}
-			</main>
-		))} />
+		<AppPage>
+			<Loader state={state} element={(result => (
+				<Fragment>
+					<ConnectYourWallet requiredNetworkId={1} />
+					{result?.form &&
+						<BlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
+							onSave={save} />}
+				</Fragment>
+			))} />
+		</AppPage>
 	);
 }

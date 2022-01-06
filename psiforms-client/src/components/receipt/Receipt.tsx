@@ -1,5 +1,5 @@
 import { FilePointer } from '../../storage/Model';
-
+import { SimpleMarkdown } from '../SimpleMarkdown';
 
 export interface ReceiptProps {
 	message: string;
@@ -9,10 +9,18 @@ export interface ReceiptProps {
 export function Receipt(props: ReceiptProps) {
 	return (
 		<div className="receipt">
-			<p>{props.message}</p>
+			<div className="description">
+				<SimpleMarkdown text={props.message} />
+			</div>
 
-			{props.files && props.files.map((file, index) =>
-				<a key={index} href={file.url}>${file.name}</a>)}
+			{props.files &&
+				<ul className="files">
+				{props.files.map((file, index) =>
+					<li>
+						<a key={index} href={file.url}>{file.name}</a>
+						{' '}({Math.round(file.size / 1024)} KB)
+					</li>)}
+				</ul>}
 		</div>
 	);
 }

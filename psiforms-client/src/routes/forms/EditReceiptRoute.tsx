@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 import { PostReceipt, PreReceipt } from '../../components/form/Receipt';
 import { ReceiptEditor } from '../../components/form/receipt-editor/ReceiptEditor';
+import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
-import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { StorageClient } from '../../storage/StorageClient';
 
@@ -45,11 +45,10 @@ export function EditReceiptRoute() {
 	}
 	return (
 		<Loader state={state} element={(result => (
-			<main className="page">
-				<ConnectYourWallet requiredNetworkId={1} />
+			<AppPage>
 				<ReceiptEditor requireApproval={!!result.preReceipt} preMessage={result.preReceipt?.message}
 					postMessage={result.postReceipt.message} postFiles={result.postReceipt.files} onSave={onSave} />
-			</main>
+			</AppPage>
 		))} />
 	);
 }

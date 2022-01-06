@@ -1,5 +1,6 @@
 import { Fragment, useCallback } from 'react';
 
+import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { RequestStatusInfo } from '../../components/requests/RequestStatusInfo';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
@@ -50,7 +51,7 @@ export function MyRequestsRoute() {
 	}
 
 	return (
-		<main className="page">
+		<AppPage>
 			<ConnectYourWallet />
 			<Loader state={state} element={(requests => (
 				<section className="section">
@@ -97,6 +98,6 @@ export function MyRequestsRoute() {
 					</div>
 				</section>
 			))} />
-		</main>
+		</AppPage>
 	);
 }
