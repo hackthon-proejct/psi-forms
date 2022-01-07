@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 
 import { Field } from '../../../storage/Model';
 import { FormSection } from '../../layout/FormSection';
+import { Receipt } from '../../receipt/Receipt';
 import { useWallet } from '../../wallet/WalletContext';
 import { BlockchainForm, Form } from '../Form';
 import { FormGenerator } from '../form-generator/FormGenerator';
@@ -69,6 +70,21 @@ export function NewFormEditor(props: NewFormEditorProps) {
 					<h2>Form Preview</h2>
 				</div>
 				<FormGenerator form={form} />
+			</section>
+
+			{form.requireApproval &&
+				<section className="section">
+					<div className="section-header">
+						<h2>After Submit Preview</h2>
+					</div>
+					<Receipt message={preReceipt.message} />
+				</section>}
+
+			<section className="section">
+				<div className="section-header">
+					<h2>Receipt Preview</h2>
+				</div>
+				<Receipt message={postReceipt.message} files={postReceipt.files.toPointers()} />
 			</section>
 		</Fragment>
 	);

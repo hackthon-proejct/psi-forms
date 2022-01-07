@@ -13,7 +13,7 @@ export function Receipt(props: ReceiptProps) {
 				<SimpleMarkdown text={props.message} />
 			</div>
 
-			{props.files &&
+			{props.files && props.files.length > 0 &&
 				<ul className="files">
 				{props.files.map((file, index) =>
 					<li>
