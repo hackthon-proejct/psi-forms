@@ -89,6 +89,14 @@ $screen-padding: 10px;
 	to { transform: rotate(359deg); }
 }
 
+
+.status {
+	& {display: inline-block; padding: 7px 15px; border-radius: $radius; white-space: nowrap; vertical-align: middle;}
+	&.status-idle {color: #FFF; @include black-gradient-background();}
+	&.status-success {color: #FFF; @include violet-gradient-background();}
+	&.status-danger {color: #FFF; @include orange-gradient-background();}
+}
+
 /* main */
 
 html, body, code, h1, h2, h3, h4, h5, input, textarea, button, select {font: 14px/1.3em Inter, 'Open Sans', Verdana, Tahoma; font-weight: 500;}
@@ -356,12 +364,6 @@ body, #root {color: #000; min-height: 100vh;}
 }
 .form-error {padding: 15px 0 5px; color: #D7143B; @include font-size(16px); font-weight: bold;}
 .form-submit {padding: 15px 0 5px; text-align: center;}
-
-.status {
-	& {display: inline-block; padding: 7px 15px; border-radius: $radius; vertical-align: middle;}
-	&.status-idle {color: #FFF; @include orange-gradient-background();}
-	&.status-success {color: #FFF; @include violet-gradient-background();}
-}
 
 .requests-header {
 	h3 {@include auto-font-size(28px); font-weight: 700; letter-spacing: -0.02em;}

@@ -53,8 +53,8 @@ export interface FieldData {
 // request
 
 export enum RequestStatus {
-	pending,
-	rejected,
-	approved,
-	rolledBack
+	pending = 1,
+	approved = 2,
+	rejected = 3,
+	rolledBack = 4
 }

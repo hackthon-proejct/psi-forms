@@ -2,6 +2,7 @@ import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 
 export interface StorageFormDto {
 	id: string;
+	isEnabled: null | boolean;
 	name: string;
 	description: string;
 	fields: Field[];

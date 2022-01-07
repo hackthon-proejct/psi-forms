@@ -50,6 +50,7 @@ export function MyFormsRoute() {
 								<table>
 									<thead>
 										<tr>
+											<th>Status</th>
 											<th>Name</th>
 											<th>Editing</th>
 											<th>Requests</th>
@@ -58,6 +59,11 @@ export function MyFormsRoute() {
 									<tbody>
 										{forms.map(ab =>
 											<tr key={ab.id}>
+												<td width={'1%'}>
+													{ab.isEnabled === null && <span className="status status-idle">Syncing</span>}
+													{ab.isEnabled === true && <span className="status status-success">Enabled</span>}
+													{ab.isEnabled === false && <span className="status status-danger">Disabled</span>}
+												</td>
 												<td>
 													<Link to={`/forms/${ab.id}`}>{ab.name}</Link>
 												</td>

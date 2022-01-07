@@ -1,6 +1,6 @@
 import Moralis from 'moralis';
 
-import { Field, FieldData, FilePointer } from './Model';
+import { Field, FieldData, FilePointer } from '../Model';
 
 export class FormEntity extends Moralis.Object {
 
@@ -11,11 +11,20 @@ export class FormEntity extends Moralis.Object {
 		entity.set('name', name);
 		entity.set('description', description);
 		entity.set('fields', fields);
+
+		entity.set('isEnabled', null);
+		entity.set('requireApproval', null);
 		return entity;
 	}
 
 	public constructor() {
 		super('Form');
+	}
+
+	public static update(entity: FormEntity, name: string, description: string, fields: Field[]) {
+		entity.set('name', name);
+		entity.set('description', description);
+		entity.set('fields', fields);
 	}
 
 	public setAccess(creatorUserId: string) {
@@ -96,6 +105,9 @@ export class RequestEntity extends Moralis.Object {
 		entity.set('formId', formId);
 		entity.set('email', email);
 		entity.set('fields', fields);
+
+		entity.set('creator', null);
+		entity.set('status', null);
 		return entity;
 	}
 

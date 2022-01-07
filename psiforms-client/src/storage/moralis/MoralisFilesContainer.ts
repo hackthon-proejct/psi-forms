@@ -1,7 +1,7 @@
 import Moralis from 'moralis';
 
-import { DeltaFile, DeltaFileStatus, FilesContainer } from './FilesContainer';
-import { FilePointer } from './Model';
+import { DeltaFile, DeltaFileStatus, FilesContainer } from '../FilesContainer';
+import { FilePointer } from '../Model';
 
 export class MoralisFilesContainer implements FilesContainer {
 

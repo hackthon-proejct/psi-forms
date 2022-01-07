@@ -2,22 +2,21 @@ import Moralis from 'moralis';
 
 import { FilesContainer } from './FilesContainer';
 import { Field, FieldData, FilePointer, RequestStatus } from './Model';
-import { MoralisFilesContainer } from './MoralisFilesContainer';
-import { currentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './MoralisUtils';
 import {
     FormCreatedEntity,
     FormEntity,
     FormUpdatedEntity,
     PostReceiptEntity,
     PreReceiptEntity,
-    RequestApprovedEntity,
     RequestEntity,
-    RequestRejectedEntity,
-    RequestRolledBackEntity,
-} from './StorageEntities';
+} from './moralis/MoralisEntities';
+import { MoralisFilesContainer } from './moralis/MoralisFilesContainer';
+import { currentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './moralis/MoralisUtils';
 import { FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
+
+	// forms
 
 	public static async createForm(creator: string, formId: string, name: string, description: string, fields: Field[]): Promise<void> {
 		const user = await currentUser();
@@ -29,9 +28,7 @@ export class StorageClient {
 
 	public static async updateForm(formId: string, name: string, description: string, fields: Field[]): Promise<void> {
 		const entity = await readEntity(FormEntity, 'formId', toNumericId(formId));
-		entity.set('name', name);
-		entity.set('description', description);
-		entity.set('fields', fields);
+		FormEntity.update(entity, name, description, fields);
 		await entity.save();
 	}
 
@@ -40,85 +37,6 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async createPreReceipt(formId: string, message: string): Promise<void> {
-		const user = await currentUser();
-
-		const entity = PreReceiptEntity.create(toNumericId(formId), message);
-		entity.setAccess(user.id);
-		await entity.save();
-	}
-
-	public static async updatePreReceipt(formId: string, message: string): Promise<void> {
-		const entity = await readEntity(PreReceiptEntity, 'formId', toNumericId(formId));
-		entity.set('message', message);
-		await entity.save();
-	}
-
-	public static async deletePreReceipt(formId: string): Promise<void> {
-		const entity = await readEntity(PreReceiptEntity, 'formId', toNumericId(formId));
-		await entity.destroy();
-	}
-
-	public static async createPostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
-		const user = await currentUser();
-
-		const entity = PostReceiptEntity.create(toNumericId(formId), message, files);
-		entity.setAccess(user.id);
-		await entity.save();
-	}
-
-	public static async updatePostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
-		const entity = await readEntity(PostReceiptEntity, 'formId', toNumericId(formId));
-
-		entity.set('message', message);
-		entity.set('files', files);
-		await entity.save();
-	}
-
-	public static async deletePostReceipt(formId: string): Promise<void> {
-		const entity = await readEntity(PostReceiptEntity, 'formId', toNumericId(formId));
-		await entity.destroy();
-	}
-
-	public static async tryGetPreReceipt(formId: string): Promise<PreReceiptDto | null> {
-		await waitForWeb3();
-
-		const entity = await tryReadEntity(PreReceiptEntity, 'formId', toNumericId(formId));
-		if (!entity) {
-			return null;
-		}
-		return {
-			message: entity.get('message')
-		};
-	}
-
-	public static async tryGetPostReceipt(formId: string): Promise<PostReceiptDto | null> {
-		await waitForWeb3();
-
-		const entity = await tryReadEntity(PostReceiptEntity, 'formId', toNumericId(formId));
-		if (!entity) {
-			return null;
-		}
-		return {
-			message: entity.get('message'),
-			files: entity.get('files')
-		};
-	}
-
-	public static async getCreatorForms(creator: string): Promise<StorageFormDto[]> {
-		const query = new Moralis.Query(FormEntity)
-			.equalTo('creator', creator)
-			.addDescending('createdAt');
-		return (await query.find()).map(obj => {
-			return {
-				id: toHexId(obj.get('formId')),
-				name: obj.get('name'),
-				description: obj.get('description'),
-				fields: obj.get('fields'),
-				creator: obj.get('creator')
-			};
-		});
-	}
 
 	public static async getForm(formId: string): Promise<FormDto> {
 		await waitForWeb3();
@@ -150,6 +68,93 @@ export class StorageClient {
 
 		return form as FormDto;
 	}
+
+	public static async getCreatorForms(creator: string): Promise<StorageFormDto[]> {
+		const query = new Moralis.Query(FormEntity)
+			.equalTo('creator', creator)
+			.addDescending('createdAt');
+		return (await query.find()).map(obj => {
+			return {
+				id: toHexId(obj.get('formId')),
+				isEnabled: obj.get('isEnabled'),
+				name: obj.get('name'),
+				description: obj.get('description'),
+				fields: obj.get('fields'),
+				creator: obj.get('creator')
+			};
+		});
+	}
+
+	// pre receipt
+
+	public static async createPreReceipt(formId: string, message: string): Promise<void> {
+		const user = await currentUser();
+
+		const entity = PreReceiptEntity.create(toNumericId(formId), message);
+		entity.setAccess(user.id);
+		await entity.save();
+	}
+
+	public static async updatePreReceipt(formId: string, message: string): Promise<void> {
+		const entity = await readEntity(PreReceiptEntity, 'formId', toNumericId(formId));
+		entity.set('message', message);
+		await entity.save();
+	}
+
+	public static async deletePreReceipt(formId: string): Promise<void> {
+		const entity = await readEntity(PreReceiptEntity, 'formId', toNumericId(formId));
+		await entity.destroy();
+	}
+
+	public static async tryGetPreReceipt(formId: string): Promise<PreReceiptDto | null> {
+		await waitForWeb3();
+
+		const entity = await tryReadEntity(PreReceiptEntity, 'formId', toNumericId(formId));
+		if (!entity) {
+			return null;
+		}
+		return {
+			message: entity.get('message')
+		};
+	}
+
+	// post receipt
+
+	public static async createPostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
+		const user = await currentUser();
+
+		const entity = PostReceiptEntity.create(toNumericId(formId), message, files);
+		entity.setAccess(user.id);
+		await entity.save();
+	}
+
+	public static async updatePostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
+		const entity = await readEntity(PostReceiptEntity, 'formId', toNumericId(formId));
+
+		entity.set('message', message);
+		entity.set('files', files);
+		await entity.save();
+	}
+
+	public static async deletePostReceipt(formId: string): Promise<void> {
+		const entity = await readEntity(PostReceiptEntity, 'formId', toNumericId(formId));
+		await entity.destroy();
+	}
+
+	public static async tryGetPostReceipt(formId: string): Promise<PostReceiptDto | null> {
+		await waitForWeb3();
+
+		const entity = await tryReadEntity(PostReceiptEntity, 'formId', toNumericId(formId));
+		if (!entity) {
+			return null;
+		}
+		return {
+			message: entity.get('message'),
+			files: entity.get('files')
+		};
+	}
+
+	// request
 
 	public static async createRequest(sender: string, requestId: string, formId: string, email: string, fields: FieldData[]): Promise<void> {
 		const senderUser = await currentUser();
@@ -189,6 +194,7 @@ export class StorageClient {
 
 		return await readRequests(new Moralis.Query(RequestEntity)
 			.equalTo('creator', creator)
+			.notContainedIn('status', [RequestStatus.approved, RequestStatus.rejected, RequestStatus.rolledBack])
 			.addDescending('createdAt'));
 	}
 
@@ -206,41 +212,15 @@ function readFormEarningsFields(row: Moralis.Object, form: Partial<FormDto>) {
 
 async function readRequests(query: Moralis.Query<RequestEntity>): Promise<RequestDto[]> {
 	const requestEntites = await query.find();
-	const requests = requestEntites.map<RequestDto>(entity => {
+	return requestEntites.map<RequestDto>(entity => {
 		return {
-			id: entity.get('requestId'),
+			id: toHexId(entity.get('requestId')),
+			status: entity.get('status') || RequestStatus.pending,
 			createdAt: new Date(entity.get('createdAt')),
 			formId: toHexId(entity.get('formId')),
 			email: entity.get('email'),
 			fields: entity.get('fields'),
-			sender: entity.get('sender'),
-			status: RequestStatus.pending
+			sender: entity.get('sender')
 		};
-	});
-
-	const requestIdInts = requestEntites.map(e => e.get('requestId')) as string[];
-	if (requestIdInts.length > 0) {
-		await Promise.all([
-			readRequestStatuses(RequestApprovedEntity, requestIdInts, requests, RequestStatus.approved),
-			readRequestStatuses(RequestRejectedEntity, requestIdInts, requests, RequestStatus.rejected),
-			readRequestStatuses(RequestRolledBackEntity, requestIdInts, requests, RequestStatus.rolledBack)
-		]);
-	}
-
-	requests.forEach(request => {
-		request.id = toHexId(request.id);
-	});
-	return requests;
-}
-
-async function readRequestStatuses<T extends Moralis.Object>(t: new () => T, requestIdInts: any[], requests: RequestDto[], status: RequestStatus) {
-	const entities = await (new Moralis.Query(t)
-		.containedIn('requestId', requestIdInts)
-		.find());
-	entities.forEach(entity => {
-		const request = requests.find(r => r.id === entity.get('requestId'));
-		if (request) {
-			request.status = status;
-		}
 	});
 }
