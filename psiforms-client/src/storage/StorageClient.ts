@@ -204,7 +204,7 @@ export class StorageClient {
 }
 
 function readFormEarningsFields(row: Moralis.Object, form: Partial<FormDto>) {
-	form.isEnabled = row.get('isEnabled');
+	form.isEnabled = row.get('isEnabled') || false;
 	form.unitPrice = row.get('unitPrice');
 	form.minQuantity = parseInt(row.get('minQuantity'), 10);
 	form.maxQuantity = parseInt(row.get('maxQuantity'), 10);

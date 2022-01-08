@@ -2,7 +2,7 @@ import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 
 export interface StorageFormDto {
 	id: string;
-	isEnabled: null | boolean;
+	isEnabled: boolean;
 	name: string;
 	description: string;
 	fields: Field[];
@@ -10,7 +10,6 @@ export interface StorageFormDto {
 }
 
 export interface FormDto extends StorageFormDto {
-	isEnabled: boolean;
 	unitPrice: string;
 	minQuantity: number;
 	maxQuantity: number;

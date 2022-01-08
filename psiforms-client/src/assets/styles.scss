@@ -396,6 +396,16 @@ body, #root {color: #000; min-height: 100vh;}
 	}
 }
 
+.article {
+	& {padding-top: 10px;}
+	h2, h4, p {padding-top: 20px;}
+	h2 {@include auto-font-size(36px); font-weight: 700; letter-spacing: -0.02em;}
+	h4 {@include font-size(18px); font-weight: 700;}
+	strong {font-weight: bold;}
+	a {text-decoration: underline;}
+	a:hover {text-decoration: none;}
+}
+
 /* .web */
 $web-max-width: 800px;
 

@@ -46,7 +46,11 @@ export function WalletContext(props: { children: JSX.Element }) {
 			Moralis.Web3.onChainChanged(connect);
 
 			if (canAutoConnect()) {
-				connect();
+				try {
+					await connect();
+				} catch (e) {
+					console.error(e);
+				}
 			}
 		}
 		start();
