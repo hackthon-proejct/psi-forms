@@ -4,7 +4,7 @@ import Web3 from 'web3';
 
 import { determineNetwork, NetworkInfo } from '../../core/NetworkInfo';
 
-export const walletContext = createContext<Wallet | null>(null);
+const walletContext = createContext<Wallet | null>(null);
 
 export interface Wallet {
 	canAutoConnect(): boolean;

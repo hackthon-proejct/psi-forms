@@ -11,7 +11,6 @@ export function useLoader<T>(factory: () => Promise<T>): LoaderState<T> {
 
 	const [state, setState] = useState<{
 		isLoading: boolean;
-		loadTime?: number;
 		value?: T;
 		error?: string;
 	}>(() => {
@@ -24,32 +23,28 @@ export function useLoader<T>(factory: () => Promise<T>): LoaderState<T> {
 				const newValue = await factory();
 				setState({
 					isLoading: false,
-					loadTime: state.loadTime,
 					value: newValue
 				});
 			} catch (e) {
 				console.error(e);
 				setState({
 					isLoading: false,
-					loadTime: state.loadTime,
 					error: (e as Error).message
 				});
 			}
 		}
 
-		if (!state.isLoading) {
-			setState({
-				loadTime: state.loadTime,
-				isLoading: true
-			});
+		if (state.isLoading) {
+			load();
 		}
-		load();
-	}, [state.loadTime, factory]);
+	}, [state.isLoading, factory]);
 
 	function reload() {
+		if (state.isLoading) {
+			throw new Error('Loader is already reloading');
+		}
 		setState({
-			isLoading: true,
-			loadTime: Date.now()
+			isLoading: true
 		});
 	}
 
