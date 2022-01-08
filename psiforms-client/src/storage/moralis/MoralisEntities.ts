@@ -108,6 +108,7 @@ export class RequestEntity extends Moralis.Object {
 
 		entity.set('creator', null);
 		entity.set('status', null);
+		entity.set('value', null);
 		return entity;
 	}
 

@@ -29,6 +29,7 @@ export interface PostReceiptDto {
 export interface RequestDto {
 	id: string;
 	status: RequestStatus;
+	value: string | null;
 	createdAt: Date;
 	sender: string;
 	formId: string;

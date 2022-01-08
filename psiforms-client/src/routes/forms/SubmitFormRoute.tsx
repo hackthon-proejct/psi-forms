@@ -39,6 +39,9 @@ export function SubmitFormRoute() {
 	const state = useLoader(
 		useCallback(async () => {
 			const dto = await StorageClient.getForm(formId);
+			if (!dto.isEnabled) {
+				throw new Error('This form is disabled');
+			}
 			return convertToForm(dto);
 		}, [formId]));
 

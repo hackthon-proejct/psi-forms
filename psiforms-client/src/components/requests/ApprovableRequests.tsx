@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 
 import { Arr } from '../../core/Arr';
 import { HexFormatter } from '../../core/HexFormatter';
+import { UnitsConverter } from '../../core/UnitsConverter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { RequestStatus } from '../../storage/Model';
 import { RequestDto } from '../../storage/StorageModel';
@@ -115,7 +116,8 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 											<div className="details">
 												<div className="basic-info">
 													<RequestStatusInfo status={ri.request.status} />
-													<strong className="value">1.2345 AVAX</strong>
+													{ri.request.value &&
+														<strong className="value">{UnitsConverter.toDecimalETH(ri.request.value)} AVAX</strong>}
 												</div>
 												<div className="meta-info">
 													<span className="meta">

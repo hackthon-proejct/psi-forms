@@ -1,5 +1,6 @@
 import BN from 'bn.js';
 import Decimal from 'decimal.js';
+import Web3 from 'web3';
 
 export class UnitsConverter {
 
@@ -7,7 +8,10 @@ export class UnitsConverter {
 		return new Decimal(value.toString()).div(new Decimal(10).pow(decimals)).toNumber();
 	}
 
-	public static toDecimalETH(value: BN): number {
+	public static toDecimalETH(value: BN | string): number {
+		if (typeof value === 'string') {
+			value = Web3.utils.toBN(value);
+		}
 		return UnitsConverter.toDecimal(value, 18);
 	}
 

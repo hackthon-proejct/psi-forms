@@ -216,6 +216,7 @@ async function readRequests(query: Moralis.Query<RequestEntity>): Promise<Reques
 		return {
 			id: toHexId(entity.get('requestId')),
 			status: entity.get('status') || RequestStatus.pending,
+			value: entity.get('value') || null,
 			createdAt: new Date(entity.get('createdAt')),
 			formId: toHexId(entity.get('formId')),
 			email: entity.get('email'),
