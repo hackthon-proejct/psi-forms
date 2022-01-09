@@ -54,7 +54,7 @@ export function WalletConnector() {
 				</Fragment>}
 			<button className="btn btn-black" onClick={togglePopup}>
 				<i className="ico ico-mr ico-wallet-white" />
-				{isConnected ? HexFormatter.formatHex(wallet.getAccount().address) : 'Connect wallet'}
+				{isConnected ? HexFormatter.format(wallet.getAccount().address) : 'Connect wallet'}
 			</button>
 		</Fragment>
 	);

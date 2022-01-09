@@ -1,6 +1,6 @@
 export class HexFormatter {
 
-	public static formatHex(address: string): string {
-		return address.substr(0, 6) + '...' + address.substr(-4);
+	public static format(hex: string): string {
+		return hex.substring(0, 6) + '...' + hex.substring(hex.length - 4);
 	}
 }

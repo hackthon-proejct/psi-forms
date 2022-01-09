@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 
 import { StorageClient } from '../../../storage/StorageClient';
-import { Form } from '../Form';
+import { Form, FormNotifications } from '../Form';
 import { PostReceipt, PreReceipt } from '../Receipt';
 
 export function initializeNewForm(): Form {
@@ -14,6 +14,12 @@ export function initializeNewForm(): Form {
 		unitPrice: new BN('10000000000000000'),
 		minQuantity: 1,
 		maxQuantity: 1
+	};
+}
+
+export function initializeFormNotifications(): FormNotifications {
+	return {
+		email: ''
 	};
 }
 

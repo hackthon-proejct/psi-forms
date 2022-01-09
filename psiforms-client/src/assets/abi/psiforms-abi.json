@@ -160,6 +160,12 @@
 				"internalType": "uint256",
 				"name": "_value",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "_hash",
+				"type": "uint256"
 			}
 		],
 		"name": "RequestCreated",
@@ -381,6 +387,11 @@
 			},
 			{
 				"internalType": "uint256",
+				"name": "hash",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "createdAt",
 				"type": "uint256"
 			},
@@ -563,6 +574,11 @@
 				"internalType": "uint64",
 				"name": "_quantity",
 				"type": "uint64"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_hash",
+				"type": "uint256"
 			}
 		],
 		"name": "createRequest",

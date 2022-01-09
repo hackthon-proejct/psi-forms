@@ -24,5 +24,5 @@ export function ApprovalFormGroup(props: ApprovalFormGroupProps) {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

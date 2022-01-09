@@ -5,7 +5,7 @@ const meta = JSON.parse(metaRaw);
 
 const baseDir = './src/assets/abi/';
 
-fs.writeFileSync(baseDir + 'psiforms-abi.json', JSON.stringify(meta['abi']));
+fs.writeFileSync(baseDir + 'psiforms-abi.json', JSON.stringify(meta['abi'], null, '\t'));
 
 const networkIds = Object.keys(meta.networks);
 for (let networkId of networkIds) {

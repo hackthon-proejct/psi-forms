@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface LoaderState<T> {
 	isLoading: boolean;
@@ -16,6 +16,17 @@ export function useLoader<T>(factory: () => Promise<T>): LoaderState<T> {
 	}>(() => {
 		return { isLoading: true };
 	});
+	const isFirstFactory = useRef<boolean>(true);
+
+	useEffect(() => {
+		if (isFirstFactory.current) {
+			isFirstFactory.current = false;
+		} else {
+			setState({
+				isLoading: true
+			});
+		}
+	}, [isFirstFactory, factory]);
 
 	useEffect(() => {
 		async function load() {

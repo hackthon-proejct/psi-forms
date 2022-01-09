@@ -1,4 +1,5 @@
 import BN from 'bn.js';
+
 import { Field, FileType } from '../../storage/Model';
 
 export interface BlockchainForm {
@@ -16,6 +17,10 @@ export interface StorageForm {
 
 export interface Form extends BlockchainForm, StorageForm {
 	requireApproval: boolean;
+}
+
+export interface FormNotifications {
+	email: string;
 }
 
 export const fileTypes = [

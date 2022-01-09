@@ -10,6 +10,7 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { Meta } from '../../components/layout/Meta';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
+import { RequestHasher } from '../../services/hashes/RequestHasher';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { FieldData } from '../../storage/Model';
 import { StorageClient } from '../../storage/StorageClient';
@@ -56,28 +57,30 @@ export function SubmitFormRoute() {
 		let requestCreated = false;
 		try {
 			const fields: FieldData[] = [];
-			for (let f of data.fields) {
-				if (f.files) {
-					await f.files.save();
+			for (let field of data.fields) {
+				if (field.files) {
+					await field.files.save();
 					fields.push({
-						label: f.label,
-						type: f.type,
-						files: f.files.toPointers()
+						label: field.label,
+						type: field.type,
+						files: field.files.toPointers()
 					});
-				} else if (f.value) {
+				} else if (field.value) {
 					fields.push({
-						label: f.label,
-						type: f.type,
-						value: f.value
+						label: field.label,
+						type: field.type,
+						value: field.value
 					});
 				}
 			}
+
+			const hash = await RequestHasher.hash(data.email, fields);
 
 			await StorageClient.createRequest(account.address, requestId, formId, data.email, fields);
 			requestCreated = true;
 
 			const contract = new BlockchainContractClient(account);
-			await contract.createRequest(formId, requestId, data.quantity, totalPrice);
+			await contract.createRequest(formId, requestId, data.quantity, totalPrice, hash);
 		} catch (e) {
 			if (requestCreated) {
 				await StorageClient.deleteRequest(requestId);

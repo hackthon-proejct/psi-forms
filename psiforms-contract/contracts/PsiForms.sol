@@ -81,6 +81,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 	struct Request {
 		uint64 quantity;
 		uint value;
+		uint256 hash;
 		uint createdAt;
 		RequestStatus status;
 		address payable sender;
@@ -97,7 +98,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 	event FormCreated(uint _formId, address _creator, bool _isEnabled, bool _requireApproval, uint64 _minQuantity, uint64 _maxQuantity, uint _unitPrice);
 	event FormUpdated(uint _formId, bool _isEnabled, uint64 _minQuantity, uint64 _maxQuantity, uint _unitPrice);
 	event FormBanChanged(uint _formId, bool _isBanned);
-	event RequestCreated(uint _formId, uint _requestId, address _sender, uint64 _quantity, uint _value);
+	event RequestCreated(uint _formId, uint _requestId, address _sender, uint64 _quantity, uint _value, uint256 _hash);
 	event RequestApproved(uint _formId, uint _requestId);
 	event RequestRejected(uint _formId, uint _requestId);
 	event RequestRolledBack(uint _formId, uint _requestId);
@@ -144,7 +145,7 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 		emit FormBanChanged(_formId, _isBanned);
 	}
 
-	function createRequest(uint128 _formId, uint128 _requestId, uint64 _quantity) public payable onlyNotPaused {
+	function createRequest(uint128 _formId, uint128 _requestId, uint64 _quantity, uint256 _hash) public payable onlyNotPaused {
 		Form storage _form = forms[_formId];
 		require(_form.creator != address(0), 'Form does not exist');
 		require(_form.isEnabled, 'Form is disabled');
@@ -160,10 +161,11 @@ contract PsiForms is Gate, Pausable, PsiFormsParameters {
 		_request.sender = payable(msg.sender);
 		_request.quantity = _quantity;
 		_request.value = _value;
+		_request.hash = _hash;
 		_request.createdAt = block.timestamp;
 		_request.status = RequestStatus.pending;
 
-		emit RequestCreated(_formId, _requestId, msg.sender, _quantity, _value);
+		emit RequestCreated(_formId, _requestId, msg.sender, _quantity, _value, _hash);
 
 		if (!_form.requireApproval) {
 			_approveRequest(_formId, _form, _requestId, _request);

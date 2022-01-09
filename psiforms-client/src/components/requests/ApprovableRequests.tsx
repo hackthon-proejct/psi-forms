@@ -101,7 +101,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 							{forms.map(form =>
 								<Fragment key={form.formId}>
 									<div className="requests-header">
-										<h3>{HexFormatter.formatHex(form.formId)}</h3>
+										<h3>{HexFormatter.format(form.formId)}</h3>
 
 										{form.hasAnyChange &&
 											<div className="actions">
@@ -124,7 +124,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 														{'created '}
 														<em>{ri.request.createdAt.toLocaleString()}</em>
 														{' by '}
-														<em>{HexFormatter.formatHex(ri.request.sender)}</em>
+														<em>{HexFormatter.format(ri.request.sender)}</em>
 													</span>
 													{(ri.request.status === RequestStatus.pending) &&
 														<span className="actions">

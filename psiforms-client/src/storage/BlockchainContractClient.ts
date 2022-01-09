@@ -46,11 +46,12 @@ export class BlockchainContractClient {
 		return result.transactionHash;
 	}
 
-	public async createRequest(formId: string, requestId: string, quantity: number, value: BN) {
+	public async createRequest(formId: string, requestId: string, quantity: number, value: BN, hash: BN) {
 		const result = await this.contract.methods['createRequest'](
 			formId,
 			requestId,
-			quantity).send({ value }) as ContractResult;
+			quantity,
+			hash).send({ value }) as ContractResult;
 		return result.transactionHash;
 	}
 
