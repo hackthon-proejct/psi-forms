@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 
 import { StorageClient } from '../../../storage/StorageClient';
-import { Form, FormNotifications } from '../Form';
+import { Form, Notifications } from '../Form';
 import { PostReceipt, PreReceipt } from '../Receipt';
 
 export function initializeNewForm(): Form {
@@ -17,7 +17,7 @@ export function initializeNewForm(): Form {
 	};
 }
 
-export function initializeFormNotifications(): FormNotifications {
+export function initializeNotifications(): Notifications {
 	return {
 		email: ''
 	};

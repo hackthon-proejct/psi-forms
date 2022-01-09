@@ -19,7 +19,7 @@ export interface Form extends BlockchainForm, StorageForm {
 	requireApproval: boolean;
 }
 
-export interface FormNotifications {
+export interface Notifications {
 	email: string;
 }
 

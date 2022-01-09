@@ -1,5 +1,9 @@
 import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 
+export interface CreatorProfileDto {
+	email: string;
+}
+
 export interface StorageFormDto {
 	id: string;
 	isEnabled: boolean;

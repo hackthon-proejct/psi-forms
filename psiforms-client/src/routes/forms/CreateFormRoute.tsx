@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Navigate } from 'react-router';
 import Web3 from 'web3';
 
-import { Form } from '../../components/form/Form';
+import { Form, Notifications } from '../../components/form/Form';
 import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
 import { PostReceipt, PreReceipt } from '../../components/form/Receipt';
 import { AppPage } from '../../components/layout/AppPage';
+import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
@@ -14,10 +15,22 @@ import { StorageClient } from '../../storage/StorageClient';
 export function CreateFormRoute() {
 
 	const wallet = useWallet();
+	const account = wallet.tryGetAccount();
 	const [navigateTo, setNavigateTo] = useState<string>();
 
-	async function save(form: Form, preReceipt: PreReceipt, postReceipt: PostReceipt): Promise<boolean> {
-		const account = wallet.getAccount();
+	const state = useLoader<{ collectNotifications: boolean }>(
+		useCallback(async () => {
+			return {
+				collectNotifications: account
+					? (!(await StorageClient.tryGetCreatorProfile(account.address))?.email)
+					: true
+			};
+		}, [account]));
+
+	async function save(form: Form, notifications: Notifications | null, preReceipt: PreReceipt, postReceipt: PostReceipt): Promise<boolean> {
+		if (!account) {
+			throw new Error('Wallet is not connected');
+		}
 
 		const formId = Web3.utils.randomHex(16);
 
@@ -25,6 +38,10 @@ export function CreateFormRoute() {
 		let preReceiptCreated = false;
 		let postReceiptCreated = false;
 		try {
+			if (notifications) {
+				await StorageClient.createOrUpdateCreatorProfile(account.address, notifications.email);
+			}
+
 			await StorageClient.createForm(account.address, formId, form.name, form.description, form.fields);
 			formCreated = true;
 
@@ -63,7 +80,9 @@ export function CreateFormRoute() {
 	return (
 		<AppPage>
 			<ConnectYourWallet />
-			<NewFormEditor onSave={save} />
+			<Loader state={state} element={(result => (
+				<NewFormEditor collectNotifications={result.collectNotifications} onSave={save} />
+			))} />
 		</AppPage>
 	);
 }

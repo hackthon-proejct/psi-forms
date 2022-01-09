@@ -2,6 +2,29 @@ import Moralis from 'moralis';
 
 import { Field, FieldData, FilePointer } from '../Model';
 
+export class CreatorProfileEntity extends Moralis.Object {
+
+	public static create(creator: string, email: string): FormEntity {
+		const entity = new CreatorProfileEntity();
+		entity.set('creator', creator);
+		entity.set('email', email);
+		return entity;
+	}
+
+	public constructor() {
+		super('CreatorProfile');
+	}
+
+	public setAccess(creatorUserId: string) {
+		const acl = new Moralis.ACL();
+		acl.setPublicReadAccess(false);
+		acl.setPublicWriteAccess(false);
+		acl.setReadAccess(creatorUserId, true);
+		acl.setWriteAccess(creatorUserId, true);
+		this.setACL(acl);
+	}
+}
+
 export class FormEntity extends Moralis.Object {
 
 	public static create(creator: string, formId: string, name: string, description: string, fields: Field[]): FormEntity {

@@ -3,6 +3,7 @@ import Moralis from 'moralis';
 import { FilesContainer } from './FilesContainer';
 import { Field, FieldData, FilePointer, RequestStatus } from './Model';
 import {
+    CreatorProfileEntity,
     FormCreatedEntity,
     FormEntity,
     FormUpdatedEntity,
@@ -12,17 +13,17 @@ import {
 } from './moralis/MoralisEntities';
 import { MoralisFilesContainer } from './moralis/MoralisFilesContainer';
 import { currentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './moralis/MoralisUtils';
-import { FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
+import { CreatorProfileDto, FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
 
 	// forms
 
 	public static async createForm(creator: string, formId: string, name: string, description: string, fields: Field[]): Promise<void> {
-		const user = await currentUser();
+		const creatorUser = await currentUser();
 
 		const entity = FormEntity.create(creator, toNumericId(formId), name, description, fields);
-		entity.setAccess(user.id);
+		entity.setAccess(creatorUser.id);
 		await entity.save();
 	}
 
@@ -197,6 +198,33 @@ export class StorageClient {
 			.notContainedIn('status', [RequestStatus.approved, RequestStatus.rejected, RequestStatus.rolledBack])
 			.addDescending('createdAt'));
 	}
+
+	// creator profile
+
+	public static async tryGetCreatorProfile(creator: string): Promise<CreatorProfileDto | null> {
+		const entity = await tryReadEntity(CreatorProfileEntity, 'creator', creator);
+		if (entity) {
+			return {
+				email: entity.get('email')
+			};
+		}
+		return null;
+	}
+
+	public static async createOrUpdateCreatorProfile(creator: string, email: string) {
+		const creatorUser = await currentUser();
+
+		let entity = await tryReadEntity(CreatorProfileEntity, 'creator', creator);
+		if (!entity) {
+			entity = CreatorProfileEntity.create(creator, email);
+			entity.setAccess(creatorUser.id);
+		} else {
+			entity.set('email', email);
+		}
+		await entity.save();
+	}
+
+	// files container
 
 	public static createFilesContainer(files?: FilePointer[]): FilesContainer {
 		return MoralisFilesContainer.createFromPointers(files);

@@ -4,24 +4,25 @@ import { Field } from '../../../storage/Model';
 import { FormSection } from '../../layout/FormSection';
 import { Receipt } from '../../receipt/Receipt';
 import { useWallet } from '../../wallet/WalletContext';
-import { BlockchainForm, Form, FormNotifications } from '../Form';
+import { BlockchainForm, Notifications, Form } from '../Form';
 import { FormGenerator } from '../form-generator/FormGenerator';
 import { PostReceipt, PreReceipt } from '../Receipt';
 import { ReceiptGroup } from '../receipt-editor/groups/ReceiptGroup';
 import { ApprovalFormGroup } from './groups/ApprovalFormGroup';
 import { BasicsFormGroup } from './groups/BasicsFormGroup';
+import { NotificationFormGroup } from './groups/NotificationFormGroup';
 import { FieldsFormGroup } from './groups/fields/FieldsFormGroup';
-import { NotificationsFormGroup } from './groups/NotificationsFormGroup';
 import { PricingFormGroup } from './groups/PricingFormGroup';
 import {
-    initializeFormNotifications,
+    initializeNotifications,
     initializeNewForm,
     initializePostReceipt,
     initializePreReceipt,
 } from './NewFormInitializator';
 
 export interface NewFormEditorProps {
-	onSave: (form: Form, preReceipt: PreReceipt, post: PostReceipt) => Promise<boolean>;
+	collectNotifications: boolean;
+	onSave: (form: Form, notifications: Notifications | null, preReceipt: PreReceipt, post: PostReceipt) => Promise<boolean>;
 }
 
 export function NewFormEditor(props: NewFormEditorProps) {
@@ -29,7 +30,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 	const account = wallet.tryGetAccount();
 
 	const [form, setForm] = useState<Form>(() => initializeNewForm());
-	const [formNotifications, setFormNotifications] = useState<FormNotifications>(() => initializeFormNotifications());
+	const [notifications, setNotifications] = useState<Notifications>(() => initializeNotifications());
 	const [preReceipt, setPreReceipt] = useState<PreReceipt>(() => initializePreReceipt());
 	const [postReceipt, setPostReceipt] = useState<PostReceipt>(() => initializePostReceipt());
 	const isReadonly = !account;
@@ -43,7 +44,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 	}
 
 	function onNotificationsChanged(email: string) {
-		setFormNotifications({ email });
+		setNotifications({ email });
 	}
 
 	function onEarningsChanged(form: BlockchainForm) {
@@ -59,7 +60,11 @@ export function NewFormEditor(props: NewFormEditorProps) {
 	}
 
 	function onSubmited(): Promise<boolean> {
-		return props.onSave(form, preReceipt, postReceipt);
+		return props.onSave(
+			form,
+			props.collectNotifications ? notifications : null,
+			preReceipt,
+			postReceipt);
 	}
 
 	return (
@@ -67,8 +72,9 @@ export function NewFormEditor(props: NewFormEditorProps) {
 			<FormSection title="Create Form" submitText="Create" onSubmit={onSubmited}>
 				<BasicsFormGroup isReadonly={isReadonly} name={form.name} description={form.description}
 					onChange={onBasicsChanged} />
-				<NotificationsFormGroup email={formNotifications.email} isReadonly={isReadonly}
-					onChange={onNotificationsChanged} />
+				{props.collectNotifications &&
+					<NotificationFormGroup email={notifications.email} isReadonly={isReadonly}
+						onChange={onNotificationsChanged} />}
 				<PricingFormGroup isReadonly={isReadonly} form={form}
 					onChange={onEarningsChanged}/>
 				<ApprovalFormGroup isReadonly={isReadonly} requireApproval={form.requireApproval}

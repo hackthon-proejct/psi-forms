@@ -1,11 +1,11 @@
 
-export interface NotificationsFormGroupProps {
+export interface NotificationFormGroupProps {
 	isReadonly: boolean;
 	email: string;
 	onChange: (email: string) => void;
 }
 
-export function NotificationsFormGroup(props: NotificationsFormGroupProps) {
+export function NotificationFormGroup(props: NotificationFormGroupProps) {
 
 	function onEmailChanged(email: string) {
 		props.onChange(email);
