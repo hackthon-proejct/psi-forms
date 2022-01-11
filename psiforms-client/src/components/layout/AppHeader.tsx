@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { WalletConnector } from './WalletConnector';
+import { WalletConnector } from '../wallet/WalletConnector';
 
 export function AppHeader() {
 	return (
@@ -17,7 +17,7 @@ export function AppHeader() {
 					</ul>
 				</nav>
 				<aside className="session">
-					<WalletConnector />
+					<WalletConnector canEditProfile={true} />
 				</aside>
 			</div>
 		</header>

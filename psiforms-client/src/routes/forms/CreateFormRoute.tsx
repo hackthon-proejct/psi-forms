@@ -75,7 +75,7 @@ export function CreateFormRoute() {
 	}
 
 	if (navigateTo) {
-		return <Navigate to={navigateTo} />
+		return <Navigate to={navigateTo} />;
 	}
 	return (
 		<AppPage>

@@ -2,7 +2,7 @@ import BN from 'bn.js';
 import { Fragment, useEffect } from 'react';
 import { useState } from 'react';
 
-import { validateEmail } from '../../../core/EmailValidator';
+import { EmailValidator } from '../../../core/EmailValidator';
 import { UnitsConverter } from '../../../core/UnitsConverter';
 import { TokenPriceService } from '../../../services/TokenPriceService';
 import { FilesContainer } from '../../../storage/FilesContainer';
@@ -64,7 +64,7 @@ export function FormGenerator(props: FormGeneratorProps) {
 		if (isProcessing) {
 			return;
 		}
-		if (!email || !validateEmail(email)) {
+		if (!email || !EmailValidator.validate(email)) {
 			setError('E-mail is invalid');
 			return;
 		}

@@ -104,15 +104,10 @@ html, body, code, h1, h2, h3, h4, h5, input, textarea, button, select {font: 14p
 html {height: 100%;}
 body, #root {color: #000; min-height: 100vh;}
 
-.wallet-connector {
+.tiny-popup {
 	& {position: fixed; z-index: 100;  padding: 15px; box-sizing: border-box; background: #FFF; text-align: center; border-radius: $radius; border: 1px solid #000; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);}
 	h4 {@include auto-font-size(30px); font-weight: 700;}
-	.wallets .wallet {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
-		transition: opacity 150ms linear;}
-	.wallets .wallet:hover {opacity: 0.8;}
-	.wallets .wallet strong {display: block; padding-top: 130px;}
-	.wallets .wallet-metamask {background-image: url('./logo-metamask.svg');}
-	.cancel {padding-top: 15px;}
+	.simple-row {padding-top: 15px;}
 
 	@media #{$desktop} {
 		& {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
@@ -120,6 +115,14 @@ body, #root {color: #000; min-height: 100vh;}
 	@media #{$phone} {
 		& {top: 10px; left: 10px; right: 10px;}
 	}
+}
+
+.wallet-provider-logo {
+	& {width: 130px; cursor: pointer; background-color: transparent; background-size: 130px 130px; background-repeat: no-repeat;
+		transition: opacity 150ms linear;}
+	&:hover {opacity: 0.8;}
+	&.metamask {background-image: url('./logo-metamask.svg');}
+	strong {display: block; padding-top: 130px;}
 }
 
 .wallet-alert {
