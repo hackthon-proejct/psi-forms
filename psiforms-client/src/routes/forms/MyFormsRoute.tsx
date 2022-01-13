@@ -65,7 +65,10 @@ export function MyFormsRoute() {
 													{ab.isEnabled === false && <span className="status status-danger">Disabled</span>}
 												</td>
 												<td>
-													<Link to={`/forms/${ab.id}`}>{ab.name}</Link>
+													<Link to={`/forms/${ab.id}`}>
+														{ab.name}
+														<i className="ico ico-ml ico-arrow-right-black" />
+													</Link>
 												</td>
 												<td className="actions">
 													<Link to={`/forms/${ab.id}/blockchain`} className="btn btn-small btn-white">Edit Earnings</Link>
