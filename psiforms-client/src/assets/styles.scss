@@ -1,3 +1,4 @@
+@use 'sass:math';
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
@@ -331,8 +332,8 @@ body, #root {color: #000; min-height: 100vh;}
 .table {
 	& {overflow: auto;}
 	table {width: 100%; min-width: 700px; border-spacing: 4px 4px;}
-	th {padding: 12px 8px; background: #000; color: #FFF; border-radius: $radius / 2;}
-	td {padding: 8px; background: #F6F6F6; border-radius: $radius / 2;}
+	th {padding: 12px 8px; background: #000; color: #FFF; border-radius: math.div($radius, 2);}
+	td {padding: 8px; background: #F6F6F6; border-radius: math.div($radius, 2);}
 	td.actions {width: 1%; white-space: nowrap;}
 }
 
@@ -349,7 +350,7 @@ body, #root {color: #000; min-height: 100vh;}
 		}
 	}
 	.form-section-body {
-		& {position: relative; background: #F6F6F6; padding: 10px 10px 0; margin-top: 15px; border-radius: $radius / 2;}
+		& {position: relative; background: #F6F6F6; padding: 10px 10px 0; margin-top: 15px; border-radius: math.div($radius, 2);}
 
 		.form-section-body-title {position: absolute; left: 50%; top: -10px; width: 100px; margin-left: -50px; padding: 5px 10px; @include font-size(12px); border-radius: $radius; text-align: center; background: #C5C5C5; color: #575757;}
 		.form-section-body-close {position: absolute; top: -10px; right: 0;}
@@ -361,7 +362,7 @@ body, #root {color: #000; min-height: 100vh;}
 	& {padding: 0 0 10px;}
 	label {display: block; padding: 0 10px 10px;}
 	label.checkbox {padding: 5px 0; cursor: pointer;}
-	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: $radius / 2;}
+	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: math.div($radius, 2);}
 	input[type=text]:read-only, input[type=number]:read-only, textarea:disabled {color: #7E7E7E;}
 	textarea {min-height: 100px;}
 	textarea {resize: vertical;}
@@ -385,7 +386,7 @@ body, #root {color: #000; min-height: 100vh;}
 	.details .meta-info em {color: #000;}
 	.values {overflow: auto;}
 	.values table {width: 100%; min-width: 700px; border-spacing: 4px;}
-	.values table td {background: #FFF; padding: 10px; border-radius: $radius / 2;}
+	.values table td {background: #FFF; padding: 10px; border-radius: math.div($radius, 2);}
 
 	@media #{$desktop} {
 		.details .basic-info {display: table-cell; vertical-align: middle; padding: 6px;}
@@ -450,7 +451,7 @@ $web-max-width: 800px;
 		.web-form-group {
 			& {padding: 0 15px;}
 			label {display: block; padding: 10px 0; font-weight: bold;}
-			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: $radius / 2;}
+			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: math.div($radius, 2);}
 		}
 
 		@media #{$desktop} {
