@@ -7,12 +7,12 @@ import { StorageClient } from '../../storage/StorageClient';
 
 export function PreReceiptRoute() {
 	const { id } = useParams();
-	const formId = id as string;
+	const requestId = id as string;
 
 	return <PreReceiptLoader
 		loader={useCallback(() => {
-			return StorageClient.tryGetPreReceipt(formId);
-		}, [formId])}
+			return StorageClient.tryGetPreReceipt(requestId);
+		}, [requestId])}
 		element={receipt => {
 			return <Receipt message={receipt.message} />;
 		}} />;

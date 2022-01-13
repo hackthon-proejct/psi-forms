@@ -35,7 +35,7 @@ export function ConnectYourWallet(props: ConnectYourWalletProps) {
 		return (
 			<div className={className}>
 				<div className="warning">
-					Sorry, you have connected unsupported blockchain network. Please switch to Avalanche Network.
+					Sorry, you have connected an unsupported blockchain network. Please switch to Avalanche Network.
 					{false && <button className="btn btn-small btn-white" onClick={() => wallet.switchNetwork(networkInfo)}>Switch</button>}
 				</div>
 			</div>

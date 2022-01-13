@@ -16,7 +16,7 @@ export function Receipt(props: ReceiptProps) {
 			{props.files && props.files.length > 0 &&
 				<ul className="files">
 				{props.files.map((file, index) =>
-					<li>
+					<li key={index}>
 						<a key={index} href={file.url}>{file.name}</a>
 						{' '}({Math.round(file.size / 1024)} KB)
 					</li>)}

@@ -63,7 +63,7 @@ export function SubmitFormRoute() {
 					fields.push({
 						label: field.label,
 						type: field.type,
-						files: field.files.toPointers()
+						files: field.files.toPointers(true)
 					});
 				} else if (field.value) {
 					fields.push({
@@ -83,14 +83,18 @@ export function SubmitFormRoute() {
 			await contract.createRequest(formId, requestId, data.quantity, totalPrice, hash);
 		} catch (e) {
 			if (requestCreated) {
-				await StorageClient.deleteRequest(requestId);
+				try {
+					await StorageClient.deleteRequest(requestId);
+				} catch (er) {
+					console.error(er);
+				}
 			}
 			throw e;
 		}
 
 		setNavigateTo(state.value.requireApproval
-			? `/forms/${formId}/pre-receipt`
-			: `/forms/${formId}/post-receipt`);
+			? `/requests/${requestId}/pre-receipt`
+			: `/requests/${requestId}/post-receipt`);
 	}
 
 	if (navigateTo) {

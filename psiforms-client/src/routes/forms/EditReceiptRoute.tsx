@@ -34,7 +34,7 @@ export function EditReceiptRoute() {
 			await StorageClient.updatePreReceipt(formId, preReceipt.message);
 		}
 		await postReceipt.files.save();
-		await StorageClient.updatePostReceipt(formId, postReceipt.message, postReceipt.files.toPointers());
+		await StorageClient.updatePostReceipt(formId, postReceipt.message, postReceipt.files.toPointers(true));
 
 		setNavigateTo('/forms');
 		return true;

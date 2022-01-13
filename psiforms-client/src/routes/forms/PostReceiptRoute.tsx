@@ -7,12 +7,12 @@ import { StorageClient } from '../../storage/StorageClient';
 
 export function PostReceiptRoute() {
 	const { id } = useParams();
-	const formId = id as string;
+	const requestId = id as string;
 
 	return <PostReceiptLoader
 		loader={useCallback(() => {
-			return StorageClient.tryGetPostReceipt(formId)
-		}, [formId])}
+			return StorageClient.tryGetPostReceipt(requestId)
+		}, [requestId])}
 		element={receipt => {
 			return <Receipt message={receipt.message} files={receipt.files} />;
 		}} />;

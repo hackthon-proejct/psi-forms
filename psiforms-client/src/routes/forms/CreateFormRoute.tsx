@@ -52,20 +52,32 @@ export function CreateFormRoute() {
 
 			await postReceipt.files.save();
 
-			await StorageClient.createPostReceipt(formId, postReceipt.message, postReceipt.files.toPointers());
+			await StorageClient.createPostReceipt(formId, postReceipt.message, postReceipt.files.toPointers(true));
 			postReceiptCreated = true;
 
 			const contract = new BlockchainContractClient(account);
 			await contract.createForm(formId, form.isEnabled, form.requireApproval, form.minQuantity, form.maxQuantity, form.unitPrice);
 		} catch (e) {
 			if (formCreated) {
-				await StorageClient.deleteForm(formId);
+				try {
+					await StorageClient.deleteForm(formId);
+				} catch (er) {
+					console.error(er);
+				}
 			}
 			if (preReceiptCreated) {
-				await StorageClient.deletePreReceipt(formId);
+				try {
+					await StorageClient.deletePreReceipt(formId);
+				} catch (er) {
+					console.error(er);
+				}
 			}
 			if (postReceiptCreated) {
-				await StorageClient.deletePostReceipt(formId);
+				try {
+					await StorageClient.deletePostReceipt(formId);
+				} catch (er) {
+					console.error(er);
+				}
 			}
 			throw e;
 		}
@@ -79,7 +91,7 @@ export function CreateFormRoute() {
 	}
 	return (
 		<AppPage>
-			<ConnectYourWallet />
+			<ConnectYourWallet requiredNetworkId={1} />
 			<Loader state={state} element={(result => (
 				<NewFormEditor collectNotifications={result.collectNotifications} onSave={save} />
 			))} />

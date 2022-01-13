@@ -104,7 +104,7 @@ export function NewFormEditor(props: NewFormEditorProps) {
 				<div className="section-header">
 					<h2>Receipt Preview</h2>
 				</div>
-				<Receipt message={postReceipt.message} files={postReceipt.files.toPointers()} />
+				<Receipt message={postReceipt.message} files={postReceipt.files.toPointers(false)} />
 			</section>
 		</Fragment>
 	);

@@ -107,15 +107,17 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async tryGetPreReceipt(formId: string): Promise<PreReceiptDto | null> {
+	public static async tryGetPreReceipt(requestId: string): Promise<PreReceiptDto | null> {
 		await waitForWeb3();
 
-		const entity = await tryReadEntity(PreReceiptEntity, 'formId', toNumericId(formId));
-		if (!entity) {
+		const request = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
+		const formId = request.get('formId');
+		const preReceipt = await tryReadEntity(PreReceiptEntity, 'formId', formId);
+		if (!preReceipt) {
 			return null;
 		}
 		return {
-			message: entity.get('message')
+			message: preReceipt.get('message')
 		};
 	}
 
@@ -142,16 +144,22 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async tryGetPostReceipt(formId: string): Promise<PostReceiptDto | null> {
+	public static async tryGetPostReceipt(requestId: string): Promise<PostReceiptDto | null> {
 		await waitForWeb3();
 
-		const entity = await tryReadEntity(PostReceiptEntity, 'formId', toNumericId(formId));
-		if (!entity) {
+		const request = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
+		if (request.get('status') !== RequestStatus.approved) {
+			return null;
+		}
+
+		const formId = request.get('formId');
+		const postReceipt = await tryReadEntity(PostReceiptEntity, 'formId', formId);
+		if (!postReceipt) {
 			return null;
 		}
 		return {
-			message: entity.get('message'),
-			files: entity.get('files')
+			message: postReceipt.get('message'),
+			files: postReceipt.get('files')
 		};
 	}
 

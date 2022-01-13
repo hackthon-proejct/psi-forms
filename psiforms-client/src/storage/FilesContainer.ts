@@ -6,7 +6,7 @@ export interface FilesContainer {
 	delete(id: number): void;
 	getDeltas(): DeltaFile[];
 	save(): Promise<void>;
-	toPointers(): FilePointer[];
+	toPointers(requireUploaded: boolean): FilePointer[];
 }
 
 export interface DeltaFile {

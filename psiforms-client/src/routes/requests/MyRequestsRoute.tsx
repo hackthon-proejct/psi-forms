@@ -100,7 +100,7 @@ export function MyRequestsRoute() {
 												{request.status === RequestStatus.approved &&
 													<Fragment>
 														{' '}
-														<Link to={`/forms/${request.formId}/post-receipt`} className="btn btn-small btn-black">Receipt</Link>
+														<Link to={`/requests/${request.id}/post-receipt`} className="btn btn-small btn-black">Receipt</Link>
 													</Fragment>}
 												{canRollback(request) &&
 													<Fragment>

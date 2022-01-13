@@ -47,8 +47,8 @@ function AppRoutes() {
 			<Route path="/forms/:id/receipt" element={<AppContainer title="Edit Receipt" element={<EditReceiptRoute />} />} />
 
 			<Route path="/forms/:id" element={<WebContainer element={<SubmitFormRoute />} />} />
-			<Route path="/forms/:id/pre-receipt" element={<WebContainer element={<PreReceiptRoute />} />} />
-			<Route path="/forms/:id/post-receipt" element={<WebContainer element={<PostReceiptRoute />} />} />
+			<Route path="/requests/:id/pre-receipt" element={<WebContainer element={<PreReceiptRoute />} />} />
+			<Route path="/requests/:id/post-receipt" element={<WebContainer element={<PostReceiptRoute />} />} />
 
 			<Route path="/forms/:id/requests" element={<AppContainer title="Form Requests" element={<FormRequestsRoute />} />} />
 			<Route path="/requests" element={<AppContainer title="My Requests" element={<MyRequestsRoute />} />} />

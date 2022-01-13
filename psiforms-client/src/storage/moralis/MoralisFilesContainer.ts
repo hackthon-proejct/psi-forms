@@ -79,8 +79,8 @@ export class MoralisFilesContainer implements FilesContainer {
 		}
 	}
 
-	public toPointers(): FilePointer[] {
-		if (this.deltas.some(o => o.status !== DeltaFileStatus.uploaded)) {
+	public toPointers(requireUploaded: boolean): FilePointer[] {
+		if (requireUploaded && this.deltas.some(o => o.status !== DeltaFileStatus.uploaded)) {
 			throw new Error('Invalid state');
 		}
 		return this.deltas.map(d => {
