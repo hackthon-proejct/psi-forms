@@ -38,8 +38,8 @@ export function WalletContext(props: { children: JSX.Element }) {
 	useEffect(() => {
 		async function start() {
 			await Moralis.start({
-				serverUrl: 'https://dmm1lmrlpitg.usemoralis.com:2053/server',
-				appId: 'xNlvWKCOxfltmjKzINOx3HO2Om3NcWkdJNGzfYuo'
+				serverUrl: 'https://awy24hdhalct.usemoralis.com:2053/server',
+				appId: 'qhuzeekgeb2J2KBAaSlQTwCEVQk2nvymszVZcQKB'
 			});
 
 			Moralis.Web3.onAccountsChanged(disconnect);
