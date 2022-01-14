@@ -144,7 +144,7 @@ export class RequestEntity extends Moralis.Object {
 		acl.setPublicReadAccess(false);
 		acl.setPublicWriteAccess(false);
 		acl.setReadAccess(senderUserId, true);
-		acl.setWriteAccess(senderUserId, true);
+		acl.setWriteAccess(senderUserId, false);
 		if (senderUserId !== creatorUserId) {
 			acl.setReadAccess(creatorUserId, true);
 			acl.setWriteAccess(creatorUserId, false);
