@@ -10,8 +10,9 @@ export function PreReceiptRoute() {
 	const requestId = id as string;
 
 	return <PreReceiptLoader
-		loader={useCallback(() => {
-			return StorageClient.tryGetPreReceipt(requestId);
+		loader={useCallback(async () => {
+			const request = await StorageClient.getRequest(requestId);
+			return await StorageClient.tryGetPreReceipt(request.formId);
 		}, [requestId])}
 		element={receipt => {
 			return <Receipt message={receipt.message} />;

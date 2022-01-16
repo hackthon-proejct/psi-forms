@@ -43,7 +43,7 @@ export function HomeRoute() {
 					<li>
 						<span className="text">
 							<span className="icon"><img src="images/home-icon-form.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Your Payable</span><span className="line">Forms</span>
+							<span className="line">Payable</span><span className="line">Crypto Forms</span>
 						</span>
 					</li>
 				</ul>

@@ -84,6 +84,7 @@ $screen-padding: 10px;
 .ico-save-white {background-image: url('./icons/ico-save-white.svg');}
 .ico-refresh-black {background-image: url('./icons/ico-refresh-black.svg');}
 .ico-refresh-white {background-image: url('./icons/ico-refresh-white.svg');}
+.ico-close-black {background-image: url('./icons/ico-close-black.svg');}
 
 .ico-rotating {animation: rotation 500ms infinite linear;}
 @keyframes rotation {
@@ -362,10 +363,14 @@ body, #root {color: #000; min-height: 100vh;}
 	& {padding: 0 0 10px;}
 	label {display: block; padding: 0 10px 10px;}
 	label.checkbox {padding: 5px 0; cursor: pointer;}
+	label .info {display: inline-block; @include font-size(12px); margin: 0 5px; color: #6F6F6F;}
 	input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #FFF; border-radius: math.div($radius, 2);}
 	input[type=text]:read-only, input[type=number]:read-only, textarea:disabled {color: #7E7E7E;}
 	textarea {min-height: 100px;}
 	textarea {resize: vertical;}
+	.file-list {margin-top: 6px;}
+	.file-list li {display: inline-block; padding: 4px 10px; margin: 4px 4px 0 0; background: #FFF; border-radius: $radius;}
+	.file-list li strong {font-weight: bold; color: #2528BD;}
 }
 .form-error {padding: 15px 0 5px; color: #D7143B; @include font-size(16px); font-weight: bold;}
 .form-submit {padding: 15px 0 5px; text-align: center;}
@@ -476,7 +481,9 @@ $web-max-width: 800px;
 	.description a {text-decoration: underline;}
 	.description a:hover {text-decoration: none;}
 
-	.files {padding-top: 20px;}
-	.files a {text-decoration: underline;}
-	.files a:hover {text-decoration: none;}
+	.file-list {padding: 0 15px 15px;}
+	.file-list h4 {padding: 0 0 5px; @include font-size(20px); font-weight: 700;}
+	.file-list ul li {margin: 5px 0 0; padding: 8px 10px; background: #F6F6F6; border-radius: math.div($radius, 2);}
+	.file-list a {font-weight: bold; color: #2528BD;}
+	.file-list a:hover {text-decoration: underline;}
 }

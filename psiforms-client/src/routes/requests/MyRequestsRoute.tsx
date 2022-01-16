@@ -76,6 +76,7 @@ export function MyRequestsRoute() {
 										<tr>
 											<th>Status</th>
 											<th>ID</th>
+											<th>Form ID</th>
 											<th>Value</th>
 											<th>Created</th>
 											<th></th>
@@ -87,7 +88,8 @@ export function MyRequestsRoute() {
 											<td width={'1%'}>
 												<RequestStatusInfo status={request.status} />
 											</td>
-											<td>{HexFormatter.format(request.id)}</td>
+											<td width={'1%'}>{HexFormatter.format(request.id)}</td>
+											<td width={'1%'}>{HexFormatter.format(request.formId)}</td>
 											<td>
 												{request.value &&
 													<Fragment>{UnitsConverter.toDecimalETH(request.value)} AVAX</Fragment>}

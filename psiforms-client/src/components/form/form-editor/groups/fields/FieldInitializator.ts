@@ -3,11 +3,11 @@ import { Field, FieldType, FileField, FileType, NumberField, TextField } from '.
 export function initializeField(type: FieldType): Field {
 	switch (type) {
 		case FieldType.text:
-			return { type, label: 'Label for Text Field', isRequired: false } as TextField;
+			return { type, label: 'Text', isRequired: false } as TextField;
 		case FieldType.number:
-			return { type, label: 'Label for Number Field', isRequired: false } as NumberField;
+			return { type, label: 'Number', isRequired: false } as NumberField;
 		case FieldType.file:
-			return { type, label: 'Label for File Field', isRequired: false, fileType: FileType.any } as FileField;
+			return { type, label: 'File', isRequired: false, fileType: FileType.any } as FileField;
 		default:
 			throw new Error(`Not supported type: ${type}`);
 	}

@@ -107,12 +107,10 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async tryGetPreReceipt(requestId: string): Promise<PreReceiptDto | null> {
+	public static async tryGetPreReceipt(formId: string): Promise<PreReceiptDto | null> {
 		await waitForWeb3();
 
-		const request = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
-		const formId = request.get('formId');
-		const preReceipt = await tryReadEntity(PreReceiptEntity, 'formId', formId);
+		const preReceipt = await tryReadEntity(PreReceiptEntity, 'formId', toNumericId(formId));
 		if (!preReceipt) {
 			return null;
 		}
@@ -144,16 +142,10 @@ export class StorageClient {
 		await entity.destroy();
 	}
 
-	public static async tryGetPostReceipt(requestId: string): Promise<PostReceiptDto | null> {
+	public static async tryGetPostReceipt(formId: string): Promise<PostReceiptDto | null> {
 		await waitForWeb3();
 
-		const request = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
-		if (request.get('status') !== RequestStatus.approved) {
-			return null;
-		}
-
-		const formId = request.get('formId');
-		const postReceipt = await tryReadEntity(PostReceiptEntity, 'formId', formId);
+		const postReceipt = await tryReadEntity(PostReceiptEntity, 'formId', toNumericId(formId));
 		if (!postReceipt) {
 			return null;
 		}
@@ -180,6 +172,11 @@ export class StorageClient {
 	public static async deleteRequest(requestId: string) {
 		const entity = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
 		await entity.destroy();
+	}
+
+	public static async getRequest(requestId: string): Promise<RequestDto> {
+		const entity = await readEntity(RequestEntity, 'requestId', toNumericId(requestId));
+		return readRequest(entity);
 	}
 
 	public static async getSenderRequests(sender: string): Promise<RequestDto[]> {
@@ -248,16 +245,18 @@ function readFormEarningsFields(row: Moralis.Object, form: Partial<FormDto>) {
 
 async function readRequests(query: Moralis.Query<RequestEntity>): Promise<RequestDto[]> {
 	const requestEntites = await query.find();
-	return requestEntites.map<RequestDto>(entity => {
-		return {
-			id: toHexId(entity.get('requestId')),
-			status: entity.get('status') || RequestStatus.pending,
-			value: entity.get('value') || null,
-			createdAt: new Date(entity.get('createdAt')),
-			formId: toHexId(entity.get('formId')),
-			email: entity.get('email'),
-			fields: entity.get('fields'),
-			sender: entity.get('sender')
-		};
-	});
+	return requestEntites.map<RequestDto>(readRequest);
+}
+
+function readRequest(entity: RequestEntity): RequestDto {
+	return {
+		id: toHexId(entity.get('requestId')),
+		status: entity.get('status') || RequestStatus.pending,
+		value: entity.get('value') || null,
+		createdAt: new Date(entity.get('createdAt')),
+		formId: toHexId(entity.get('formId')),
+		email: entity.get('email'),
+		fields: entity.get('fields'),
+		sender: entity.get('sender')
+	};
 }

@@ -14,13 +14,18 @@ export function Receipt(props: ReceiptProps) {
 			</div>
 
 			{props.files && props.files.length > 0 &&
-				<ul className="files">
-				{props.files.map((file, index) =>
-					<li key={index}>
-						<a key={index} href={file.url}>{file.name}</a>
-						{' '}({Math.round(file.size / 1024)} KB)
-					</li>)}
-				</ul>}
+				<div className="file-list">
+					<h4>Attached Files</h4>
+					<ul>
+					{props.files.map((file, index) =>
+						<li key={index}>
+							<a key={index} href={file.url} target="_blank" rel="noreferrer">
+								{file.name}
+							</a>
+							{' '}({Math.round(file.size / 1024)} KB)
+						</li>)}
+					</ul>
+				</div>}
 		</div>
 	);
 }

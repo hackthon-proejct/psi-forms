@@ -62,9 +62,11 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 					</div>
 					<div className="form-section-body">
 						<div className="form-group">
-							<label>Message</label>
+							<label>
+								Message *
+								<span className="info">This message is not visible to your customer until a confirmed payment.</span>
+							</label>
 							<textarea value={props.preReceipt.message} readOnly={props.isReadonly} onChange={e => onPreMessageChanged(e.target.value)} />
-							<span>This message is not visible for your customer until confirmed payment on blockchain.</span>
 						</div>
 					</div>
 				</div>}
@@ -75,24 +77,30 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 				</div>
 				<div className="form-section-body">
 					<div className="form-group">
-						<label>Message</label>
+						<label>
+							Message *
+							<span className="info">This message is not visible to your customer until a confirmed payment and your approval.</span>
+						</label>
 						<textarea value={props.postReceipt.message} readOnly={props.isReadonly} onChange={e => onPostMessageChanged(e.target.value)} />
-						<span>This message is not visible for your customer until confirmed payment on blockchain and your approval.</span>
 					</div>
 
 					<div className="form-group">
-						<label>Files to Download ({files.length} files)</label>
+						<label>Attached Files <span className="info">({files.length} files)</span></label>
 						<input type="file" onChange={e => onUploaded(e.target)} />
 
-						<ul>
-						{files.map((file) =>
-							<li key={file.id}>&bull;
-								{file.url
-									? <a href={file.url} target="_blank" rel="noreferrer">{file.name}</a>
-									: <span>{file.name}</span>}
-								{' '}({Math.round(file.size / 1024)} KB){' '}
-							<button onClick={() => onFileDeleted(file.id)}>x</button></li>)}
-						</ul>
+						{files.length > 0 &&
+							<ul className="file-list">
+							{files.map((file) =>
+								<li key={file.id}>
+									<strong>{file.name}</strong>
+									{' '}
+									({Math.round(file.size / 1024)} KB)
+									{' '}
+									<button onClick={() => onFileDeleted(file.id)} className="btn btn-small btn-gray" title="Delete">
+										<i className="ico ico-close-black" />
+									</button>
+								</li>)}
+							</ul>}
 					</div>
 				</div>
 			</div>

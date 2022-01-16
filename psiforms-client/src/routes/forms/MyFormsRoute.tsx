@@ -5,6 +5,7 @@ import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
+import { HexFormatter } from '../../core/HexFormatter';
 import { StorageClient } from '../../storage/StorageClient';
 import { StorageFormDto } from '../../storage/StorageModel';
 
@@ -51,6 +52,7 @@ export function MyFormsRoute() {
 									<thead>
 										<tr>
 											<th>Status</th>
+											<th>ID</th>
 											<th>Name</th>
 											<th>Editing</th>
 											<th>Requests</th>
@@ -64,6 +66,7 @@ export function MyFormsRoute() {
 													{ab.isEnabled === true && <span className="status status-success">Enabled</span>}
 													{ab.isEnabled === false && <span className="status status-danger">Disabled</span>}
 												</td>
+												<td width={'1%'}>{HexFormatter.format(ab.id)}</td>
 												<td>
 													<Link to={`/forms/${ab.id}`}>
 														{ab.name}

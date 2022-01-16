@@ -31,7 +31,7 @@ export function FileFieldEditor(props: FileFieldEditorProps) {
 					</div>
 				</div>
 			</div>
-			<div className="form-group">
+			<div className="form-group" style={{ display: 'none' }}>
 				<label>File type:</label>
 				<select value={props.field.fileType} onChange={e => updateField({ fileType: e.target.value as FileType })}>
 					{fileTypes.map(fileType =>
