@@ -184,6 +184,7 @@ export class StorageClient {
 
 		return await readRequests(new Moralis.Query(RequestEntity)
 			.equalTo('sender', sender)
+			.notEqualTo('status', null)
 			.addDescending('createdAt'));
 	}
 
@@ -192,6 +193,7 @@ export class StorageClient {
 
 		return await readRequests(new Moralis.Query(RequestEntity)
 			.equalTo('formId', toNumericId(formId))
+			.notEqualTo('status', null)
 			.addDescending('createdAt'));
 	}
 
@@ -200,6 +202,7 @@ export class StorageClient {
 
 		return await readRequests(new Moralis.Query(RequestEntity)
 			.equalTo('creator', creator)
+			.notEqualTo('status', null)
 			.notContainedIn('status', [RequestStatus.approved, RequestStatus.rejected, RequestStatus.rolledBack])
 			.addDescending('createdAt'));
 	}
