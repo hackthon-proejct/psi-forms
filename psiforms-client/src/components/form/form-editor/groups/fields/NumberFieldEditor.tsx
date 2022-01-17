@@ -44,13 +44,13 @@ export function NumberFieldEditor(props: NumberFieldEditorProps) {
 				<div className="col">
 					<div className="form-group">
 						<label>Min:</label>
-						<input type="number" value={props.field.min || ''} onChange={e => onMinChanged(e.target.value)} />
+						<input type="number" value={(props.field.min !== undefined) ? props.field.min : ''} onChange={e => onMinChanged(e.target.value)} />
 					</div>
 				</div>
 				<div className="col">
 					<div className="form-group">
 						<label>Max:</label>
-						<input type="number" value={props.field.max || ''} onChange={e => onMaxChanged(e.target.value)} />
+						<input type="number" value={(props.field.max !== undefined) ? props.field.max : ''} onChange={e => onMaxChanged(e.target.value)} />
 					</div>
 				</div>
 			</div>

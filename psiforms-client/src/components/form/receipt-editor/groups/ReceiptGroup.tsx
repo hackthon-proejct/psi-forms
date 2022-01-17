@@ -58,7 +58,7 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 			{props.requireApproval &&
 				<div className="form-section">
 					<div className="form-section-header">
-						<h3>After Submission &amp; Payment</h3>
+						<h3>After Payment</h3>
 					</div>
 					<div className="form-section-body">
 						<div className="form-group">
@@ -73,13 +73,17 @@ export function ReceiptGroup(props: ReceiptGroupProps) {
 
 			<div className="form-section">
 				<div className="form-section-header">
-					<h3>{props.requireApproval ? 'After Approval' : 'After Submission & Payment'}</h3>
+					<h3>{props.requireApproval ? 'After Approval' : 'After Payment'}</h3>
 				</div>
 				<div className="form-section-body">
 					<div className="form-group">
 						<label>
 							Message *
-							<span className="info">This message is not visible to your customer until a confirmed payment and your approval.</span>
+							<span className="info">
+								{props.requireApproval
+									? 'This message is not visible to your customer until a confirmed payment and your approval.'
+									: 'This message is not visible to your customer until a confirmed payment.'}
+							</span>
 						</label>
 						<textarea value={props.postReceipt.message} readOnly={props.isReadonly} onChange={e => onPostMessageChanged(e.target.value)} />
 					</div>

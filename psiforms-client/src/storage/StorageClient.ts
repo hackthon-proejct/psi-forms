@@ -202,8 +202,7 @@ export class StorageClient {
 
 		return await readRequests(new Moralis.Query(RequestEntity)
 			.equalTo('creator', creator)
-			.notEqualTo('status', null)
-			.notContainedIn('status', [RequestStatus.approved, RequestStatus.rejected, RequestStatus.rolledBack])
+			.equalTo('status', RequestStatus.pending)
 			.addDescending('createdAt'));
 	}
 

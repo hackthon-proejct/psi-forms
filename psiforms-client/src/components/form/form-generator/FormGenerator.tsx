@@ -98,6 +98,9 @@ export function FormGenerator(props: FormGeneratorProps) {
 		};
 
 		setIsProcessing(true);
+		if (error) {
+			setError(undefined);
+		}
 		try {
 			await props.onSave(data);
 		} catch (e) {

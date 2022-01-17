@@ -63,6 +63,8 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 			console.error(e);
 			alert('Error: ' + (e as Error).message);
 		}
+
+		state.reload();
 	}
 
 	return (

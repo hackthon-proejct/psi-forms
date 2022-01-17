@@ -19,7 +19,7 @@ export function ApprovalFormGroup(props: ApprovalFormGroupProps) {
 					</label>
 					<label className="checkbox">
 						<input type="radio" checked={props.requireApproval} disabled={props.isReadonly} onChange={() => props.onChange(true)} />
-						{' '}Need approval, transfer money to me after approval
+						{' '}Need approval, transfer money to me after approval, otherwise return money to a sender
 					</label>
 				</div>
 			</div>

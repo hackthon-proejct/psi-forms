@@ -215,7 +215,10 @@ body, #root {color: #000; min-height: 100vh;}
 .home-intro {
 	& {@include app-centered();}
 
-	.info h4 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.05em; margin-bottom: -10px; @include orange-gradient-text();}
+	.info h4 {@include auto-font-size(58px); font-weight: 700; letter-spacing: -0.05em; margin-bottom: -10px;}
+	.info h4.orange {@include orange-gradient-text();}
+	.info h4.violet {@include violet-gradient-text();}
+	.info h4.azure {@include azure-gradient-text();}
 	.info h3 {@include auto-font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
 	.info .subtitle {padding: 15px 0 25px; @include auto-font-size(20px); color: #929292;}
 
@@ -226,7 +229,8 @@ body, #root {color: #000; min-height: 100vh;}
 		.picture .frame img {margin-left: -50%; width: auto; height: 510px;}
 	}
 	@media #{$phone} {
-		& {text-align: center}
+		& {text-align: center;}
+		.info h4 {display: flex; align-items: center; justify-content: center; min-height: 150px;}
 		.picture {padding-top: 30px;}
 		.picture .frame img {max-width: 100%; height: auto; margin: 0 auto; border-radius: $radius;}
 	}

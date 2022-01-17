@@ -13,12 +13,12 @@
 		"@types/react-dom": "^17.0.11",
 		"decimal.js": "^10.3.1",
 		"moralis": "^0.0.184",
-		"sass": "^1.48.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-router": "^6.2.1",
 		"react-router-dom": "^6.2.1",
 		"react-scripts": "^4.0.3",
+		"sass": "^1.48.0",
 		"typescript": "^4.5.4",
 		"web3": "^1.6.1"
 	},

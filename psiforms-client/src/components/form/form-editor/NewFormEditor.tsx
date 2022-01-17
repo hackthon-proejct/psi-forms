@@ -95,14 +95,14 @@ export function NewFormEditor(props: NewFormEditorProps) {
 			{form.requireApproval &&
 				<section className="section">
 					<div className="section-header">
-						<h2>After Submit Preview</h2>
+						<h2>After Payment</h2>
 					</div>
 					<Receipt message={preReceipt.message} />
 				</section>}
 
 			<section className="section">
 				<div className="section-header">
-					<h2>Receipt Preview</h2>
+					<h2>{form.requireApproval ? 'After Approval' : 'After Payment'}</h2>
 				</div>
 				<Receipt message={postReceipt.message} files={postReceipt.files.toPointers(false)} />
 			</section>

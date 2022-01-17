@@ -1,12 +1,19 @@
 import { Link } from 'react-router-dom';
 
+import { Typewriter } from './Typewriter';
+
+const TYPEWRITER_TEXTS = [
+	{ a: 'Sell Your Digital Files', aClassName: 'orange', b: 'Anywhere' },
+	{ a: 'Receive Donates', aClassName: 'violet', b: 'Anytime' },
+	{ a: 'Receive Paid Offers', aClassName: 'azure', b: 'Anyplace' }
+];
+
 export function HomeRoute() {
 	return (
 		<section className="home">
 			<div className="home-intro">
 				<div className="info">
-					<h4>Sell Your Digital Files</h4>
-					<h3>Anywhere</h3>
+					<Typewriter texts={TYPEWRITER_TEXTS} />
 					<p className="subtitle">Earn in AVAX cryptocurrency</p>
 					<Link to="/create-form" className="btn btn-black">
 						Create Form for Free
