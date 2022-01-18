@@ -38,6 +38,10 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 		window.prompt('Request ID', request.id);
 	}
 
+	function onSenderClicked(request: RequestDto) {
+		window.prompt('Sender', request.sender);
+	}
+
 	async function save(formId: string) {
 		if (!account) {
 			alert('Your wallet is not connected.');
@@ -131,7 +135,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 														{', created '}
 														<em>{ri.request.createdAt.toLocaleString()}</em>
 														{' by '}
-														<em>{HexFormatter.format(ri.request.sender)}</em>
+														<em onClick={() => onSenderClicked(ri.request)}>{HexFormatter.format(ri.request.sender)}</em>
 													</span>
 													{(ri.request.status === RequestStatus.pending) &&
 														<span className="actions">
