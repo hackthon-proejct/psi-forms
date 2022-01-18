@@ -34,6 +34,10 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 		setStatuses(newStatuses);
 	}
 
+	function onRequestIdClicked(request: RequestDto) {
+		window.prompt('Request ID', request.id);
+	}
+
 	async function save(formId: string) {
 		if (!account) {
 			alert('Your wallet is not connected.');
@@ -123,7 +127,8 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 												</div>
 												<div className="meta-info">
 													<span className="meta">
-														{'created '}
+														<em onClick={() => onRequestIdClicked(ri.request)}>{HexFormatter.format(ri.request.id)}</em>
+														{', created '}
 														<em>{ri.request.createdAt.toLocaleString()}</em>
 														{' by '}
 														<em>{HexFormatter.format(ri.request.sender)}</em>
@@ -149,7 +154,18 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 														{ri.request.fields.map((field, findex) =>
 															<tr key={findex}>
 																<td>{field.label}</td>
-																<td>{field.value}</td>
+																<td>
+																	{field.files
+																		? <Fragment>
+																			{field.files.map((f, i) =>
+																				<Fragment key={f.hash}>
+																					{i > 0 && <br />}
+																					<a href={f.url} target="_blank" rel="noreferrer">{f.name}</a>{' '}
+																					({Math.round(f.size / 1024)} KB)
+																				</Fragment>)}
+																		</Fragment>
+																		: field.value}
+																</td>
 															</tr>)}
 													</tbody>
 												</table>

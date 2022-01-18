@@ -26,6 +26,7 @@ export function FileFieldGenerator(props: FileFieldGeneratorProps) {
 			newFiles.add(input.files[i]);
 		}
 		update(newFiles);
+		input.value = '';
 	}
 
 	function onFileDeleted(fileId: number) {
@@ -39,13 +40,16 @@ export function FileFieldGenerator(props: FileFieldGeneratorProps) {
 			<label>{props.field.label}:{props.field.isRequired && ' *'}</label>
 			<input type="file" onChange={e => onUploaded(e.target)} />
 
-			<ul>
-				{deltas.map(delta =>
-					<li key={delta.id}>
-						{delta.name}
-						<button onClick={() => onFileDeleted(delta.id)}>x</button>
-					</li>)}
-			</ul>
+			{deltas.length > 0 &&
+				<ul className="file-list">
+					{deltas.map(delta =>
+						<li key={delta.id}>
+							{delta.name}{' '}
+							<button onClick={() => onFileDeleted(delta.id)} className="btn btn-small btn-gray" title="Delete">
+								<i className="ico ico-close-black" />
+							</button>
+						</li>)}
+				</ul>}
 		</div>
 	);
 }

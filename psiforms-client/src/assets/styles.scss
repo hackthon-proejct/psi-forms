@@ -461,6 +461,9 @@ $web-max-width: 800px;
 			& {padding: 0 15px;}
 			label {display: block; padding: 10px 0; font-weight: bold;}
 			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: math.div($radius, 2);}
+
+			.file-list {margin-top: 5px;}
+			.file-list li {display: inline-block; padding: 4px 10px; margin: 4px 4px 0 0; background: #F6F6F6; border-radius: math.div($radius, 2);}
 		}
 
 		@media #{$desktop} {

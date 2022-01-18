@@ -38,6 +38,10 @@ export function MyRequestsRoute() {
 		);
 	}
 
+	function onRequestIdClicked(request: RequestDto) {
+		window.prompt('Request ID', request.id);
+	}
+
 	async function onRollbackClicked(request: RequestDto) {
 		if (!account) {
 			return;
@@ -88,8 +92,12 @@ export function MyRequestsRoute() {
 											<td width={'1%'}>
 												<RequestStatusInfo status={request.status} />
 											</td>
-											<td width={'1%'}>{HexFormatter.format(request.id)}</td>
-											<td width={'1%'}>{HexFormatter.format(request.formId)}</td>
+											<td width={'1%'}>
+												<span onClick={() => onRequestIdClicked(request)}>{HexFormatter.format(request.id)}</span>
+											</td>
+											<td width={'1%'}>
+												<Link to={'/forms/' + request.formId}>{HexFormatter.format(request.formId)}</Link>
+											</td>
 											<td>
 												{request.value &&
 													<Fragment>{UnitsConverter.toDecimalETH(request.value)} AVAX</Fragment>}
@@ -98,10 +106,8 @@ export function MyRequestsRoute() {
 												{request.createdAt.toLocaleString()}
 											</td>
 											<td className="actions">
-												<Link to={'/forms/' + request.formId} className="btn btn-small btn-white">Form</Link>
 												{request.status === RequestStatus.approved &&
 													<Fragment>
-														{' '}
 														<Link to={`/requests/${request.id}/post-receipt`} className="btn btn-small btn-black">Receipt</Link>
 													</Fragment>}
 												{canRollback(request) &&
