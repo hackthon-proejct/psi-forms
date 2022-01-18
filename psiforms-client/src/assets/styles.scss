@@ -221,6 +221,7 @@ body, #root {color: #000; min-height: 100vh;}
 	.info h4.azure {@include azure-gradient-text();}
 	.info h3 {@include auto-font-size(80px); font-weight: 700; letter-spacing: -0.06em;}
 	.info .subtitle {padding: 15px 0 25px; @include auto-font-size(20px); color: #929292;}
+	.info .subaction {padding: 15px 0 0;}
 
 	@media #{$desktop} {
 		& {display: flex; align-items: center;}

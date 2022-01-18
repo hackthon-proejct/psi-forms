@@ -20,6 +20,7 @@ import { EditCreatorProfileRoute } from './routes/profiles/EditCreatorProfileRou
 import { FormRequestsRoute } from './routes/requests/FormRequestsRoute';
 import { MyRequestsRoute } from './routes/requests/MyRequestsRoute';
 import { PendingRequestsRoute } from './routes/requests/PendingRequestsRoute';
+import { ScrollToTop } from './routes/ScrollToTop';
 import { Examples } from './routes/statics/Examples';
 import { FAQ } from './routes/statics/FAQ';
 import { HowItWorksRoute } from './routes/statics/HowItWorksRoute';
@@ -28,6 +29,8 @@ import { TermsRoute } from './routes/statics/TermsRoute';
 export function App() {
 	return (
 		<HashRouter>
+			<ScrollToTop />
+
 			<WalletContext>
 				<AppRoutes />
 			</WalletContext>
@@ -58,7 +61,7 @@ function AppRoutes() {
 
 			<Route path="/terms" element={<AppContainer title="Terms and Conditions" element={<TermsRoute />} />} />
 			<Route path="/how-it-works" element={<AppContainer title="How it Works" element={<HowItWorksRoute />} />} />
-			<Route path="/examples" element={<AppContainer title="Widget Examples" element={<Examples />} />} />
+			<Route path="/examples" element={<AppContainer title="Examples" element={<Examples />} />} />
 			<Route path="/faq" element={<AppContainer title="FAQ" element={<FAQ />} />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>

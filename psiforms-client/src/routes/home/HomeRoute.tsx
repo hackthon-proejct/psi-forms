@@ -14,11 +14,21 @@ export function HomeRoute() {
 			<div className="home-intro">
 				<div className="info">
 					<Typewriter texts={TYPEWRITER_TEXTS} />
+
 					<p className="subtitle">Earn in AVAX cryptocurrency</p>
-					<Link to="/create-form" className="btn btn-black">
-						Create Form for Free
-						<i className="ico ico-ml ico-arrow-right-white" />
-					</Link>
+
+					<div className="action">
+						<Link to="/create-form" className="btn btn-black">
+							Create Form for Free
+							<i className="ico ico-ml ico-arrow-right-white" />
+						</Link>
+					</div>
+					<div className="subaction">
+						<Link to="/examples" className="btn btn-gray">
+							Explore Examples
+							<i className="ico ico-ml ico-arrow-right-black" />
+						</Link>
+					</div>
 				</div>
 				<div className="picture">
 					<div className="frame">

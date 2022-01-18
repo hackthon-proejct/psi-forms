@@ -24,8 +24,9 @@ export function FormSection(props: FormSectionProps) {
 			}
 		} catch (e) {
 			setError((e as Error).message);
+		} finally {
+			setIsProcessing(false);
 		}
-		setIsProcessing(false);
 	}
 
 	return (
@@ -41,8 +42,9 @@ export function FormSection(props: FormSectionProps) {
 
 				<div className="form-submit">
 					<button className="btn btn-black btn-large" onClick={onSubmited}>
-						{!isProcessing && <i className="ico ico-mr ico-save-white" />}
-						{isProcessing && <i className="ico ico-mr ico-refresh-white ico-rotating" />}
+						<i className={isProcessing
+							? 'ico ico-mr ico-refresh-white ico-rotating'
+							: 'ico ico-mr ico-save-white'} />
 						{props.submitText}
 					</button>
 				</div>

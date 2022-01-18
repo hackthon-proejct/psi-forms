@@ -22,6 +22,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 	const account = wallet.tryGetAccount();
 
 	const [statuses, setStatuses] = useState<(boolean | null)[]>();
+	const [processingFormId, setProcessingFormId] = useState<string>();
 	const state = useLoader<RequestDto[]>(props.loader);
 
 	function setStatus(status: boolean | null, requestId: string) {
@@ -39,10 +40,13 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 	}
 
 	function onSenderClicked(request: RequestDto) {
-		window.prompt('Sender', request.sender);
+		window.prompt('Sender Address', request.sender);
 	}
 
 	async function save(formId: string) {
+		if (processingFormId) {
+			return;
+		}
 		if (!account) {
 			alert('Your wallet is not connected.');
 			return;
@@ -57,22 +61,25 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 					request,
 					status: statuses ? statuses[index] : null,
 					index
-				}
+				};
 			})
 			.filter(r => r.request.formId === formId && r.status !== null);
 
+		setProcessingFormId(formId);
 		try {
 			const client = new BlockchainContractClient(account);
 
 			await client.approveOrRejectRequests(formId,
 				newStatuses.map(s => s.request.id),
 				newStatuses.map(s => s.status as boolean));
+
+			state.reload();
 		} catch (e) {
 			console.error(e);
 			alert('Error: ' + (e as Error).message);
+		} finally {
+			setProcessingFormId(undefined);
 		}
-
-		state.reload();
 	}
 
 	return (
@@ -116,7 +123,9 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 										{form.hasAnyChange &&
 											<div className="actions">
 												<button className="btn btn-black btn-large" onClick={() => save(form.formId)}>
-													<i className="ico ico-mr ico-save-white" />
+													<i className={(form.formId === processingFormId)
+														? 'ico ico-mr ico-refresh-white ico-rotating'
+														: 'ico ico-mr ico-save-white'} />
 													Save
 												</button>
 											</div>}
