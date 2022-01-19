@@ -68,7 +68,7 @@ export function MyFormsRoute() {
 												</td>
 												<td width={'1%'}>{HexFormatter.format(ab.id)}</td>
 												<td>
-													<Link to={`/forms/${ab.id}`}>
+													<Link to={`/forms/${ab.id}`} target="_blank" rel="noreferrer">
 														{ab.name}
 														<i className="ico ico-ml ico-arrow-right-black" />
 													</Link>

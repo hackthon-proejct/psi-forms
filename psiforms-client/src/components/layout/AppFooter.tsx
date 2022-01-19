@@ -7,7 +7,6 @@ export function AppFooter() {
 		<footer className="app-footer">
 			<div className="links">
 				<ul>
-					<li><a href="https://n4no.com" target="_blank" rel="noreferrer">Contact</a></li>
 					<li><Link to="/terms">Terms</Link></li>
 					<li><a href="https://twitter.com/b4rtaz" target="_blank" rel="noreferrer">Twitter</a></li>
 					<li><a href="https://t.me/psiforms" target="_blank" rel="noreferrer">Telegram</a></li>
