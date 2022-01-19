@@ -15,7 +15,7 @@ export function HomeRoute() {
 				<div className="info">
 					<Typewriter texts={TYPEWRITER_TEXTS} />
 
-					<p className="subtitle">Earn in AVAX cryptocurrency</p>
+					<p className="subtitle">Earn directly in AVAX cryptocurrency</p>
 
 					<div className="action">
 						<Link to="/create-form" className="btn btn-black">
@@ -54,13 +54,13 @@ export function HomeRoute() {
 					<li>
 						<span className="text">
 							<span className="icon"><img src="images/home-icon-support.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Receive Paid</span><span className="line">Offers</span>
+							<span className="line">Receive Paid</span> <span className="line">Offers</span>
 						</span>
 					</li>
 					<li>
 						<span className="text">
 							<span className="icon"><img src="images/home-icon-form.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Payable</span><span className="line">Crypto Forms</span>
+							<span className="line">Payment</span> <span className="line">Crypto Forms</span>
 						</span>
 					</li>
 				</ul>
@@ -85,19 +85,19 @@ export function HomeRoute() {
 					<ul>
 						<li>
 							<strong className="value">
-								<span className="text">42.1</span>
+								<span className="text">12.8</span>
 							</strong>
 							<span className="label">Transfered AVAX</span>
 						</li>
 						<li>
 							<strong className="value">
-								<span className="text">67</span>
+								<span className="text">16</span>
 							</strong>
 							<span className="label">Created Forms</span>
 						</li>
 						<li>
 							<strong className="value">
-								<span className="text">03:21</span>
+								<span className="text">02:22</span>
 							</strong>
 							<span className="label">Avg. Creating Form Time</span>
 						</li>

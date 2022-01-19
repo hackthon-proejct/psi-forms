@@ -8,7 +8,9 @@ export interface MetaProps {
 export function Meta(props: MetaProps) {
 
 	useEffect(() => {
-		window.document.title = (props.title ? (props.title + ' - ') : '') + 'PsiForms.com';
+		window.document.title = props.title
+			? `${props.title} - PsiForms.com`
+			: `PsiForms.com - Online Payment Forms Powered by Blockchain`;
 	}, [props.title]);
 
 	return props.element;

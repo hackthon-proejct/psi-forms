@@ -44,7 +44,7 @@ contract Pausable is Gate {
 
 contract PsiFormsParameters is Gate {
 
-	uint16 public fee = 30; // 3.333%
+	uint16 public fee = 25; // 4%
 	uint public minApprovalTime = 86400;
 	uint public minUnitPrice = 100000;
 

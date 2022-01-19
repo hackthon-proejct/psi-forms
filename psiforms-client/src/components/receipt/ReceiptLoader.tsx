@@ -45,7 +45,7 @@ function ReceiptLoader<T>(props: ReceiptLoaderProps<T>) {
 		<Loader state={state} loadingText="Waiting for blockchain confirmations. This may take several minutes..." element={(result => {
 			if (!account) {
 				return (
-					<div>You are not logged in.</div>
+					<div>Please connect your wallet.</div>
 				);
 			}
 			if (result.failed) {
