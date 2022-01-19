@@ -15,10 +15,7 @@ export function TermsRoute() {
 
 				<p>TODO</p>
 
-				<p>
-					We do our best to keep our service high-quality and available. But we inform you, in case of technical problems, hacker attack, network errors or unpredictable events our service can be temporally unavailable.
-					In case of the unavailability, PsiForms.com may increase the display time of advertiser ads to reward the inaccessibility.
-				</p>
+				<p>We do our best to keep our service high-quality and available. But we inform you, in case of technical problems, hacker attack, network errors or unpredictable events our service can be temporally unavailable.</p>
 
 				<p>The publisher obliges himself to keep the JavaScript widget on his website until advertiser ads are valid.</p>
 

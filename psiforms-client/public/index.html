@@ -30,7 +30,14 @@
 
 		<script>
 			if (['localhost', 'localhost:3000', '127.0.0.1'].indexOf(location.host.toLowerCase()) < 0) {
-				// gtag
+				document.write('<script async src="https://www.googletagmanager.com/gtag/js?id=G-31CHV9DZ3L"><\/script>');
+
+				window.dataLayer = window.dataLayer || [];
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+				gtag('js', new Date());
+				gtag('config', 'G-31CHV9DZ3L');
 			}
 		</script>
 	</body>
