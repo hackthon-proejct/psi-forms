@@ -18,6 +18,15 @@ export const networkInfos: NetworkInfo[] = [
 		ethDecimals: 18,
 		ethSymbol: 'AVAX',
 		isSupported: false
+	},
+	{
+		id: 1,
+		networkId: 43113,
+		chainId: 43113,
+		name: 'Avalanche Testnet',
+		ethDecimals: 18,
+		ethSymbol: 'AVAX',
+		isSupported: false
 	}
 ];
 

@@ -13,15 +13,7 @@ export function TermsRoute() {
 
 				<h4>§1 The Service</h4>
 
-				<p>
-					PsiForms.com offers the advertise system, which allows the advertiser buy ad space on the website of the publisher.
-					The money transfer is fully powered by the smart contract in the one of supported blockchains. The smart contract is open source, everyone can access to the source code.
-					PsiForms.com can not access to transferring money between the advertiser and the publisher in a different way than described in the smart contract.
-				</p>
-
-				<p>PsiForms.com only takes the fee when the publisher accepts an ad from the advertiser. The fee amount is defined in the smart contract.</p>
-
-				<p>PsiForms.com shares the JavaScript widget for publishers which should be embedded on the publisher website.</p>
+				<p>TODO</p>
 
 				<p>
 					We do our best to keep our service high-quality and available. But we inform you, in case of technical problems, hacker attack, network errors or unpredictable events our service can be temporally unavailable.
