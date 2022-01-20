@@ -8,14 +8,17 @@ export interface TextFieldGeneratorProps {
 
 export function TextFieldGenerator(props: TextFieldGeneratorProps) {
 
-	function onChanged(value: string) {
-		props.onChanged(value, !props.field.isRequired || value.length > 0);
+	function onChanged(newText: string) {
+		props.onChanged(newText, !props.field.isRequired || newText.length > 0);
 	}
 
+	const text = props.value || '';
 	return (
 		<div className="web-form-group">
 			<label>{props.field.label}:{props.field.isRequired && ' *'}</label>
-			<input type="text" value={props.value || ''} onChange={e => onChanged(e.target.value)} />
+			{props.field.multiline
+				? <textarea value={text} onChange={e => onChanged(e.target.value)} />
+				: <input type="text" value={text} onChange={e => onChanged(e.target.value)} />}
 		</div>
 	);
 }

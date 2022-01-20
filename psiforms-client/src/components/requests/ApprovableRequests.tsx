@@ -4,10 +4,11 @@ import { Arr } from '../../core/Arr';
 import { HexFormatter } from '../../core/HexFormatter';
 import { UnitsConverter } from '../../core/UnitsConverter';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
-import { RequestStatus } from '../../storage/Model';
+import { FieldType, RequestStatus } from '../../storage/Model';
 import { RequestDto } from '../../storage/StorageModel';
 import { AppPage } from '../layout/AppPage';
 import { Loader, useLoader } from '../layout/Loader';
+import { SimpleMarkdown } from '../SimpleMarkdown';
 import { ConnectYourWallet } from '../wallet/ConnectYourWallet';
 import { useWallet } from '../wallet/WalletContext';
 import { RequestStatusInfo } from './RequestStatusInfo';
@@ -168,16 +169,19 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 															<tr key={findex}>
 																<td>{field.label}</td>
 																<td>
-																	{field.files
-																		? <Fragment>
+																	{field.type === FieldType.text
+																		&& <SimpleMarkdown text={field.value || ''} />}
+																	{field.type === FieldType.number
+																		&& <Fragment>{field.value}</Fragment>}
+																	{field.type === FieldType.file && field.files
+																		&& <Fragment>
 																			{field.files.map((f, i) =>
 																				<Fragment key={f.hash}>
 																					{i > 0 && <br />}
 																					<a href={f.url} target="_blank" rel="noreferrer">{f.name}</a>{' '}
 																					({Math.round(f.size / 1024)} KB)
 																				</Fragment>)}
-																		</Fragment>
-																		: field.value}
+																		</Fragment>}
 																</td>
 															</tr>)}
 													</tbody>

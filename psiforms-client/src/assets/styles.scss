@@ -197,6 +197,8 @@ body, #root {color: #000; min-height: 100vh;}
 	.providers .provider.ipfs {width: 44px; background-position-x: -176px;}
 	.providers .provider.avalanche {width: 210px; background-position-x: -257px;}
 	.providers .provider.covalent {width: 158px; background-position-x: -498px;}
+	.rigths a {color: #414141;}
+	.rigths a:hover {text-decoration: underline;}
 
 	@media #{$desktop} {
 		.links {padding: 50px 0;}
@@ -398,6 +400,8 @@ body, #root {color: #000; min-height: 100vh;}
 	.values {overflow: auto;}
 	.values table {width: 100%; min-width: 700px; border-spacing: 4px;}
 	.values table td {background: #FFF; padding: 10px; border-radius: math.div($radius, 2);}
+	.values table td p {margin-top: 10px;}
+	.values table td p:first-child {margin-top: 0;}
 
 	@media #{$desktop} {
 		.details .basic-info {display: table-cell; vertical-align: middle; padding: 6px;}
@@ -462,7 +466,8 @@ $web-max-width: 800px;
 		.web-form-group {
 			& {padding: 0 15px;}
 			label {display: block; padding: 10px 0; font-weight: bold;}
-			input[type=text], input[type=number] {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: math.div($radius, 2);}
+			input[type=text], input[type=number], textarea {padding: 10px 15px; width: 100%; box-sizing: border-box; background: #F6F6F6; border-radius: math.div($radius, 2);}
+			textarea {min-height: 100px; resize: vertical;}
 
 			.file-list {margin-top: 5px;}
 			.file-list li {display: inline-block; padding: 4px 10px; margin: 4px 4px 0 0; background: #F6F6F6; border-radius: math.div($radius, 2);}

@@ -24,6 +24,7 @@ export interface Field {
 }
 
 export interface TextField extends Field {
+	multiline: boolean;
 }
 
 export interface NumberField extends Field {

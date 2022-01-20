@@ -10,7 +10,7 @@ export function AppFooter() {
 					<li><Link to="/terms">Terms</Link></li>
 					<li><a href="https://twitter.com/b4rtaz" target="_blank" rel="noreferrer">Twitter</a></li>
 					<li><a href="https://t.me/psiforms" target="_blank" rel="noreferrer">Telegram</a></li>
-					<li><a href="https://testnet.avascan.info/blockchain/c/address/0x8A367DF709AfE175D58015ECFbe3bA38Ff063008/contract" target="_blank" rel="noreferrer">Smart Contract</a></li>
+					<li><a href="https://testnet.avascan.info/blockchain/c/address/0x119306d5d3B2a59ef369B5E13363AaDf6a9bb9dC/contract" target="_blank" rel="noreferrer">Smart Contract</a></li>
 				</ul>
 			</div>
 

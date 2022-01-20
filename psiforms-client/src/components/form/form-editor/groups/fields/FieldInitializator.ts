@@ -3,7 +3,7 @@ import { Field, FieldType, FileField, FileType, NumberField, TextField } from '.
 export function initializeField(type: FieldType): Field {
 	switch (type) {
 		case FieldType.text:
-			return { type, label: 'Text', isRequired: false } as TextField;
+			return { type, label: 'Text', isRequired: false, multiline: false } as TextField;
 		case FieldType.number:
 			return { type, label: 'Number', isRequired: false } as NumberField;
 		case FieldType.file:
