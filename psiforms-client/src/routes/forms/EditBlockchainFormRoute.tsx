@@ -47,7 +47,7 @@ export function EditBlockchainFormRoute() {
 		<AppPage>
 			<Loader state={state} element={(result => (
 				<Fragment>
-					<ConnectYourWallet requiredNetworkId={1} />
+					<ConnectYourWallet />
 					{result?.form &&
 						<BlockchainFormEditor isEnabled={result.form.isEnabled} unitPrice={result.form.unitPrice} minQuantity={result.form.minQuantity} maxQuantity={result.form.maxQuantity}
 							onSave={save} />}

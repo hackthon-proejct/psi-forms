@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
-body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input, textarea {margin: 0; padding: 0; border: 0; list-style-type: none;}
+body, ul, li, h1, h2, h3, h4, h5, p, iframe, button, input, textarea {margin: 0; padding: 0; border: 0; background: transparent; list-style-type: none;}
 strong, em {font-weight: normal; font-style: normal;}
 a {text-decoration: none; color: #000;}
 
@@ -132,7 +132,8 @@ body, #root {color: #000; min-height: 100vh;}
 	&.mt {padding-top: 20px;}
 	&.mb {padding-bottom: 20px;}
 	.warning {color: #FFF; padding: 15px; box-sizing: border-box; text-align: center; @include black-gradient-background(); border-radius: $radius;}
-	.warning strong {font-weight: bold;}
+	.warning .connect {color: #FFF; text-decoration: underline; font-weight: bold; cursor: pointer;}
+	.warning .connect:hover {text-decoration: none;}
 }
 
 .loading-idle {padding: 80px 0; text-align: center;}

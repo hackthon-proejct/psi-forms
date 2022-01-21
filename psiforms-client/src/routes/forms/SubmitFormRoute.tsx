@@ -103,7 +103,7 @@ export function SubmitFormRoute() {
 	return (
 		<Loader state={state} element={(form =>
 			<Fragment>
-				<ConnectYourWallet requiredNetworkId={1} className="mb" />
+				<ConnectYourWallet className="mb" />
 				<Meta title={form.name} element={<FormGenerator form={form} onSave={save} />} />
 			</Fragment>)} />
 	);

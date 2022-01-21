@@ -65,14 +65,13 @@ export function WalletContext(props: { children: JSX.Element }) {
 
 		const ethAddress = user.get('ethAddress');
 		const chainId = await web3.eth.getChainId();
-		const networkId = await web3.eth.net.getId();
-		const hash = `${ethAddress}|${chainId}|${networkId}`;
+		const hash = `${ethAddress}|${chainId}`;
 
-		console.log(`chainId = ${chainId}, networkId = ${networkId}`);
+		console.log(`ethAddress = ${ethAddress}, chainId = ${chainId}`);
 
 		return {
 			web3,
-			network: determineNetwork(networkId, chainId),
+			network: determineNetwork(chainId),
 			address: ethAddress,
 			hash
 		};
@@ -127,7 +126,39 @@ export function WalletContext(props: { children: JSX.Element }) {
 	}
 
 	async function switchNetwork(network: NetworkInfo): Promise<void> {
-		// TODO
+		const account = getAccount();
+		const provider = account.web3.currentProvider as { request: (p: any) => Promise<void>; };
+		const chainIdHex = '0x' + network.chainId.toString(16);
+		try {
+			await provider.request({
+				method: 'wallet_switchEthereumChain',
+				params: [{ chainId: chainIdHex }]
+			});
+		} catch (e0) {
+			console.error(e0);
+			if ((e0 as any).code !== 4902) {
+				return;
+			}
+			try {
+				provider.request({
+					method: 'wallet_addEthereumChain',
+					params: [
+						{
+							chainId: chainIdHex,
+							chainName: network.name,
+							rpcUrls: [network.rpcUrl],
+							nativeCurrency: {
+								name: network.ethSymbol,
+								symbol: network.ethSymbol,
+								decimals: network.ethDecimals,
+							}
+						}
+					]
+				});
+			} catch (e1) {
+				console.error(e1);
+			}
+		}
 	}
 
 	return (

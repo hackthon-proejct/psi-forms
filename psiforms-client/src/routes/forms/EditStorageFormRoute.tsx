@@ -45,7 +45,7 @@ export function EditStorageFormRoute() {
 	return (
 		<Loader state={state} element={(result => (
 			<AppPage>
-				<ConnectYourWallet requiredNetworkId={1} />
+				<ConnectYourWallet />
 				{result?.form &&
 					<StorageFormEditor name={result.form.name} description={result.form.description} fields={result.form.fields} onSave={save} />}
 			</AppPage>

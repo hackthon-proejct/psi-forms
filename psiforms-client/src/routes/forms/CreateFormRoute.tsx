@@ -91,7 +91,7 @@ export function CreateFormRoute() {
 	}
 	return (
 		<AppPage>
-			<ConnectYourWallet requiredNetworkId={1} />
+			<ConnectYourWallet />
 			<Loader state={state} element={(result => (
 				<NewFormEditor collectNotifications={result.collectNotifications} onSave={save} />
 			))} />

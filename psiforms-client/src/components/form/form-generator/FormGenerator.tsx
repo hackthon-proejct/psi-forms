@@ -43,9 +43,17 @@ export function FormGenerator(props: FormGeneratorProps) {
 		: null;
 
 	useEffect(() => {
+		let isMounted = true;
+
 		TokenPriceService.getAvaxUsdPrice()
-			.then(setEthUsdPrice)
+			.then((price) => {
+				if (isMounted) {
+					setEthUsdPrice(price);
+				}
+			})
 			.catch(console.error);
+
+		return () => { isMounted = false; };
 	}, []);
 
 	function onFieldValueChanged(value: string | undefined, isValid: boolean, index: number) {

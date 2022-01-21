@@ -1,11 +1,10 @@
 import { Fragment } from 'react';
 
-import { getNetworkInfo, networkInfos } from '../../core/NetworkInfo';
+import { networkInfos } from '../../core/NetworkInfo';
 import { useWallet } from './WalletContext';
 
 export interface ConnectYourWalletProps {
 	className?: string;
-	requiredNetworkId?: number;
 }
 
 export function ConnectYourWallet(props: ConnectYourWalletProps) {
@@ -26,17 +25,14 @@ export function ConnectYourWallet(props: ConnectYourWalletProps) {
 
 	const account = wallet.getAccount();
 
-	const requiredNetworkId = (props.requiredNetworkId !== undefined)
-		? props.requiredNetworkId
-		: (account.network.isSupported ? undefined : networkInfos.find(i => i.isSupported)?.id);
+	if (!account.network.isSupported) {
+		const firstSupportedNetwork = networkInfos.filter(i => i.isSupported)[0];
 
-	if (requiredNetworkId !== undefined && account.network.id !== requiredNetworkId) {
-		const networkInfo = getNetworkInfo(requiredNetworkId);
 		return (
 			<div className={className}>
 				<div className="warning">
-					Sorry, you have connected an unsupported blockchain network. Please switch to <strong>Avalanche Testnet Network</strong>.
-					{false && <button className="btn btn-small btn-white" onClick={() => wallet.switchNetwork(networkInfo)}>Switch</button>}
+					Sorry, you have connected an unsupported blockchain network.
+					Please switch to <button onClick={() => wallet.switchNetwork(firstSupportedNetwork)} className="connect">Avalanche Testnet Network</button>.
 				</div>
 			</div>
 		)
