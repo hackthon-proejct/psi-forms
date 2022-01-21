@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Typewriter } from './Typewriter';
 
 const TYPEWRITER_TEXTS = [
-	{ a: 'Sell Your Digital Files', aClassName: 'orange', b: 'Anywhere' },
-	{ a: 'Receive Donates', aClassName: 'violet', b: 'Anytime' },
-	{ a: 'Receive Paid Offers', aClassName: 'azure', b: 'Anyplace' }
+	{ a: 'Forms for Creators', aClassName: 'orange', b: 'Anywhere' },
+	{ a: 'Forms for Business', aClassName: 'violet', b: 'Anytime' },
+	{ a: 'Forms for Influencers', aClassName: 'azure', b: 'Anyplace' }
 ];
 
 export function HomeRoute() {
