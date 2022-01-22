@@ -1,16 +1,18 @@
 import Moralis from 'moralis';
-import Web3 from 'web3';
+
+import { BNConverter } from '../../core/BNConverter';
 
 export async function waitForWeb3(): Promise<void> {
 	await Moralis.Web3.enableWeb3();
 }
 
 export function toNumericId(value: string): string {
-	return Web3.utils.toBN(value).toString();
+	return BNConverter.parseBN(value).toString();
 }
 
 export function toHexId(value: string): string {
-	return Web3.utils.toHex(Web3.utils.toBN(value));
+	const v = BNConverter.parseBN(value);
+	return BNConverter.toHex(v);
 }
 
 export async function currentUser(): Promise<Moralis.User> {

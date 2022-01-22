@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Web3 from 'web3';
 
+import { BNConverter } from '../../../core/BNConverter';
 import { FormSection } from '../../layout/FormSection';
 import { BlockchainForm } from '../Form';
 import { PricingFormGroup } from './groups/PricingFormGroup';
@@ -18,7 +18,7 @@ export function BlockchainFormEditor(props: BlockchainFormEditorProps) {
 	const [form, setForm] = useState<BlockchainForm>(() => {
 		return {
 			isEnabled: props.isEnabled,
-			unitPrice: Web3.utils.toBN(props.unitPrice),
+			unitPrice: BNConverter.parseBN(props.unitPrice),
 			minQuantity: props.minQuantity,
 			maxQuantity: props.maxQuantity
 		};

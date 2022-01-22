@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { Navigate } from 'react-router';
-import Web3 from 'web3';
 
 import { Form, Notifications } from '../../components/form/Form';
 import { NewFormEditor } from '../../components/form/form-editor/NewFormEditor';
@@ -9,6 +8,7 @@ import { AppPage } from '../../components/layout/AppPage';
 import { Loader, useLoader } from '../../components/layout/Loader';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
+import { IdGenerator } from '../../core/IdGenerator';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { StorageClient } from '../../storage/StorageClient';
 
@@ -32,7 +32,7 @@ export function CreateFormRoute() {
 			throw new Error('Wallet is not connected');
 		}
 
-		const formId = Web3.utils.randomHex(16);
+		const formId = IdGenerator.randomId(16);
 
 		let formCreated = false;
 		let preReceiptCreated = false;

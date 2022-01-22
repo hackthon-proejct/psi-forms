@@ -1,7 +1,6 @@
 import BN from 'bn.js';
 import { Fragment, useCallback, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
-import Web3 from 'web3';
 
 import { Form } from '../../components/form/Form';
 import { FormData } from '../../components/form/form-generator/FormData';
@@ -10,6 +9,8 @@ import { Loader, useLoader } from '../../components/layout/Loader';
 import { Meta } from '../../components/layout/Meta';
 import { ConnectYourWallet } from '../../components/wallet/ConnectYourWallet';
 import { useWallet } from '../../components/wallet/WalletContext';
+import { BNConverter } from '../../core/BNConverter';
+import { IdGenerator } from '../../core/IdGenerator';
 import { RequestHasher } from '../../services/hashes/RequestHasher';
 import { BlockchainContractClient } from '../../storage/BlockchainContractClient';
 import { FieldData } from '../../storage/Model';
@@ -25,7 +26,7 @@ function convertToForm(dto: FormDto): Form {
 		maxQuantity: dto.maxQuantity,
 		minQuantity: dto.minQuantity,
 		requireApproval: dto.requireApproval,
-		unitPrice: Web3.utils.toBN(dto.unitPrice)
+		unitPrice: BNConverter.parseBN(dto.unitPrice)
 	};
 }
 
@@ -51,7 +52,8 @@ export function SubmitFormRoute() {
 			return;
 		}
 
-		const requestId = Web3.utils.randomHex(16);
+		const requestId = IdGenerator.randomId(16);
+
 		const totalPrice = state.value.unitPrice.mul(new BN(data.quantity));
 
 		let requestCreated = false;
