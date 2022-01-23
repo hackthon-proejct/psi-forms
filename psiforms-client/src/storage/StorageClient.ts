@@ -12,7 +12,7 @@ import {
     RequestEntity,
 } from './moralis/MoralisEntities';
 import { MoralisFilesContainer } from './moralis/MoralisFilesContainer';
-import { currentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './moralis/MoralisUtils';
+import { getCurrentUser, readEntity, toHexId, toNumericId, tryReadEntity, waitForWeb3 } from './moralis/MoralisUtils';
 import { CreatorProfileDto, FormDto, PostReceiptDto, PreReceiptDto, RequestDto, StorageFormDto } from './StorageModel';
 
 export class StorageClient {
@@ -20,7 +20,7 @@ export class StorageClient {
 	// forms
 
 	public static async createForm(creator: string, formId: string, name: string, description: string, fields: Field[]): Promise<void> {
-		const creatorUser = await currentUser();
+		const creatorUser = await getCurrentUser();
 
 		const entity = FormEntity.create(creator, toNumericId(formId), name, description, fields);
 		entity.setAccess(creatorUser.id);
@@ -37,7 +37,6 @@ export class StorageClient {
 		const entity = await readEntity(FormEntity, 'formId', toNumericId(formId));
 		await entity.destroy();
 	}
-
 
 	public static async getForm(formId: string): Promise<FormDto> {
 		await waitForWeb3();
@@ -89,10 +88,10 @@ export class StorageClient {
 	// pre receipt
 
 	public static async createPreReceipt(formId: string, message: string): Promise<void> {
-		const user = await currentUser();
+		const senderUser = await getCurrentUser();
 
 		const entity = PreReceiptEntity.create(toNumericId(formId), message);
-		entity.setAccess(user.id);
+		entity.setAccess(senderUser.id);
 		await entity.save();
 	}
 
@@ -122,7 +121,7 @@ export class StorageClient {
 	// post receipt
 
 	public static async createPostReceipt(formId: string, message: string, files: FilePointer[]): Promise<void> {
-		const user = await currentUser();
+		const user = await getCurrentUser();
 
 		const entity = PostReceiptEntity.create(toNumericId(formId), message, files);
 		entity.setAccess(user.id);
@@ -158,7 +157,7 @@ export class StorageClient {
 	// request
 
 	public static async createRequest(sender: string, requestId: string, formId: string, email: string, fields: FieldData[]): Promise<void> {
-		const senderUser = await currentUser();
+		const senderUser = await getCurrentUser();
 
 		const formEntity = await readEntity(FormEntity, 'formId', toNumericId(formId));
 		const formAcl = formEntity.getACL()?.toJSON(); // TODO
@@ -219,7 +218,7 @@ export class StorageClient {
 	}
 
 	public static async createOrUpdateCreatorProfile(creator: string, email: string) {
-		const creatorUser = await currentUser();
+		const creatorUser = await getCurrentUser();
 
 		let entity = await tryReadEntity(CreatorProfileEntity, 'creator', creator);
 		if (!entity) {

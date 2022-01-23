@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { networkInfos } from '../../core/NetworkInfo';
+import { networkInfos } from './NetworkInfo';
 import { useWallet } from './WalletContext';
 
 export interface ConnectYourWalletProps {

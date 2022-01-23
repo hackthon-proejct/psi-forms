@@ -2,7 +2,7 @@ import Moralis from 'moralis';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 
-import { determineNetwork, NetworkInfo } from '../../core/NetworkInfo';
+import { determineNetwork, NetworkInfo } from './NetworkInfo';
 
 const walletContext = createContext<Wallet | null>(null);
 

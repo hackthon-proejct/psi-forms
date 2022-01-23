@@ -2,8 +2,16 @@ import Moralis from 'moralis';
 
 import { BNConverter } from '../../core/BNConverter';
 
+declare global {
+	interface Window {
+		etherum?: any;
+	}
+}
+
 export async function waitForWeb3(): Promise<void> {
-	await Moralis.Web3.enableWeb3();
+	if (typeof window.etherum !== 'undefined') {
+		await Moralis.Web3.enableWeb3();
+	}
 }
 
 export function toNumericId(value: string): string {
@@ -15,7 +23,7 @@ export function toHexId(value: string): string {
 	return BNConverter.toHex(v);
 }
 
-export async function currentUser(): Promise<Moralis.User> {
+export async function getCurrentUser(): Promise<Moralis.User> {
 	const user = Moralis.User.current();
 	if (!user) {
 		throw new Error('Not logged in');
