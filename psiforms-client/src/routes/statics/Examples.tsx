@@ -21,13 +21,13 @@ export function Examples() {
 
 				<p>The form allows submitting a business proposal. An owner of the form may approve or reject this offer. When the form owner approves a offer money will be transferred, otherwise the money will be refunded.</p>
 
-				<p>&rarr; <Link to="/forms/0x56a7f4de63d93c55e1c10eaf6435fd72" target="_blank" rel="noreferrer">Business Proposal Form</Link></p>
+				<p>&rarr; <Link to="/forms/0x56a7f4de63d93c55e1c10eaf6435fd72" target="_blank" rel="noreferrer">Open Business Proposal Form</Link></p>
 
 				<h4>💚 Donation Form</h4>
 
 				<p>This form allows collection donates.</p>
 
-				<p>&rarr; <Link to="/forms/0x7f955d279a6ea7fe8eb9e27f3b0cbcf5" target="_blank" rel="noreferrer">Donation Form</Link></p>
+				<p>&rarr; <Link to="/forms/0x7f955d279a6ea7fe8eb9e27f3b0cbcf5" target="_blank" rel="noreferrer">Open Donation Form</Link></p>
 
 				<h4>📠 Anti-Spam Contact Form</h4>
 
