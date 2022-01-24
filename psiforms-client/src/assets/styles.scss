@@ -162,8 +162,12 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 .app {min-height: 100vh; background: #151515;}
-.app-main {background: #FFF;}
+.app-main {background: #F6F6F6;}
+@media #{$desktop} {
+	.app-main {min-height: 100vh;}
+}
 
+.app-header {background: #FFF;}
 .app-header .header {
 	& {@include app-centered();}
 	.logo h1 {@include font-size(36px); font-weight: 700; letter-spacing: -0.03em;}
@@ -182,7 +186,7 @@ body, #root {color: #000; min-height: 100vh;}
 	}
 }
 
-.app-page {background: #F6F6F6; padding: 0 0 30px;}
+.app-page {padding: 0 0 30px;}
 .app-page-body {@include app-centered();}
 
 .app-footer {
@@ -215,6 +219,8 @@ body, #root {color: #000; min-height: 100vh;}
 }
 
 /* home */
+
+.home {background: #FFF;}
 
 .home-intro {
 	& {@include app-centered();}
