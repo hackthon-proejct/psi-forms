@@ -69,7 +69,7 @@ export function PricingFormGroup(props: PricingFormGroupProps) {
 				</div>
 				<div className="form-section-body">
 					<div className="form-group">
-						<label>Item price *</label>
+						<label>Item price (AVAX) *</label>
 						<input type="number" value={unitPriceDecimal} readOnly={props.isReadonly} step={0.01} onChange={e => onItemPriceChanged(e.target.value)} />
 					</div>
 

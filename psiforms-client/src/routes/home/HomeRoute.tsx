@@ -42,25 +42,25 @@ export function HomeRoute() {
 					<li>
 						<span className="text">
 							<span className="icon"><img src="images/home-icon-digital.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Sell Your</span> <span className="line">Digital Files</span>
+							<span className="line">Sell Digital</span> <span className="line">Products</span>
 						</span>
 					</li>
 					<li>
 						<span className="text">
 							<span className="icon"><img src="images/home-icon-donates.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Receive</span> <span className="line">Donates</span>
+							<span className="line">Receive</span> <span className="line">Donations</span>
 						</span>
 					</li>
 					<li>
 						<span className="text">
-							<span className="icon"><img src="images/home-icon-support.svg" width={48} height={48} alt="" /></span>
+							<span className="icon"><img src="images/home-icon-offers.svg" width={48} height={48} alt="" /></span>
 							<span className="line">Receive Paid</span> <span className="line">Offers</span>
 						</span>
 					</li>
 					<li>
 						<span className="text">
-							<span className="icon"><img src="images/home-icon-form.svg" width={48} height={48} alt="" /></span>
-							<span className="line">Payment</span> <span className="line">Crypto Forms</span>
+							<span className="icon"><img src="images/home-icon-advices.svg" width={48} height={48} alt="" /></span>
+							<span className="line">Sell Your</span> <span className="line">Advices</span>
 						</span>
 					</li>
 				</ul>

@@ -44,6 +44,10 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 		window.prompt('Sender Address', request.sender);
 	}
 
+	function buildEmailSubject(request: RequestDto): string {
+		return `[PsiForms] Response for the request (${request.id})`;
+	}
+
 	async function save(formId: string) {
 		if (processingFormId) {
 			return;
@@ -162,7 +166,7 @@ export function ApprovableRequests(props: ApprovableRequestsProps) {
 														<tr>
 															<td width={'30%'}>E-mail</td>
 															<td>
-																<a href={'mailto:' + ri.request.email}>{ri.request.email}</a>
+																<a href={'mailto:' + ri.request.email + '?subject=' + encodeURIComponent(buildEmailSubject(ri.request))}>{ri.request.email}</a>
 															</td>
 														</tr>
 														{ri.request.fields.map((field, findex) =>

@@ -6,8 +6,8 @@ import { PostReceipt, PreReceipt } from '../Receipt';
 
 export function initializeNewForm(): Form {
 	return {
-		name: 'Form title',
-		description: 'Form description',
+		name: 'My Form Title',
+		description: 'Enter a form description here.',
 		requireApproval: false,
 		fields: [],
 		isEnabled: true,
@@ -31,7 +31,7 @@ export function initializePreReceipt(): PreReceipt {
 
 export function initializePostReceipt(): PostReceipt {
 	return {
-		message: 'Your request is approved.',
+		message: 'Thanks for the payment.',
 		files: StorageClient.createFilesContainer()
 	};
 }
