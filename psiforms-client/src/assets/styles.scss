@@ -73,6 +73,7 @@ $screen-padding: 10px;
 	background: linear-gradient(90deg, #000 0%, #313131 100%);}
 .btn-gray {background: #E6E6E6;}
 .btn-white {background: #FFF;}
+.btn-orange {color: #FFF; background: #D7143B;}
 
 .ico {display: inline-block; width: 18px; height: 18px; margin: -6px 0 -4px; vertical-align: middle; background-size: 18px 18px;}
 .ico-mr {margin-right: 6px;}
@@ -85,6 +86,7 @@ $screen-padding: 10px;
 .ico-refresh-black {background-image: url('./icons/ico-refresh-black.svg');}
 .ico-refresh-white {background-image: url('./icons/ico-refresh-white.svg');}
 .ico-close-black {background-image: url('./icons/ico-close-black.svg');}
+.ico-play-video-white {background-image: url('./icons/ico-play-video-white.svg');}
 
 .ico-rotating {animation: rotation 500ms infinite linear;}
 @keyframes rotation {
@@ -114,6 +116,7 @@ body, #root {color: #000; min-height: 100vh;}
 
 	@media #{$desktop} {
 		& {top: 10%; left: 50%;  width: 400px; margin-left: -200px;}
+		&.wide {width: $app-max-width * 0.8; margin-left: -($app-max-width * 0.4);}
 	}
 	@media #{$phone} {
 		& {top: 10px; left: 10px; right: 10px;}
@@ -236,14 +239,20 @@ body, #root {color: #000; min-height: 100vh;}
 	@media #{$desktop} {
 		& {display: flex; align-items: center;}
 		.info {flex: 1;}
+		.picture {position: relative;}
 		.picture .frame {width: 300px; height: 510px; overflow: hidden; border-radius: $radius;}
 		.picture .frame img {margin-left: -50%; width: auto; height: 510px;}
+
+		.picture .video {position: absolute; bottom: 235px; left: 0; right: 0; text-align: center;}
+		.picture .video .btn {white-space: nowrap;}
 	}
 	@media #{$phone} {
 		& {text-align: center;}
 		.info h4 {display: flex; align-items: center; justify-content: center; min-height: 150px;}
 		.picture {padding-top: 30px;}
 		.picture .frame img {max-width: 100%; height: auto; margin: 0 auto; border-radius: $radius;}
+
+		.picture .video {padding: 15px 0 0;}
 	}
 }
 

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Typewriter } from './Typewriter';
+import { YoutubeMovie } from './YoutubeMovie';
 
 const TYPEWRITER_TEXTS = [
 	{ a: 'Forms for Creators', aClassName: 'orange', b: 'Anywhere' },
@@ -9,6 +11,16 @@ const TYPEWRITER_TEXTS = [
 ];
 
 export function HomeRoute() {
+	const [isVideoVisible, setIsVideoVisible] = useState(false);
+
+	function openVideoPopup() {
+		setIsVideoVisible(true);
+	}
+
+	function closeVideoPopup() {
+		setIsVideoVisible(false);
+	}
+
 	return (
 		<section className="home">
 			<div className="home-intro">
@@ -33,6 +45,13 @@ export function HomeRoute() {
 				<div className="picture">
 					<div className="frame">
 						<img src="images/home-intro-man.jpg" width={510} height={510} alt="" />
+					</div>
+
+					<div className="video">
+						<button className="btn btn-orange" onClick={openVideoPopup}>
+							Watch Video
+							<i className="ico ico-ml ico-play-video-white" />
+						</button>
 					</div>
 				</div>
 			</div>
@@ -104,6 +123,19 @@ export function HomeRoute() {
 					</ul>
 				</div>
 			</div>
+
+			{isVideoVisible &&
+				<div className="tiny-popup wide">
+					<h4>Introduction</h4>
+
+					<div className="simple-row">
+						<YoutubeMovie movieId="fMD_9O26y-I" />
+					</div>
+
+					<div className="simple-row">
+						<button className="btn btn-black" onClick={closeVideoPopup}>Close</button>
+					</div>
+				</div>}
 
 			<div className="home-start">
 				<h3>Start Your Crypto Business</h3>
