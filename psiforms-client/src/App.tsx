@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { AppFooter } from './components/layout/AppFooter';
 import { AppHeader } from './components/layout/AppHeader';
@@ -28,13 +28,13 @@ import { TermsRoute } from './routes/statics/TermsRoute';
 
 export function App() {
 	return (
-		<HashRouter>
+		<BrowserRouter>
 			<ScrollToTop />
 
 			<WalletContext>
 				<AppRoutes />
 			</WalletContext>
-		</HashRouter>
+		</BrowserRouter>
 	);
 }
 

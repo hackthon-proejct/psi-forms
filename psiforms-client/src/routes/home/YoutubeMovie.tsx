@@ -8,7 +8,7 @@ export function YoutubeMovie(props: YoutubeMovieProps) {
 	let iframe: HTMLElement | null = null;
 
 	useEffect(() => {
-		function reload() {
+		function resize() {
 			if (iframe?.parentElement) {
 				const width = iframe.parentElement.clientWidth;
 				iframe.style.width = width + 'px';
@@ -16,16 +16,16 @@ export function YoutubeMovie(props: YoutubeMovieProps) {
 			}
 		}
 
-		reload();
-		window.addEventListener('resize', reload);
+		resize();
+		window.addEventListener('resize', resize);
 
 		return () => {
-			window.removeEventListener('resize', reload);
+			window.removeEventListener('resize', resize);
 		};
 	});
 
 	return (
-		<iframe src={`https://www.youtube.com/embed/${props.movieId}?autoplay=1`} ref={r => iframe = r} title="YouTube video player"
+		<iframe src={`https://www.youtube.com/embed/${props.movieId}?autoplay=1&rel=0`} ref={i => iframe = i} title="YouTube video player"
 			allowFullScreen={true}
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" />
 	);
