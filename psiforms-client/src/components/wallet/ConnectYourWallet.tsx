@@ -25,8 +25,8 @@ export function ConnectYourWallet(props: ConnectYourWalletProps) {
 
 	const account = wallet.getAccount();
 
-	if (!account.network.isSupported) {
-		const firstSupportedNetwork = networkInfos.filter(i => i.isSupported)[0];
+	if (!wallet.isNetworkSupported(account.network.id)) {
+		const firstSupportedNetwork = networkInfos.filter(n => wallet.isNetworkSupported(n.id))[0];
 
 		return (
 			<div className={className}>

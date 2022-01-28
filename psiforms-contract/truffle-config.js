@@ -7,10 +7,18 @@ module.exports = {
 			port: 7545,
 			network_id: "*" // Match any network id
 		},
+		aval: {
+			provider: () => new HDWalletProvider('*',
+				'https://api.avax.network/ext/bc/C/rpc'),
+			from: '0x86D2B5F4AF69458a22d69a7347b2133854933ba4',
+			network_id: '*',
+			timeoutBlocks: 500,
+			skipDryRun: true
+		},
 		avalTestnet: {
-			provider: () => new HDWalletProvider('*****',
+			provider: () => new HDWalletProvider('*',
 				'https://api.avax-test.network/ext/bc/C/rpc'),
-			from: '0xbAeF084077C2d00fe2CCb9265d8bA5f32A98f7C7',
+			from: '0x86D2B5F4AF69458a22d69a7347b2133854933ba4',
 			network_id: '*',
 			timeoutBlocks: 500,
 			skipDryRun: true
@@ -18,10 +26,11 @@ module.exports = {
 	},
 	compilers: {
 		solc: {
-			version: "0.8.10",
+			version: '0.8.11',
+			evmVersion: 'istanbul',
 			optimizer: {
 				enabled: true,
-				runs: 1000000
+				runs: 200
 			}
 		}
 	}

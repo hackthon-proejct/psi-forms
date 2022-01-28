@@ -2,6 +2,7 @@ import Moralis from 'moralis';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 
+import { currentInstance } from '../../storage/InstanceProvider';
 import { determineNetwork, NetworkInfo } from './NetworkInfo';
 
 const walletContext = createContext<Wallet | null>(null);
@@ -13,6 +14,7 @@ export interface Wallet {
 	isConnected(): boolean;
 	getAccount(): Account;
 	tryGetAccount(): Account | undefined;
+	isNetworkSupported(id: number): boolean;
 	switchNetwork(network: NetworkInfo): Promise<void>;
 }
 
@@ -38,8 +40,8 @@ export function WalletContext(props: { children: JSX.Element }) {
 	useEffect(() => {
 		async function start() {
 			await Moralis.start({
-				serverUrl: 'https://awy24hdhalct.usemoralis.com:2053/server',
-				appId: 'qhuzeekgeb2J2KBAaSlQTwCEVQk2nvymszVZcQKB'
+				serverUrl: currentInstance.moralisServerUrl,
+				appId: currentInstance.moralisAppId
 			});
 
 			Moralis.Web3.onAccountsChanged(disconnect);
@@ -125,6 +127,10 @@ export function WalletContext(props: { children: JSX.Element }) {
 		return account;
 	}
 
+	function isNetworkSupported(networkId: number): boolean {
+		return currentInstance.networkId === networkId;
+	}
+
 	async function switchNetwork(network: NetworkInfo): Promise<void> {
 		const account = getAccount();
 		const provider = account.web3.currentProvider as { request: (p: any) => Promise<void>; };
@@ -162,7 +168,7 @@ export function WalletContext(props: { children: JSX.Element }) {
 	}
 
 	return (
-		<walletContext.Provider value={{ canAutoConnect, connect, disconnect, isConnected, getAccount, tryGetAccount, switchNetwork }}>
+		<walletContext.Provider value={{ canAutoConnect, connect, disconnect, isConnected, getAccount, tryGetAccount, isNetworkSupported, switchNetwork }}>
 			{props.children}
 		</walletContext.Provider>
 	);

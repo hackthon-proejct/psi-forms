@@ -6,6 +6,7 @@
 		"build": "truffle compile",
 		"migrate": "truffle migrate --reset",
 		"deploy:avalTestnet": "truffle deploy --network avalTestnet",
+		"deploy:aval": "truffle deploy --network aval",
 		"test": "truffle test",
 		"console": "truffle console"
 	},

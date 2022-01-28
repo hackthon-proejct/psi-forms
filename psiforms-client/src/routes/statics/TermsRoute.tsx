@@ -13,11 +13,7 @@ export function TermsRoute() {
 
 				<h4>§1 The Service</h4>
 
-				<p>TODO</p>
-
 				<p>We do our best to keep our service high-quality and available. But we inform you, in case of technical problems, hacker attack, network errors or unpredictable events our service can be temporally unavailable.</p>
-
-				<p>The publisher obliges himself to keep the JavaScript widget on his website until advertiser ads are valid.</p>
 
 				<h4>§2 Complaints</h4>
 

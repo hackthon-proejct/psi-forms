@@ -1,26 +1,20 @@
 import BN from 'bn.js';
 import { Contract } from 'web3-eth-contract';
 
-import network1 from '../assets/abi/psiforms-1.json';
 import abi from '../assets/abi/psiforms-abi.json';
 import { Account } from '../components/wallet/WalletContext';
+import { currentInstance } from './InstanceProvider';
 
 export class BlockchainContractClient {
 
 	private readonly contract: Contract;
 
 	public constructor(account: Account) {
-		let address: string;
-
-		switch (account.network.id) {
-			case 1:
-				address = (network1 as any).address;
-				break;
-			default:
-				throw new Error(`This network is not supported: ${account.network.id}`);
+		if (account.network.id !== currentInstance.networkId) {
+			throw new Error('Your network is not supported');
 		}
 
-		this.contract = new account.web3.eth.Contract(abi as any, address, {
+		this.contract = new account.web3.eth.Contract(abi as any, currentInstance.smartContractAddress, {
 			from: account.address
 		});
 	}

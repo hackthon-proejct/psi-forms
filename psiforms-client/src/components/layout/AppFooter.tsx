@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { currentInstance } from '../../storage/InstanceProvider';
+
 export function AppFooter() {
 	const year = new Date().getFullYear();
 
@@ -10,7 +12,12 @@ export function AppFooter() {
 					<li><Link to="/terms">Terms</Link></li>
 					<li><a href="https://twitter.com/b4rtaz" target="_blank" rel="noreferrer">Twitter</a></li>
 					<li><a href="https://t.me/psiforms" target="_blank" rel="noreferrer">Telegram</a></li>
-					<li><a href="https://testnet.snowtrace.io/address/0x119306d5d3B2a59ef369B5E13363AaDf6a9bb9dC" target="_blank" rel="noreferrer">Smart Contract</a></li>
+					<li><a href={currentInstance.smartContractUrl} target="_blank" rel="noreferrer">Smart Contract</a></li>
+					<li>
+						{currentInstance.isTestnet
+							? <a href="https://psiforms.com">MainNet</a>
+							: <a href="https://testnet.psiforms.com">TestNet</a>}
+					</li>
 					<li><a href="https://t.me/b4rtaz" target="_blank" rel="noreferrer">Contact</a></li>
 				</ul>
 			</div>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { currentInstance } from '../../storage/InstanceProvider';
 import { WalletConnector } from '../wallet/WalletConnector';
 
 export function AppHeader() {
@@ -7,7 +8,11 @@ export function AppHeader() {
 		<header className="app-header">
 			<div className="header">
 				<div className="logo">
-					<h1><Link to="/">ΨForms</Link></h1>
+					<h1>
+						<Link to="/">
+							{currentInstance.isTestnet ? 'TestNet' : 'ΨForms'}
+						</Link>
+					</h1>
 				</div>
 				<nav className="nav">
 					<ul>

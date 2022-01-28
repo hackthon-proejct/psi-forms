@@ -6,7 +6,6 @@ export interface NetworkInfo {
 	ethSymbol: string;
 	ethDecimals: number;
 	rpcUrl: string;
-	isSupported: boolean;
 }
 
 export const networkInfos: NetworkInfo[] = [
@@ -16,8 +15,15 @@ export const networkInfos: NetworkInfo[] = [
 		name: 'Avalanche Testnet',
 		ethDecimals: 18,
 		ethSymbol: 'AVAX',
-		rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
-		isSupported: true
+		rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc'
+	},
+	{
+		id: 2,
+		chainId: 43114,
+		name: 'Avalanche',
+		ethDecimals: 18,
+		ethSymbol: 'AVAX',
+		rpcUrl: 'https://api.avax.network/ext/bc/C/rpc'
 	}
 ];
 
@@ -29,8 +35,7 @@ export function determineNetwork(chainId: number): NetworkInfo {
 		name: 'Unknown',
 		ethDecimals: 18,
 		ethSymbol: 'ETH',
-		rpcUrl: '',
-		isSupported: false
+		rpcUrl: ''
 	};
 }
 
