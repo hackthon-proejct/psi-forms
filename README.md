@@ -1,8 +1,8 @@
 # ΨForms
 
-This repository contains SmartContract and Client App for PsiForms.com.
+This repository contains a smart contract and a client app for PsiForms.com.
 
-## Live
+## 🚀 Live
 
-⏩ MainNet: https://psiforms.com/ <br>
-⏩ TestNet: https://testnet.psiforms.com/
+📀 MainNet: https://psiforms.com/ <br>
+💿 TestNet: https://testnet.psiforms.com/
