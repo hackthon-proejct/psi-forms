@@ -15,8 +15,8 @@ export function AppFooter() {
 					<li><a href={currentInstance.smartContractUrl} target="_blank" rel="noreferrer">Smart Contract</a></li>
 					<li>
 						{currentInstance.isTestnet
-							? <a href="https://psiforms.com">MainNet</a>
-							: <a href="https://testnet.psiforms.com">TestNet</a>}
+							? <a href="https://psiforms.com">Mainnet</a>
+							: <a href="https://testnet.psiforms.com">Testnet</a>}
 					</li>
 					<li><a href="https://t.me/b4rtaz" target="_blank" rel="noreferrer">Contact</a></li>
 				</ul>

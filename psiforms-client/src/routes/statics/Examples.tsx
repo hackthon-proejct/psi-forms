@@ -13,7 +13,7 @@ export function Examples() {
 
 				<p>Online forms are powerful tools for creating an online business. You can find few examples of different businesses below. Of course you may create your own profitable idea. Start your business today!</p>
 
-				<p>All forms below are published on TestNet. You may test them for free!</p>
+				<p><strong>All forms below are published on Testnet</strong>. You may test them for free!</p>
 
 				<h4>💾 Digital Products Selling Form</h4>
 

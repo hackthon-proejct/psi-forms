@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { currentInstance } from '../../storage/InstanceProvider';
 import { Typewriter } from './Typewriter';
 import { YoutubeMovie } from './YoutubeMovie';
 
@@ -37,7 +38,7 @@ export function HomeRoute() {
 					</div>
 					<div className="subaction">
 						<Link to="/examples" className="btn btn-gray">
-							Explore Examples
+							{currentInstance.isTestnet ? 'Examples' : 'Examples on Testnet'}
 							<i className="ico ico-ml ico-arrow-right-black" />
 						</Link>
 					</div>

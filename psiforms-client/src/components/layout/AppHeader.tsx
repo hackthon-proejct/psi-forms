@@ -10,7 +10,7 @@ export function AppHeader() {
 				<div className="logo">
 					<h1>
 						<Link to="/">
-							{currentInstance.isTestnet ? 'TestNet' : 'ΨForms'}
+							{currentInstance.isTestnet ? 'Testnet' : 'ΨForms'}
 						</Link>
 					</h1>
 				</div>
